@@ -4,6 +4,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Timeline from '../components/Timeline.astro';
 import Icon from '../components/Icon.astro';
+import Awards from '../components/Awards.astro';
 import { site, experience, leadership, skills, highlights } from '../config';
 import { getProjects } from '../lib/projects';
 import { url } from '../utils';
@@ -105,14 +106,20 @@ const specs = [
     <Timeline items={experience} />
 
     <div class="mt-16">
-      <h3 class="reveal label mb-8 flex items-center gap-3"><span class="h-px w-8 bg-line-strong"></span>Leadership & honors</h3>
+      <h3 class="reveal label mb-8 flex items-center gap-3"><span class="h-px w-8 bg-line-strong"></span>Leadership & activities</h3>
       <Timeline items={leadership} compact />
     </div>
   </section>
 
+  <!-- ── AWARDS ───────────────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6" id="awards">
+    <SectionHeading index="03" label="Awards & competitions" title="Competition results" />
+    <Awards />
+  </section>
+
   <!-- ── SKILLS ───────────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="03" label="Toolkit" title="Skills & tools" id="skills" />
+    <SectionHeading index="04" label="Toolkit" title="Skills & tools" id="skills" />
     <div class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
       {
         skills.map((s) => (
@@ -129,7 +136,7 @@ const specs = [
 
   <!-- ── ABOUT (personal) ─────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="04" label="About me" title="Beyond the résumé" id="about-me" />
+    <SectionHeading index="05" label="About me" title="Beyond the résumé" id="about-me" />
     <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
       <div class="reveal corners w-full max-w-[280px] self-start overflow-hidden rounded-xl border border-line bg-surface">
         <div class="blueprint-fill grid aspect-square place-items-center">
@@ -169,7 +176,7 @@ const specs = [
   <!-- ── CONTACT ──────────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="contact" aria-labelledby="contact-h">
     <div class="reveal corners relative overflow-hidden rounded-2xl border border-line bg-surface px-6 py-14 sm:px-12 sm:py-20">
-      <p class="label flex items-center gap-3"><span class="text-accent">05</span><span class="h-px w-8 bg-line-strong"></span>Contact</p>
+      <p class="label flex items-center gap-3"><span class="text-accent">06</span><span class="h-px w-8 bg-line-strong"></span>Contact</p>
       <h2 id="contact-h" class="mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">
         Let's build something<span class="text-accent">.</span>
       </h2>

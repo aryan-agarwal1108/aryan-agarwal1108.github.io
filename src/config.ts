@@ -66,15 +66,27 @@ export type Experience = {
   role: string;
   org: string;
   href?: string;
-  start: string;
-  end: string;
+  start?: string;
+  end?: string;
   location?: string;
+  // true = a role that hasn't started yet; shows an "Incoming" badge
+  upcoming?: boolean;
   bullets: string[];
   tags?: string[];
   projects?: string[];
 };
 
 export const experience: Experience[] = [
+  {
+    role: 'Incoming Undergraduate Researcher',
+    org: 'Center for Hypersonics and Entry Systems Studies (CHESS), UIUC',
+    href: 'https://chess.grainger.illinois.edu/',
+    start: 'Jan 2027',
+    location: 'Urbana-Champaign, IL',
+    upcoming: true,
+    bullets: ['Joining the CHESS lab in the Department of Aerospace Engineering in January 2027.'],
+    tags: ['Hypersonics', 'Entry Systems'],
+  },
   {
     role: 'Undergraduate Researcher',
     org: 'Midwest Nice Aerospace Group',
@@ -111,6 +123,7 @@ export const experience: Experience[] = [
       'Designed an eVTOL UAV in SolidWorks, integrating aerodynamics and emergency water-landing buoyancy.',
       'Engineered solenoid-actuated pneumatic buoyancy with burst-diaphragm regulation for sub-8-second deployment.',
       'Simulated transient airflow and pressure distributions in ANSYS Fluent CFD to characterize inflation dynamics.',
+      'Presented the work at a national symposium.',
     ],
     tags: ['SolidWorks', 'ANSYS Fluent', 'CFD', 'Pneumatics'],
     projects: ['evtol-water-landing'],
@@ -122,7 +135,7 @@ export const experience: Experience[] = [
     end: 'Mar 2026',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      'Developed novel XQRL metrics and a unified framework for quantum reinforcement learning policy explainability.',
+      'Co-developed the first Explainable Quantum Reinforcement Learning (XQRL) metrics and a unified framework for policy explainability. Preprint on arXiv; submitted to IEEE Transactions on Quantum Engineering.',
       'Built hybrid quantum-classical simulation pipelines using Python, PennyLane, TensorFlow, and Qiskit.',
       'Applied LIME, SHAP, and feature occlusion to explain Quantum Q-Learning and Q-DQN policies.',
     ],
@@ -139,13 +152,14 @@ export const experience: Experience[] = [
       "Selected as the youngest intern at UAE's only government-funded quantum research facility, contributing to satellite quantum key distribution.",
       'Researched BB84 QKD receivers and designed a Superconducting Nanowire Single Photon Detector with reduced dark-count rates.',
       'Investigated a novel photon absorption mechanism and utilized SolidWorks to CAD the design components.',
+      'Developed the detector for the Abu Dhabi Quantum Optical Ground Station (ADQOGS) and presented it at a global tech expo.',
     ],
     tags: ['Quantum Optics', 'SolidWorks', 'QKD'],
     projects: ['snspd-qkd'],
   },
 ];
 
-// ── Leadership & honors ──────────────────────────────────────
+// ── Leadership & activities ──────────────────────────────────
 export const leadership: Experience[] = [
   {
     role: 'Founder & President',
@@ -155,28 +169,101 @@ export const leadership: Experience[] = [
     end: 'Sep 2026',
     location: 'Dubai, UAE',
     bullets: [
-      'Founded an organization that partnered with 200+ undergraduate and graduate students at top universities to mentor 1,000+ high school students globally in research projects.',
+      'Founded a free research-mentorship organization that partnered with 200+ undergraduate and graduate students from universities including Princeton and Penn to mentor 1,000+ high school students globally.',
       'Led student research initiatives resulting in the publication of 150+ academic papers.',
     ],
   },
   {
-    role: 'World Science Scholar',
+    role: 'World Science Scholar (2024–25 Cohort)',
     org: 'World Science Festival',
     start: 'Jun 2024',
     end: 'Jun 2025',
     location: 'New York, USA',
     bullets: [
-      'Selected 1 of 52 globally for advanced training in theoretical physics, mathematics, and computational science, with research mentorship from Nobel laureates and leading scientists.',
+      'Selected 1 of 52 students globally for advanced courses and projects in theoretical physics, mathematics, and computational science, led by scientists including Brian Greene, Stephen Wolfram, and Cumrun Vafa.',
     ],
+  },
+  {
+    role: 'Problem Writer',
+    org: 'Online Physics Olympiad (OPhO) 2025',
+    href: 'https://opho.physoly.tech',
+    start: '2025',
+    location: 'Online',
+    bullets: [
+      'Wrote international-olympiad-level problems on quantum physics, relativity, and electromagnetism for a competition with 900+ participants.',
+      'Assessed 70 competition entries.',
+    ],
+  },
+  {
+    role: 'Co-Founder & President',
+    org: 'Cosmic Society, Dubai International Academy',
+    location: 'Dubai, UAE',
+    bullets: [
+      'Taught 60+ students in Grades 7–9 special relativity, quantum theory, and astrophysics.',
+      "Hosted events including NASA's International Astronomical Search Collaboration (IASC), expert panels, and competitions.",
+    ],
+  },
+];
+
+// ── Awards & competitions ────────────────────────────────────
+export type Award = {
+  rank: string; // the big headline, e.g. "Top 50"
+  context: string; // e.g. "of 1,000+ teams"
+  title: string;
+  org: string;
+  level: 'International' | 'National' | 'School';
+  year: string;
+};
+
+export const awards: Award[] = [
+  {
+    rank: 'Top 50',
+    context: 'of 1,000+ teams worldwide',
+    title: 'Beamline for Schools Competition',
+    org: 'CERN',
+    level: 'International',
+    year: '2024–25',
+  },
+  {
+    rank: 'Top 250',
+    context: 'of 12,000+ globally · 2nd in UAE',
+    title: 'International Astronomy & Astrophysics Competition',
+    org: 'IAAC',
+    level: 'International',
+    year: '2024–26',
+  },
+  {
+    rank: 'Top 500',
+    context: 'of 4,000 globally · 5th in UAE',
+    title: 'Sir Isaac Newton Exam',
+    org: 'University of Waterloo',
+    level: 'International',
+    year: '2024–25',
+  },
+  {
+    rank: '2nd',
+    context: 'of 100+ competitors',
+    title: 'Annual Math Competition',
+    org: 'Emirates Aviation University',
+    level: 'National',
+    year: '2024–25',
+  },
+  {
+    rank: 'Medal',
+    context: 'Best in School',
+    title: 'Canadian Senior & Intermediate Mathematics Contest',
+    org: 'University of Waterloo',
+    level: 'School',
+    year: '2023–24',
   },
 ];
 
 // ── Skills ───────────────────────────────────────────────────
 export const skills: { group: string; items: string[] }[] = [
-  { group: 'CAD & Engineering Software', items: ['SolidWorks', 'Siemens NX', 'ANSYS Fluent'] },
-  { group: 'Design & Manufacturing', items: ['Engineering Drawings', '3D Printing', 'Assembly', 'GD&T'] },
-  { group: 'Simulation & Analysis', items: ['FEA', 'CFD', 'Thermal Analysis', 'Aerodynamic Modeling', 'BEMT'] },
-  { group: 'Programming & Tools', items: ['Python', 'C++', 'Java', 'PennyLane', 'TensorFlow', 'Qiskit', 'Arduino'] },
+  { group: 'CAD & Engineering Software', items: ['SolidWorks', 'Siemens NX', 'ANSYS Fluent', 'OpenRocket'] },
+  { group: 'Design & Manufacturing', items: ['Engineering Drawings', '3D Printing', 'Assembly', 'GD&T', 'Balsa & Foam Fabrication'] },
+  { group: 'Simulation & Analysis', items: ['FEA', 'CFD', 'Thermal Analysis', 'Aerodynamic Modeling', 'BEMT', 'Flight Simulation'] },
+  { group: 'Programming & Tools', items: ['Python', 'NumPy', 'Matplotlib', 'C++', 'Java', 'PennyLane', 'TensorFlow', 'Qiskit', 'Arduino'] },
 ];
 
 // ── Personal (About page) ────────────────────────────────────
@@ -193,9 +280,21 @@ export const now: string[] = [
   'First year at UIUC, studying Aerospace Engineering & Physics',
   'Modeling blown-wing aerodynamics with Midwest Nice Aerospace Group',
   'Building rocket fuel-grain manufacturing hardware with the ISS Hybrid team',
+  'Joining the CHESS hypersonics lab in January 2027',
 ];
 
-// Optional "Beyond engineering" section on the About page.
-// It stays hidden until you add at least one item, e.g.
-//   { title: 'Photography', text: 'I shoot film around campus.' }
-export const interests: { title: string; text: string }[] = [];
+// "Beyond engineering" section on the About page (hidden if empty).
+export const interests: { title: string; text: string }[] = [
+  {
+    title: 'Golf',
+    text: 'Varsity golfer at Dubai International Academy, playing since Grade 7 (4.8 handicap index). UAE interschool champions in 2023–24, two junior tournament wins at DASSA, and coaching newer teammates.',
+  },
+  {
+    title: 'Guitar',
+    text: 'I play guitar.',
+  },
+  {
+    title: 'Volunteer tutoring',
+    text: 'With Bachpan Bachao, I led bi-weekly sessions for 30+ underserved students in India in math, physics, digital literacy, and English, and organized a book drive that collected 500+ books.',
+  },
+];

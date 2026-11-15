@@ -12,6 +12,7 @@ org: NYU Abu Dhabi, CAIR Lab
 timeline: Jan 2025 – Nov 2025
 metrics:
   - { value: "<8 s", label: "Buoyancy deployment" }
+  - { value: "National", label: "Symposium presentation" }
 ---
 
 <!--
@@ -26,9 +27,11 @@ Small eVTOL drones increasingly fly over water, where a forced landing usually m
 
 ## What I did
 
-- Designed the eVTOL UAV in **SolidWorks**, integrating the aerodynamics with the emergency flotation system
+- Designed the multicopter eVTOL UAV in **SolidWorks**, integrating the aerodynamics with the emergency flotation system
+- Developed the platform alongside a **reinforcement learning** system
 - Engineered a **solenoid-actuated pneumatic buoyancy system** with **burst-diaphragm regulation**, reaching **sub-8-second deployment**
 - Simulated **transient airflow and pressure distributions** in **ANSYS Fluent CFD** to characterize the inflation dynamics
+- **Presented** the work at a **national symposium**
 
 ## How the flotation system works
 

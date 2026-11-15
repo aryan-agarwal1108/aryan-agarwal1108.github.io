@@ -6,13 +6,14 @@ import { site, education, leadership, highlights, now, interests } from '../conf
 import { url } from '../utils';
 
 // A short "how I got here" path, built from the resume. Oldest first.
-const journey = [
+const journey: { when: string; where: string; what: string; next?: boolean }[] = [
   { when: '2023', where: 'Dubai, UAE', what: 'Founded Erudios to connect high schoolers with university research mentors' },
   { when: '2024', where: 'New York, USA', what: 'Selected as 1 of 52 World Science Scholars worldwide' },
   { when: '2024', where: 'Abu Dhabi, UAE', what: 'Youngest intern at the Technology Innovation Institute, working on satellite quantum key distribution' },
   { when: '2025', where: 'Abu Dhabi, UAE', what: 'Research at NYU Abu Dhabi: eVTOL drone design (CAIR Lab) and quantum machine learning (eBRAIN Lab)' },
   { when: '2026', where: 'Dubai, UAE', what: 'Finished the IB Diploma with 40/45 and a thesis on atmospheric light scattering' },
-  { when: '2026', where: 'Urbana-Champaign, IL', what: 'Started Aerospace Engineering + Physics at UIUC. Joined ISS Hybrid and Midwest Nice Aerospace Group' },
+  { when: '2026', where: 'Urbana-Champaign, IL', what: 'Started Aerospace Engineering + Physics at UIUC. Joined ISS Hybrid and Midwest Nice Aerospace Group, and flew my first model rocket in AE 100' },
+  { when: '2027', where: 'Urbana-Champaign, IL', what: 'Next: joining the CHESS hypersonics lab in January', next: true },
 ];
 ---
 
@@ -27,8 +28,8 @@ const journey = [
         <div class="prose mt-8 max-w-2xl">
           <p>
             I'm a <strong>dual-degree Aerospace Engineering and Physics</strong> student at the <strong>{site.school}</strong>,
-            graduating in {site.gradYear}. I'm most interested in the places where the two fields overlap: how air moves over a
-            wing, what happens inside a rocket motor, and how quantum physics is becoming real hardware.
+            graduating in {site.gradYear}. I'm drawn to everything space and quantum: where spaceflight propulsion is heading
+            next, and how satellites and quantum technology are changing the way we communicate.
           </p>
           <p>
             I finished high school at Dubai International Academy, and alongside the IB Diploma I spent a lot of time in research
@@ -38,7 +39,8 @@ const journey = [
           </p>
           <p>
             At UIUC I'm modeling blown-wing aerodynamics with the <strong>Midwest Nice Aerospace Group</strong> and building
-            fuel-grain manufacturing hardware with the <strong>Illinois Space Society's Hybrid rocket team</strong>.
+            fuel-grain manufacturing hardware with the <strong>Illinois Space Society's Hybrid rocket team</strong>. In January
+            I'm joining the <strong>Center for Hypersonics and Entry Systems Studies (CHESS)</strong>.
           </p>
           <p>
             Outside my own work, I care about making research accessible. I founded{' '}
@@ -89,9 +91,9 @@ const journey = [
       <ol class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
         {
           journey.map((j, i) => (
-            <li class="reveal relative bg-surface p-6">
+            <li class:list={['reveal relative p-6', j.next ? 'blueprint-fill' : 'bg-surface']}>
               <div class="flex items-center justify-between font-mono text-[0.68rem] tracking-wider text-faint uppercase">
-                <span><span class="text-accent">WP-{String(i + 1).padStart(2, '0')}</span> · {j.when}</span>
+                <span><span class="text-accent">{j.next ? 'NEXT' : `WP-${String(i + 1).padStart(2, '0')}`}</span> · {j.when}</span>
                 <span>{j.where}</span>
               </div>
               <p class="mt-3 text-sm leading-relaxed text-fg">{j.what}</p>
@@ -130,7 +132,7 @@ const journey = [
 
     <!-- Leadership -->
     <div class="mt-20">
-      <p class="reveal label flex items-center gap-3"><span class="text-accent">02</span><span class="h-px w-8 bg-line-strong"></span>Leadership & honors</p>
+      <p class="reveal label flex items-center gap-3"><span class="text-accent">02</span><span class="h-px w-8 bg-line-strong"></span>Leadership & activities</p>
       <h2 class="reveal mt-3 mb-10 text-3xl font-semibold tracking-tight sm:text-4xl">Outside the lab</h2>
       <Timeline items={leadership} compact />
     </div>

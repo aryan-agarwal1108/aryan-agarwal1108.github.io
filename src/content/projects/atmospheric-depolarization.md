@@ -6,7 +6,7 @@ year: 2026
 category: Optics
 tags: [Optics, Experimental Physics, Data Analysis]
 featured: false
-order: 6
+order: 8
 role: Independent researcher
 org: Dubai International Academy Emirates Hills
 timeline: IB Diploma Programme

@@ -11,15 +11,30 @@ interface Props {
 const { items, compact = false } = Astro.props;
 const projects = await getProjects();
 const titleOf = (slug: string) => projects.find((p) => p.id === slug)?.data.title;
+const dates = (e: Experience) =>
+  e.upcoming ? `Starting ${e.start ?? 'soon'}` : [e.start, e.end].filter(Boolean).join(' — ');
 ---
 
 <ol class="relative border-l border-line">
   {
     items.map((e) => (
       <li class:list={['reveal group relative grid gap-2 pl-8 last:pb-0 md:grid-cols-[170px_1fr] md:gap-10', compact ? 'pb-8' : 'pb-11']}>
-        <span class="absolute top-1.5 -left-[5px] size-[9px] rounded-full border border-line-strong bg-bg transition-colors group-hover:border-accent group-hover:bg-accent" />
+        <span
+          class:list={[
+            'absolute top-1.5 -left-[5px] size-[9px] rounded-full border transition-colors',
+            e.upcoming ? 'border-dashed border-accent bg-bg' : 'border-line-strong bg-bg group-hover:border-accent group-hover:bg-accent',
+          ]}
+        />
         <div class="font-mono text-xs leading-6 tracking-wide text-faint uppercase">
-          <p>{e.start} — {e.end}</p>
+          {e.upcoming && (
+            <p class="mb-1">
+              <span class="inline-flex items-center gap-1.5 rounded-full border border-accent/50 bg-accent-soft px-2 py-0.5 text-[0.62rem] tracking-widest text-accent">
+                <span class="size-1.5 rounded-full bg-accent" />
+                Incoming
+              </span>
+            </p>
+          )}
+          {dates(e) && <p>{dates(e)}</p>}
           {e.location && <p class="normal-case tracking-normal">{e.location}</p>}
         </div>
         <div>

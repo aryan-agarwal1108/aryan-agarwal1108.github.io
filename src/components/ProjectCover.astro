@@ -58,6 +58,32 @@ const drawings: Record<string, string> = {
     <rect x="232" y="66" width="40" height="28" rx="3"/>${T(252, 85, 'Rθ', 'middle')}
     <rect x="232" y="166" width="40" height="28" rx="3"/>${T(252, 185, 'Rφ', 'middle')}
     ${[80, 130, 180].map((y) => `<rect x="300" y="${y - 14}" width="30" height="28" rx="3"/><path d="M306 ${y + 6}a9 9 0 0 1 18 0M315 ${y + 6}l7-10"/>`).join('')}`,
+  // Model rocket with simulated trajectory to apogee
+  Rocketry: `
+    <path d="M40 220h330" />
+    <path d="M70 220C110 60 230 30 330 210" stroke-dasharray="5 5"/>
+    <path d="M72 212C114 70 226 44 322 204" opacity="0.55"/>
+    <circle cx="196" cy="56" r="4"/>
+    <path d="M196 64v150" stroke-dasharray="2 4"/>
+    ${T(206, 50, 'APOGEE')}
+    <g transform="translate(70 214) rotate(-14)">
+      <path d="M-5 0v-46l5-14 5 14v46z"/>
+      <path d="M-5 -6l-7 8v4h7M5 -6l7 8v4H5"/>
+    </g>
+    ${T(330, 236, 'SIM vs. FLIGHT', 'end')}`,
+  // High-aspect-ratio glider (top view) with CG marker and span dimension
+  'Aircraft Design': `
+    <path d="M196 40h8l4 170h-16z"/>
+    <path d="M40 92h320l-4 18H44z"/>
+    <path d="M160 194h80l-4 10h-72z"/>
+    <path d="M200 194v-12"/>
+    <circle cx="200" cy="101" r="7"/>
+    <path d="M200 94v14M193 101h14"/>
+    ${T(214, 86, 'CG')}
+    <path d="M40 64h320M40 58v12M360 58v12" />
+    ${T(200, 56, 'SPAN', 'middle')}
+    <path d="M372 92v18M366 92h12M366 110h12"/>
+    ${T(382, 105, 'c')}`,
   // Superconducting nanowire meander with an incoming photon
   Detector: `
     <rect x="120" y="60" width="160" height="140" rx="4"/>

@@ -1,0 +1,37 @@
+---
+import { awards } from '../config';
+
+const levelStyle: Record<string, string> = {
+  International: 'border-accent/50 text-accent',
+  National: 'border-line-strong text-fg',
+  School: 'border-line text-muted',
+};
+---
+
+<ul class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+  {
+    awards.map((a, i) => (
+      <li class="reveal group relative flex flex-col bg-surface p-6">
+        <div class="flex items-center justify-between font-mono text-[0.65rem] tracking-wider text-faint uppercase">
+          <span>
+            <span class="text-accent">AWD-{String(i + 1).padStart(2, '0')}</span> · {a.year}
+          </span>
+          <span class:list={['rounded-full border px-2 py-0.5 text-[0.6rem] tracking-widest', levelStyle[a.level]]}>{a.level}</span>
+        </div>
+        <p class="mt-5 text-4xl font-semibold tracking-[-0.03em] text-fg">{a.rank}</p>
+        <p class="mt-1 font-mono text-xs text-muted">{a.context}</p>
+        <div class="mt-5 border-t border-line pt-4">
+          <p class="text-sm leading-snug font-medium text-fg">{a.title}</p>
+          <p class="mt-1 text-xs text-faint">{a.org}</p>
+        </div>
+      </li>
+    ))
+  }
+  {/* Fill leftover grid cells so the last row doesn't show empty gaps */}
+  {awards.length % 2 !== 0 && <li class="blueprint-fill hidden sm:block lg:hidden" aria-hidden="true" />}
+  {
+    awards.length % 3 !== 0 && (
+      <li class="blueprint-fill hidden lg:block" style={`grid-column: span ${3 - (awards.length % 3)}`} aria-hidden="true" />
+    )
+  }
+</ul>

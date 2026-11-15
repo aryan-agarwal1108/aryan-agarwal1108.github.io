@@ -1,13 +1,15 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
-import { site, education, experience, leadership, skills, type Experience } from '../config';
+import { site, education, experience, leadership, skills, awards, type Experience } from '../config';
 import { url } from '../utils';
 
 const sections: { title: string; items: Experience[] }[] = [
   { title: 'Experience', items: experience },
-  { title: 'Leadership & Honors', items: leadership },
+  { title: 'Leadership & Activities', items: leadership },
 ];
+const dates = (e: Experience) =>
+  e.upcoming ? `Starting ${e.start ?? 'soon'}` : [e.start, e.end].filter(Boolean).join(' – ');
 ---
 
 <BaseLayout title="Resume" description={`Resume of ${site.name}, ${site.major} student at ${site.schoolShort}.`}>
@@ -73,7 +75,7 @@ const sections: { title: string; items: Experience[] }[] = [
                   </div>
                   <div class="flex flex-wrap justify-between gap-x-4 gap-y-1">
                     <p class="text-sm text-muted italic">{e.org}</p>
-                    <p class="font-mono text-xs text-faint uppercase">{e.start} – {e.end}</p>
+                    <p class="font-mono text-xs text-faint uppercase">{dates(e)}</p>
                   </div>
                   <ul class="mt-2 space-y-1 text-sm text-muted">
                     {e.bullets.map((b) => <li class="relative pl-4"><span class="absolute left-0 text-accent">·</span>{b}</li>)}
@@ -84,6 +86,22 @@ const sections: { title: string; items: Experience[] }[] = [
           </div>
         ))
       }
+
+      <div class="mt-9">
+        <h3 class="label mb-4">Honors & Awards</h3>
+        <ul class="space-y-1.5 text-sm">
+          {
+            awards.map((a) => (
+              <li class="flex flex-wrap justify-between gap-x-4 gap-y-0.5">
+                <span>
+                  <span class="text-fg">{a.rank}</span> <span class="text-muted">({a.context}): {a.title}, {a.org}</span>
+                </span>
+                <span class="font-mono text-xs text-faint">{a.year}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
 
       <div class="mt-9">
         <h3 class="label mb-4">Technical Skills</h3>

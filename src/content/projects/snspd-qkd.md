@@ -1,7 +1,7 @@
 ---
 title: Single-Photon Detector for Satellite QKD
-summary: Research on BB84 quantum-key-distribution receivers and the design of a superconducting nanowire single-photon detector with reduced dark-count rates.
-result: Detector design with reduced dark counts
+summary: Developed the UAE's only superconducting nanowire single-photon detector for the Abu Dhabi Quantum Optical Ground Station, with reduced dark-count rates for satellite quantum key distribution.
+result: Presented at a global tech expo
 year: 2024
 category: Quantum
 art: Detector
@@ -9,8 +9,11 @@ tags: [Quantum Optics, QKD, SolidWorks]
 featured: false
 order: 5
 role: Junior Research Intern
-org: Technology Innovation Institute
+org: Technology Innovation Institute (ADQOGS)
 timeline: Jul 2024 – Aug 2024
+metrics:
+  - { value: "Youngest", label: "Quantum researcher at TII" }
+  - { value: "UAE's only", label: "SNSPD, built for ADQOGS" }
 ---
 
 <!--
@@ -22,13 +25,14 @@ timeline: Jul 2024 – Aug 2024
 
 **Quantum key distribution (QKD)** lets two parties share an encryption key with security guaranteed by physics: any eavesdropper disturbs the quantum states being sent. **BB84** is the original QKD protocol, and running it between a satellite and a ground station needs extremely sensitive receivers that can register single photons.
 
-At the Technology Innovation Institute, the UAE's only government-funded quantum research facility, I was **selected as the youngest intern** and contributed to its **satellite QKD** work.
+At the Technology Innovation Institute, the UAE's only government-funded quantum research facility, I was **selected as the youngest intern** and contributed to its **satellite QKD** work for the **Abu Dhabi Quantum Optical Ground Station (ADQOGS)**.
 
 ## What I did
 
 - Researched **BB84 QKD receivers**
-- Designed a **Superconducting Nanowire Single-Photon Detector (SNSPD)** with **reduced dark-count rates**
+- Developed the **UAE's only Superconducting Nanowire Single-Photon Detector (SNSPD)** for ADQOGS, designed for **reduced dark-count rates**
 - Investigated a **novel photon-absorption mechanism**, and modeled the design components in **SolidWorks**
+- **Presented** the work at a **global tech expo**
 
 ## Why dark counts matter
 
