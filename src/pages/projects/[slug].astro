@@ -40,7 +40,7 @@ const links = [
   p.links.github && { label: 'Source code', href: p.links.github, icon: 'github' as const },
   p.links.demo && { label: 'Live demo', href: p.links.demo, icon: 'external' as const },
   p.links.paper && { label: 'Paper', href: p.links.paper, icon: 'file' as const },
-  p.links.report && { label: 'Report (PDF)', href: url(p.links.report), icon: 'file' as const },
+  p.links.report && { label: 'Full report (PDF)', href: url(p.links.report), icon: 'file' as const },
 ].filter(Boolean) as { label: string; href: string; icon: 'github' | 'external' | 'file' }[];
 ---
 

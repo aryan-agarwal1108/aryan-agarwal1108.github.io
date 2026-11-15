@@ -11,6 +11,8 @@ role: Independent researcher
 org: IB Extended Essay, Physics
 timeline: IB Diploma Programme
 status: Complete
+links:
+  report: /files/Aryan_Agarwal_Extended_Essay_Physics.pdf
 gallery:
   - { src: /images/ee-dop-vs-temperature.svg, caption: "Degree of polarization against solution temperature. Each point is the average of five trials, with ±σ error bars. Note the y-axis starts at 0.84." }
   - { src: /images/ee-intensity-vs-temperature.svg, caption: "Average transmitted intensity with the polarizers parallel (0°) and crossed (90°). As the solution warms, light leaks through the crossed polarizers and the parallel signal drops, which is depolarization." }
@@ -25,6 +27,8 @@ metrics:
   TODO (Aryan): you could add photos of your setup (Figures 3 and 4 in the essay)
   to `gallery:` with captions.
 -->
+
+**[Read the full Extended Essay (PDF, 25 pages)](/files/Aryan_Agarwal_Extended_Essay_Physics.pdf)**: the theory, derivation, raw data tables, uncertainty propagation, and evaluation.
 
 ## The question
 
