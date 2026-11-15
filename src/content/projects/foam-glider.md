@@ -4,7 +4,7 @@ summary: A long-winged glider my team built from foam, balsa, and epoxy, sized a
 result: Long, slender wing for less drag and a longer glide
 year: 2026
 category: Aircraft Design
-tags: [Aircraft Design, Weight & Balance, Balsa & Foam Fabrication, Epoxy]
+tags: [Aircraft Design, Weight & Balance, Center of Gravity Calculation, Balsa & Foam Fabrication, Epoxy Bonding, Prototyping, Teamwork]
 featured: false
 order: 7
 role: AE 100 @ UIUC

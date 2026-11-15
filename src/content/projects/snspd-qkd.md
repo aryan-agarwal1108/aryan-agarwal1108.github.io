@@ -5,7 +5,7 @@ result: Presented at a global tech expo
 year: 2024
 category: Quantum
 art: Detector
-tags: [Quantum Optics, QKD, SolidWorks]
+tags: [Quantum Optics, QKD, BB84, Single-Photon Detection, Superconducting Nanowires, SolidWorks, Photonics]
 featured: false
 order: 5
 role: Junior Research Intern

@@ -54,7 +54,7 @@ export const education: Education[] = [
     degree: 'International Baccalaureate Diploma Programme: 40/45',
     date: 'May 2026',
     details: [
-      'Thesis: Investigating the Effect of Varying Wavelengths of Light on Depolarization Due to Atmospheric Scattering',
+      'Extended Essay (Physics): Investigating the Effect of Atmospheric Temperature on Depolarization of Light Due to Atmospheric Scattering',
     ],
   },
 ];
@@ -137,7 +137,7 @@ export const experience: Experience[] = [
     end: 'Mar 2026',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      'Co-developed the first metrics for explaining quantum reinforcement-learning agents (XQRL), plus a framework that ties them together. The paper is on arXiv and submitted to IEEE Transactions on Quantum Engineering.',
+      'Co-developed the first metrics for explaining quantum reinforcement-learning agents (XQRL), plus a framework that ties them together.',
       'Built hybrid quantum-classical simulation pipelines in Python with PennyLane, TensorFlow, and Qiskit.',
       'Used LIME, SHAP, and feature occlusion to explain Quantum Q-Learning and Q-DQN policies.',
     ],
@@ -265,7 +265,6 @@ export const recognition: { what: string; detail: string; year: string; href?: s
   { what: 'Youngest quantum researcher at TII', detail: "Technology Innovation Institute, the UAE's government quantum research facility", year: '2024', href: '/projects/snspd-qkd' },
   { what: 'Presented at a global tech expo', detail: 'Single-photon detector for the Abu Dhabi Quantum Optical Ground Station', year: '2024', href: '/projects/snspd-qkd' },
   { what: 'Presented at a national symposium', detail: 'eVTOL drone with emergency water-landing floats (NYU Abu Dhabi)', year: '2025', href: '/projects/evtol-water-landing' },
-  { what: 'Research paper on arXiv', detail: 'Explainable quantum RL metrics; submitted to IEEE Transactions on Quantum Engineering', year: '2025–26', href: '/projects/xqrl' },
   { what: 'IB Diploma: 40/45', detail: 'Dubai International Academy Emirates Hills', year: '2026', href: '/about' },
 ];
 
@@ -275,6 +274,8 @@ export const skills: { group: string; items: string[] }[] = [
   { group: 'Design & Manufacturing', items: ['Engineering Drawings', '3D Printing', 'Assembly', 'GD&T', 'Balsa & Foam Fabrication'] },
   { group: 'Simulation & Analysis', items: ['FEA', 'CFD', 'Thermal Analysis', 'Aerodynamic Modeling', 'BEMT', 'Flight Simulation'] },
   { group: 'Programming & Tools', items: ['Python', 'NumPy', 'Matplotlib', 'C++', 'Java', 'PennyLane', 'TensorFlow', 'Qiskit', 'Arduino'] },
+  { group: 'Physics & Lab', items: ['Experimental Physics', 'Polarimetry', 'Mie Scattering', 'Quantum Optics', 'Photonics', 'Vernier LabQuest', 'Uncertainty Analysis'] },
+  { group: 'Aerospace', items: ['Aircraft Design', 'Weight & Balance', 'Hybrid Propulsion', 'Model Rocketry', 'Propeller Slipstream Analysis', 'Takeoff Performance'] },
 ];
 
 // ── Personal (About page) ────────────────────────────────────

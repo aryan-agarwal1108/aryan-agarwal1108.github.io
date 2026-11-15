@@ -4,7 +4,7 @@ summary: Parts and thermal analysis for the rig that casts solid fuel grains for
 result: Parts designed in Siemens NX, made with 3D printing
 year: 2026
 category: Propulsion
-tags: [Siemens NX, 3D Printing, FEA, Thermal Analysis]
+tags: [Siemens NX, 3D Printing, FEA, Thermal Analysis, Heat Transfer, Mechanical Design, Hybrid Propulsion]
 featured: true
 order: 2
 role: Manufacturing Engineer, Hybrid Team

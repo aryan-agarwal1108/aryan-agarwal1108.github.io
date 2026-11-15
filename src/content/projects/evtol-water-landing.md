@@ -4,7 +4,7 @@ summary: A multicopter drone I designed at NYU Abu Dhabi that inflates its own f
 result: Floats deploy in under 8 seconds
 year: 2025
 category: Mechanical Design
-tags: [SolidWorks, ANSYS Fluent, CFD, Pneumatics]
+tags: [SolidWorks, ANSYS Fluent, CFD, Transient Simulation, Pneumatics, Mechanical Design, Reinforcement Learning]
 featured: true
 order: 3
 role: Visiting Researcher

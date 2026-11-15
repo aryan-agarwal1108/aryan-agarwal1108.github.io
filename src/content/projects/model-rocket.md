@@ -4,7 +4,7 @@ summary: My AE 100 rocket. I simulated the flight in OpenRocket, built and flew 
 result: Simulated in OpenRocket, analyzed in Python
 year: 2026
 category: Rocketry
-tags: [OpenRocket, Flight Simulation, Python, NumPy, Matplotlib]
+tags: [OpenRocket, Flight Simulation, Python, NumPy, Matplotlib, Flight Data Analysis, Model Rocketry]
 featured: false
 order: 6
 role: AE 100 @ UIUC

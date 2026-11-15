@@ -12,9 +12,9 @@ interface Props {
 const { project, index, size = 'md' } = Astro.props;
 const p = project.data;
 
-// Short status pill: In progress / Flown / Preprint / Completed
+// Short status pill: In progress / Flown / Completed
 const live = /progress|present/i.test(`${p.status ?? ''} ${p.timeline}`);
-const pill = live ? 'In progress' : /flown/i.test(p.status ?? '') ? 'Flown' : /arxiv/i.test(p.status ?? '') ? 'Preprint' : 'Completed';
+const pill = live ? 'In progress' : /flown/i.test(p.status ?? '') ? 'Flown' : 'Completed';
 ---
 
 <a
@@ -61,7 +61,8 @@ const pill = live ? 'In progress' : /flown/i.test(p.status ?? '') ? 'Flown' : /a
       <span class="text-muted">{p.role}</span>{p.org && <> · {p.org}</>}
     </p>
     <ul class="mt-auto flex flex-wrap gap-1.5 pt-2" aria-label="Tools">
-      {p.tags.slice(0, 5).map((t) => <li class="tag">{t}</li>)}
+      {p.tags.slice(0, 6).map((t) => <li class="tag">{t}</li>)}
+      {p.tags.length > 6 && <li class="tag !text-faint">+{p.tags.length - 6}</li>}
     </ul>
   </div>
 </a>

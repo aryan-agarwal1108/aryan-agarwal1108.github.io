@@ -111,7 +111,7 @@ const links = [
                       data-caption={`Fig. ${index + 1}.${i + 1} — ${g.caption}`}
                       aria-label={`Enlarge figure: ${g.caption}`}
                     >
-                      <img src={url(g.src)} alt={g.alt ?? g.caption} loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover" />
+                      <img src={url(g.src)} alt={g.alt ?? g.caption} loading="lazy" decoding="async" class="aspect-[16/10] w-full bg-white object-contain" />
                     </button>
                     <figcaption>
                       <span class="font-mono text-accent">Fig. {index + 1}.{i + 1}</span> {g.caption}

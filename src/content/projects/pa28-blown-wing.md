@@ -4,7 +4,7 @@ summary: Python models that predict how much extra lift a Piper PA-28's wing get
 result: Models lift gain, thrust, and takeoff performance
 year: 2026
 category: Aerodynamics
-tags: [Python, BEMT, Aerodynamic Modeling]
+tags: [Python, BEMT, Aerodynamic Modeling, Propeller Slipstream Analysis, Lift Augmentation, Takeoff Performance, Power Loading]
 featured: true
 order: 1
 role: Undergraduate Researcher
