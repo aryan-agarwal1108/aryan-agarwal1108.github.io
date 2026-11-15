@@ -2,38 +2,47 @@
 
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
-/* ── Design tokens ───────────────────────────────────────── */
+/* ── Design tokens ───────────────────────────────────────────
+   Palette: "blueprint ink" navy + international orange (the classic
+   aerospace safety color) + a cool sky blue for data/links.
+   Light mode is drafting paper with navy ink and blue grid lines. */
 :root {
-  --bg: #fafaf9;
-  --surface: #ffffff;
-  --surface-2: #f4f4f2;
-  --border: #e4e4e0;
-  --border-strong: #cfcfc9;
-  --fg: #111113;
-  --muted: #5f5f68;
-  --faint: #8a8a93;
-  --accent: #e85a1a;
-  --accent-soft: rgb(232 90 26 / 0.1);
-  --grid: rgb(17 17 19 / 0.045);
-  --glow: rgb(232 90 26 / 0.06);
-  --ok: #16a34a;
+  --bg: #f5f3ee;
+  --surface: #fffdf9;
+  --surface-2: #efece4;
+  --border: #e3ded3;
+  --border-strong: #cdc6b7;
+  --fg: #121826;
+  --muted: #4a5366;
+  --faint: #646b7d;
+  --accent: #b93f08;
+  --accent-soft: rgb(185 63 8 / 0.09);
+  --accent-2: #1f5fbf;
+  --accent-2-soft: rgb(31 95 191 / 0.09);
+  --grid: rgb(31 95 191 / 0.06);
+  --glow: rgb(185 63 8 / 0.05);
+  --sky: rgb(31 95 191 / 0.07);
+  --ok: #15803d;
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --bg: #0a0a0b;
-  --surface: #111113;
-  --surface-2: #17171a;
-  --border: #1f1f23;
-  --border-strong: #2e2e34;
-  --fg: #ededed;
-  --muted: #a0a0a8;
-  --faint: #6e6e78;
-  --accent: #ff6b2c;
-  --accent-soft: rgb(255 107 44 / 0.12);
-  --grid: rgb(255 255 255 / 0.035);
-  --glow: rgb(255 107 44 / 0.07);
-  --ok: #22c55e;
+  --bg: #090d16;
+  --surface: #0e1420;
+  --surface-2: #141b2a;
+  --border: #1c2536;
+  --border-strong: #2a3650;
+  --fg: #e9edf5;
+  --muted: #a3adbf;
+  --faint: #7b879d;
+  --accent: #ff6b1f;
+  --accent-soft: rgb(255 107 31 / 0.12);
+  --accent-2: #7cc4ff;
+  --accent-2-soft: rgb(124 196 255 / 0.1);
+  --grid: rgb(124 196 255 / 0.045);
+  --glow: rgb(255 107 31 / 0.08);
+  --sky: rgb(124 196 255 / 0.07);
+  --ok: #34d399;
   color-scheme: dark;
 }
 
@@ -48,6 +57,8 @@
   --color-faint: var(--faint);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-soft: var(--accent-2-soft);
   --color-ok: var(--ok);
   --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
@@ -66,10 +77,18 @@ html {
 body {
   background-color: var(--bg);
   background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, var(--sky), transparent 70%),
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 32px 32px;
-  background-position: -1px -1px;
+  background-size:
+    100% 100%,
+    32px 32px,
+    32px 32px;
+  background-position:
+    0 0,
+    -1px -1px,
+    -1px -1px;
+  background-repeat: no-repeat, repeat, repeat;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -151,12 +170,36 @@ body {
   transition: opacity 0.3s;
   pointer-events: none;
 }
+.card::after {
+  /* thin accent line that draws across the top edge on hover */
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
+  transform: scaleX(0);
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
 .card:hover {
   border-color: var(--border-strong);
   transform: translateY(-2px);
+  box-shadow: 0 12px 32px -18px rgb(0 0 0 / 0.35);
 }
 .card:hover::before {
   opacity: 1;
+}
+.card:hover::after {
+  transform: scaleX(1);
+}
+
+/* A skill/tool chip that links to the projects that used it */
+a.tag:hover,
+a.skill:hover {
+  border-color: var(--accent-2);
+  color: var(--fg);
 }
 
 .tag {
@@ -368,4 +411,81 @@ body {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+/* ── Figures (captioned visuals on project pages) ────────── */
+.figure img {
+  cursor: zoom-in;
+}
+.prose figure {
+  margin: 1.6em 0;
+}
+.prose figcaption,
+.figure figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--faint);
+}
+.prose img {
+  cursor: zoom-in;
+}
+
+/* Lightbox */
+#lightbox::backdrop {
+  background: rgb(4 7 13 / 0.85);
+  backdrop-filter: blur(4px);
+}
+
+/* ── Print: clean, ink-friendly pages (resume + project write-ups) ── */
+@media print {
+  :root,
+  :root[data-theme='dark'] {
+    --bg: #fff;
+    --surface: #fff;
+    --surface-2: #f4f4f4;
+    --border: #d4d4d4;
+    --border-strong: #bbb;
+    --fg: #000;
+    --muted: #333;
+    --faint: #555;
+    --accent: #b93f08;
+    --accent-2: #1f5fbf;
+    --grid: transparent;
+    --sky: transparent;
+    color-scheme: light;
+  }
+  body {
+    background: #fff !important;
+  }
+  header,
+  footer,
+  .spotlight,
+  .no-print,
+  #cmdk,
+  #lightbox {
+    display: none !important;
+  }
+  .js .reveal,
+  .hero-in {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .card,
+  .corners {
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+  .sticky {
+    position: static !important;
+  }
+  .prose a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    color: var(--faint);
+  }
+  @page {
+    margin: 14mm;
+  }
 }

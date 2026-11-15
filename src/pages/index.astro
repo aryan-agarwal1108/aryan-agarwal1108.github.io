@@ -6,15 +6,16 @@ import Timeline from '../components/Timeline.astro';
 import Icon from '../components/Icon.astro';
 import Awards from '../components/Awards.astro';
 import { site, experience, leadership, skills, highlights } from '../config';
-import { getProjects } from '../lib/projects';
+import { getProjects, getToolCounts } from '../lib/projects';
 import { url } from '../utils';
 
 const all = await getProjects();
 const featured = all.filter((p) => p.data.featured).slice(0, 4);
+const toolCounts = await getToolCounts();
 
 const specs = [
   ['Name', site.name],
-  ['Discipline', 'Aerospace Eng. + Physics'],
+  ['Studying', 'Aerospace Eng. + Physics'],
   ['School', site.schoolShort],
   ['Class of', site.gradYear],
   ['Based in', site.location],
@@ -25,8 +26,22 @@ const specs = [
 
 <BaseLayout>
   <!-- ── HERO ─────────────────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl px-4 pt-16 pb-20 sm:px-6 sm:pt-24 lg:pb-28">
-    <div class="grid items-center gap-12 lg:grid-cols-[1.35fr_1fr]">
+  <section class="relative mx-auto max-w-6xl px-4 pt-16 pb-20 sm:px-6 sm:pt-24 lg:pb-28">
+    <!-- Faint trajectory sketch behind the hero -->
+    <svg
+      class="pointer-events-none absolute -top-6 right-0 -z-0 hidden h-[460px] w-[760px] text-accent-2 opacity-40 lg:block"
+      viewBox="0 0 760 460"
+      fill="none"
+      stroke="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M20 440C180 120 470 30 740 120" stroke-dasharray="2 7" stroke-width="1.2" />
+      <path d="M60 440C230 190 450 110 700 170" stroke-dasharray="1 9" stroke-width="1" opacity="0.6" />
+      <ellipse cx="560" cy="210" rx="230" ry="70" transform="rotate(-12 560 210)" stroke-dasharray="3 6" opacity="0.5" />
+      <circle cx="740" cy="120" r="3" fill="currentColor" />
+    </svg>
+
+    <div class="relative grid items-center gap-12 lg:grid-cols-[1.35fr_1fr]">
       <div class="hero-in">
         {
           site.status.available && (
@@ -48,7 +63,7 @@ const specs = [
             href={url('/projects')}
             class="inline-flex h-11 items-center gap-2 rounded-lg bg-fg px-5 text-sm font-medium text-bg transition-opacity hover:opacity-85"
           >
-            View projects <Icon name="arrow" size={16} />
+            See my projects <Icon name="arrow" size={16} />
           </a>
           <a
             href={url('/resume')}
@@ -65,10 +80,10 @@ const specs = [
       </div>
 
       <!-- Datasheet card -->
-      <aside class="hero-in hero-in-2 corners rounded-xl border border-line bg-surface/80 backdrop-blur-sm" aria-label="Quick facts">
+      <aside class="hero-in hero-in-2 corners rounded-xl border border-line bg-surface/85 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.45)] backdrop-blur-sm" aria-label="Quick facts">
         <div class="flex items-center justify-between border-b border-line px-5 py-3">
           <span class="label">Datasheet</span>
-          <span class="font-mono text-[0.65rem] text-faint">DOC-001 · REV A</span>
+          <span class="font-mono text-[0.65rem] text-faint">DOC-001 · REV B</span>
         </div>
         <dl class="divide-y divide-line">
           {
@@ -82,7 +97,7 @@ const specs = [
         </dl>
         <div class="flex items-center justify-between border-t border-line px-5 py-3 font-mono text-[0.65rem] text-faint">
           <span>STATUS</span>
-          <span class="flex items-center gap-2 text-ok"><span class="size-1.5 rounded-full bg-ok"></span>CLEARED FOR TAKEOFF</span>
+          <span class="flex items-center gap-2 text-ok"><span class="size-1.5 rounded-full bg-ok"></span>AVAILABLE · SUMMER 2027</span>
         </div>
       </aside>
     </div>
@@ -90,7 +105,7 @@ const specs = [
 
   <!-- ── SELECTED WORK ────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="work">
-    <SectionHeading index="01" label="Selected work" title="Things I've designed, built & researched" id="work">
+    <SectionHeading index="01" label="Selected work" title="A few things I've worked on" id="work">
       <a href={url('/projects')} class="group inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-fg">
         All {all.length} projects <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-0.5" />
       </a>
@@ -102,7 +117,7 @@ const specs = [
 
   <!-- ── EXPERIENCE ───────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6" id="experience">
-    <SectionHeading index="02" label="Experience" title="Research & engineering roles" />
+    <SectionHeading index="02" label="Experience" title="Where I've worked" />
     <Timeline items={experience} />
 
     <div class="mt-16">
@@ -119,14 +134,36 @@ const specs = [
 
   <!-- ── SKILLS ───────────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="04" label="Toolkit" title="Skills & tools" id="skills" />
+    <SectionHeading index="04" label="Toolkit" title="What I work with" id="skills">
+      <p class="max-w-xs text-sm text-muted">
+        Tools with a <span class="font-mono text-accent-2">number</span> link to the projects I used them on.
+      </p>
+    </SectionHeading>
     <div class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
       {
         skills.map((s) => (
           <div class="reveal bg-surface p-6">
             <h3 class="label mb-4">{s.group}</h3>
             <ul class="flex flex-wrap gap-2">
-              {s.items.map((i) => <li class="rounded-md border border-line bg-surface-2 px-2.5 py-1 text-sm text-fg">{i}</li>)}
+              {s.items.map((i) => {
+                const n = toolCounts.get(i.toLowerCase());
+                return (
+                  <li>
+                    {n ? (
+                      <a
+                        href={url(`/projects?tool=${encodeURIComponent(i.toLowerCase())}`)}
+                        class="skill inline-flex items-center gap-2 rounded-md border border-line bg-surface-2 px-2.5 py-1 text-sm text-fg transition-colors"
+                        title={`See ${n} project${n === 1 ? '' : 's'} using ${i}`}
+                      >
+                        {i}
+                        <span class="rounded bg-accent-2-soft px-1.5 font-mono text-[0.65rem] text-accent-2">{n}</span>
+                      </a>
+                    ) : (
+                      <span class="inline-block rounded-md border border-line bg-surface-2 px-2.5 py-1 text-sm text-muted">{i}</span>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))
@@ -136,7 +173,7 @@ const specs = [
 
   <!-- ── ABOUT (personal) ─────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="05" label="About me" title="Beyond the résumé" id="about-me" />
+    <SectionHeading index="05" label="About me" title="A bit about me" id="about-me" />
     <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
       <div class="reveal corners w-full max-w-[280px] self-start overflow-hidden rounded-xl border border-line bg-surface">
         <div class="blueprint-fill grid aspect-square place-items-center">
@@ -150,10 +187,15 @@ const specs = [
       <div class="reveal flex flex-col">
         <div class="space-y-4 text-lg leading-relaxed text-muted">
           <p>
-            I'm <span class="text-fg">{site.firstName}</span>, a first-year <span class="text-fg">Aerospace Engineering and Physics</span> dual-degree student at the University of Illinois. I finished high school in Dubai, and before college I'd already worked on satellite quantum communication, drone design, and quantum machine learning in research labs across the UAE.
+            I'm <span class="text-fg">{site.firstName}</span>. I'm in my first year at Illinois, doing a dual degree in{' '}
+            <span class="text-fg">Aerospace Engineering and Physics</span>. Before college I was in Dubai, and I spent a lot of
+            high school in research labs around the UAE, working on single-photon detectors at TII, then a water-landing drone and
+            quantum machine learning at NYU Abu Dhabi.
           </p>
           <p>
-            I also care about opening research up to other students. I founded <a href={leadership[0].href} target="_blank" rel="noopener" class="text-fg underline decoration-accent underline-offset-4">Erudios</a>, which connected 1,000+ high schoolers worldwide with university mentors to do their own research projects.
+            Outside my own projects, I started <a href={leadership[0].href} target="_blank" rel="noopener" class="text-fg underline decoration-accent underline-offset-4">Erudios</a>,
+            a free mentorship program that paired over 1,000 high schoolers with university students to do real research. I
+            also play golf and guitar.
           </p>
         </div>
         <dl class="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
@@ -176,14 +218,16 @@ const specs = [
   <!-- ── CONTACT ──────────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="contact" aria-labelledby="contact-h">
     <div class="reveal corners relative overflow-hidden rounded-2xl border border-line bg-surface px-6 py-14 sm:px-12 sm:py-20">
-      <p class="label flex items-center gap-3"><span class="text-accent">06</span><span class="h-px w-8 bg-line-strong"></span>Contact</p>
-      <h2 id="contact-h" class="mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">
-        Let's build something<span class="text-accent">.</span>
+      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_100%_100%,var(--accent-soft),transparent_70%)]" aria-hidden="true"></div>
+      <p class="label relative flex items-center gap-3"><span class="text-accent">06</span><span class="h-px w-8 bg-line-strong"></span>Contact</p>
+      <h2 id="contact-h" class="relative mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">
+        Want to talk<span class="text-accent">?</span>
       </h2>
-      <p class="mt-5 max-w-lg text-muted">
-        I'm looking for Summer 2027 internships in aerospace, propulsion, and research. If you're hiring, or just want to talk engineering, my inbox is open.
+      <p class="relative mt-5 max-w-lg text-muted">
+        I'm looking for a Summer 2027 internship in aerospace, propulsion, or research. If you're hiring, have a question about
+        something here, or just want to talk rockets, send me an email.
       </p>
-      <div class="mt-9 flex flex-wrap gap-3">
+      <div class="relative mt-9 flex flex-wrap gap-3">
         <button
           type="button"
           data-copy={site.email}

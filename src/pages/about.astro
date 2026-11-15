@@ -7,13 +7,13 @@ import { url } from '../utils';
 
 // A short "how I got here" path, built from the resume. Oldest first.
 const journey: { when: string; where: string; what: string; next?: boolean }[] = [
-  { when: '2023', where: 'Dubai, UAE', what: 'Founded Erudios to connect high schoolers with university research mentors' },
-  { when: '2024', where: 'New York, USA', what: 'Selected as 1 of 52 World Science Scholars worldwide' },
-  { when: '2024', where: 'Abu Dhabi, UAE', what: 'Youngest intern at the Technology Innovation Institute, working on satellite quantum key distribution' },
-  { when: '2025', where: 'Abu Dhabi, UAE', what: 'Research at NYU Abu Dhabi: eVTOL drone design (CAIR Lab) and quantum machine learning (eBRAIN Lab)' },
-  { when: '2026', where: 'Dubai, UAE', what: 'Finished the IB Diploma with 40/45 and a thesis on atmospheric light scattering' },
-  { when: '2026', where: 'Urbana-Champaign, IL', what: 'Started Aerospace Engineering + Physics at UIUC. Joined ISS Hybrid and Midwest Nice Aerospace Group, and flew my first model rocket in AE 100' },
-  { when: '2027', where: 'Urbana-Champaign, IL', what: 'Next: joining the CHESS hypersonics lab in January', next: true },
+  { when: '2023', where: 'Dubai, UAE', what: 'Started Erudios, a free research-mentorship program for high schoolers' },
+  { when: '2024', where: 'New York, USA', what: 'Picked as one of 52 World Science Scholars' },
+  { when: '2024', where: 'Abu Dhabi, UAE', what: 'Summer at TII as its youngest quantum researcher, working on single-photon detectors' },
+  { when: '2025', where: 'Abu Dhabi, UAE', what: 'Research at NYU Abu Dhabi: an eVTOL drone at CAIR and quantum RL at eBRAIN' },
+  { when: '2026', where: 'Dubai, UAE', what: 'Finished the IB Diploma (40/45), with a thesis on how light depolarizes in the atmosphere' },
+  { when: '2026', where: 'Urbana-Champaign, IL', what: 'Moved to UIUC. Joined ISS Hybrid and Midwest Nice, and built and flew a rocket in AE 100' },
+  { when: '2027', where: 'Urbana-Champaign, IL', what: 'Starting hypersonics research at CHESS in January', next: true },
 ];
 ---
 
@@ -27,25 +27,27 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
         </h1>
         <div class="prose mt-8 max-w-2xl">
           <p>
-            I'm a <strong>dual-degree Aerospace Engineering and Physics</strong> student at the <strong>{site.school}</strong>,
-            graduating in {site.gradYear}. I'm drawn to everything space and quantum: where spaceflight propulsion is heading
-            next, and how satellites and quantum technology are changing the way we communicate.
+            I'm a first-year at the <strong>University of Illinois</strong>, doing a dual degree in{' '}
+            <strong>Aerospace Engineering and Physics</strong> (class of {site.gradYear}). Space and quantum physics are the two
+            things I keep coming back to, especially where rocket propulsion is headed and how satellites will carry
+            quantum-secure communication.
           </p>
           <p>
-            I finished high school at Dubai International Academy, and alongside the IB Diploma I spent a lot of time in research
-            labs. At the <strong>Technology Innovation Institute</strong> I worked on detectors for satellite quantum key
-            distribution. At <strong>NYU Abu Dhabi</strong> I designed an eVTOL drone that can survive a water landing, and helped
-            build a framework for explaining quantum reinforcement-learning agents.
+            I finished high school at Dubai International Academy. Alongside the IB, I spent most of my free time in labs. At the{' '}
+            <strong>Technology Innovation Institute</strong> I designed a superconducting single-photon detector for the UAE's
+            quantum optical ground station. At <strong>NYU Abu Dhabi</strong> I designed an eVTOL drone with an inflatable
+            flotation system, and worked on ways to explain what quantum reinforcement-learning agents are actually doing.
           </p>
           <p>
-            At UIUC I'm modeling blown-wing aerodynamics with the <strong>Midwest Nice Aerospace Group</strong> and building
-            fuel-grain manufacturing hardware with the <strong>Illinois Space Society's Hybrid rocket team</strong>. In January
-            I'm joining the <strong>Center for Hypersonics and Entry Systems Studies (CHESS)</strong>.
+            Since getting to UIUC I've joined the Hybrid team at the <strong>Illinois Space Society</strong>, where I'm designing
+            parts for a fuel-grain spin-caster, and I'm modeling a blown-wing PA-28 with the{' '}
+            <strong>Midwest Nice Aerospace Group</strong> under Dr. Elle Wroblewski. In January I start research at <strong>CHESS</strong>, the university's
+            hypersonics center.
           </p>
           <p>
-            Outside my own work, I care about making research accessible. I founded{' '}
-            <a href={leadership[0].href} target="_blank" rel="noopener">Erudios</a>, which partnered 200+ university students with
-            1,000+ high schoolers around the world and led to 150+ published student papers.
+            Outside engineering, I started{' '}
+            <a href={leadership[0].href} target="_blank" rel="noopener">Erudios</a>, a free research-mentorship program that
+            ended up connecting 1,000+ high schoolers with university mentors. I also play golf and guitar.
           </p>
         </div>
       </div>

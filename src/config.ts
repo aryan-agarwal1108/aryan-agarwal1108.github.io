@@ -17,9 +17,9 @@ export const site = {
   location: 'Urbana-Champaign, IL',
   previously: 'Dubai, UAE',
   tagline:
-    'I work where aerospace engineering meets physics: aircraft aerodynamics, rocket propulsion hardware, and quantum technology.',
+    "Most of what I work on comes back to space and flight. Right now that's blown-wing aerodynamics and hybrid rocket hardware, and in January I start hypersonics research.",
   description:
-    'Aryan Agarwal: Aerospace Engineering & Physics student at UIUC. Projects, research, and experience.',
+    'Aryan Agarwal studies Aerospace Engineering and Physics at UIUC. Projects, research, and resume.',
   status: {
     available: true,
     text: 'Open to Summer 2027 internships',
@@ -71,6 +71,7 @@ export type Experience = {
   location?: string;
   // true = a role that hasn't started yet; shows an "Incoming" badge
   upcoming?: boolean;
+  supervisor?: string;
   bullets: string[];
   tags?: string[];
   projects?: string[];
@@ -78,24 +79,25 @@ export type Experience = {
 
 export const experience: Experience[] = [
   {
-    role: 'Incoming Undergraduate Researcher',
+    role: 'Undergraduate Researcher',
     org: 'Center for Hypersonics and Entry Systems Studies (CHESS), UIUC',
     href: 'https://chess.grainger.illinois.edu/',
     start: 'Jan 2027',
     location: 'Urbana-Champaign, IL',
     upcoming: true,
-    bullets: ['Joining the CHESS lab in the Department of Aerospace Engineering in January 2027.'],
+    bullets: ["Joining UIUC's hypersonics research center in January 2027."],
     tags: ['Hypersonics', 'Entry Systems'],
   },
   {
     role: 'Undergraduate Researcher',
     org: 'Midwest Nice Aerospace Group',
+    supervisor: 'Dr. Elle Wroblewski',
     start: 'Aug 2026',
     end: 'Present',
     location: 'Urbana-Champaign, IL',
     bullets: [
-      'Developed Python aerodynamic models of a Piper PA-28 blown wing using blade-element momentum theory (BEMT).',
-      'Simulated propeller slipstream and lift augmentation, analyzing thrust, power loading, and takeoff performance.',
+      'Building Python models of a Piper PA-28 blown wing using blade-element momentum theory (BEMT).',
+      'Simulating the propeller slipstream and the extra lift it creates, then using the results to look at thrust, power loading, and takeoff performance.',
     ],
     tags: ['Python', 'BEMT', 'Aerodynamic Modeling'],
     projects: ['pa28-blown-wing'],
@@ -107,52 +109,52 @@ export const experience: Experience[] = [
     end: 'Present',
     location: 'Urbana-Champaign, IL',
     bullets: [
-      'Designed mechanical components in Siemens NX and fabricated them using 3D printing for a hybrid-propulsion rocket fuel-grain spin-casting apparatus.',
-      'Conducted Finite Element Analysis to analyze heat distribution, thermal gradients, and heat transfer during the spin-casting process.',
+      'Designing parts in Siemens NX for the rig that spin-casts fuel grains for our hybrid rocket, and making them with 3D printing.',
+      'Running FEA on heat distribution, thermal gradients, and heat transfer during the casting process.',
     ],
     tags: ['Siemens NX', '3D Printing', 'FEA', 'Thermal Analysis'],
     projects: ['fuel-grain-spin-caster'],
   },
   {
     role: 'Visiting Researcher',
-    org: 'New York University Abu Dhabi, CAIR Lab',
+    org: 'NYU Abu Dhabi, CAIR Lab',
     start: 'Jan 2025',
     end: 'Nov 2025',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      'Designed an eVTOL UAV in SolidWorks, integrating aerodynamics and emergency water-landing buoyancy.',
-      'Engineered solenoid-actuated pneumatic buoyancy with burst-diaphragm regulation for sub-8-second deployment.',
-      'Simulated transient airflow and pressure distributions in ANSYS Fluent CFD to characterize inflation dynamics.',
-      'Presented the work at a national symposium.',
+      'Designed an eVTOL drone in SolidWorks with an emergency flotation system for water landings.',
+      'Engineered a solenoid-triggered pneumatic flotation system with a burst diaphragm to control inflation. It deploys in under 8 seconds.',
+      'Ran transient CFD in ANSYS Fluent to see how airflow and pressure behave as the floats inflate.',
+      'Presented the project at a national symposium.',
     ],
     tags: ['SolidWorks', 'ANSYS Fluent', 'CFD', 'Pneumatics'],
     projects: ['evtol-water-landing'],
   },
   {
     role: 'Student Researcher',
-    org: 'New York University Abu Dhabi, eBRAIN Lab',
+    org: 'NYU Abu Dhabi, eBRAIN Lab',
     start: 'Aug 2025',
     end: 'Mar 2026',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      'Co-developed the first Explainable Quantum Reinforcement Learning (XQRL) metrics and a unified framework for policy explainability. Preprint on arXiv; submitted to IEEE Transactions on Quantum Engineering.',
-      'Built hybrid quantum-classical simulation pipelines using Python, PennyLane, TensorFlow, and Qiskit.',
-      'Applied LIME, SHAP, and feature occlusion to explain Quantum Q-Learning and Q-DQN policies.',
+      'Co-developed the first metrics for explaining quantum reinforcement-learning agents (XQRL), plus a framework that ties them together. The paper is on arXiv and submitted to IEEE Transactions on Quantum Engineering.',
+      'Built hybrid quantum-classical simulation pipelines in Python with PennyLane, TensorFlow, and Qiskit.',
+      'Used LIME, SHAP, and feature occlusion to explain Quantum Q-Learning and Q-DQN policies.',
     ],
     tags: ['Python', 'PennyLane', 'Qiskit', 'TensorFlow'],
     projects: ['xqrl'],
   },
   {
     role: 'Junior Research Intern',
-    org: 'Technology Innovation Institute',
+    org: 'Technology Innovation Institute (TII)',
     start: 'Jul 2024',
     end: 'Aug 2024',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      "Selected as the youngest intern at UAE's only government-funded quantum research facility, contributing to satellite quantum key distribution.",
-      'Researched BB84 QKD receivers and designed a Superconducting Nanowire Single Photon Detector with reduced dark-count rates.',
-      'Investigated a novel photon absorption mechanism and utilized SolidWorks to CAD the design components.',
-      'Developed the detector for the Abu Dhabi Quantum Optical Ground Station (ADQOGS) and presented it at a global tech expo.',
+      "Youngest intern at the UAE's only government-funded quantum research facility, working on satellite quantum key distribution.",
+      "Researched BB84 QKD receivers and designed a superconducting nanowire single-photon detector with lower dark-count rates for the Abu Dhabi Quantum Optical Ground Station.",
+      'Looked into a new photon-absorption mechanism and modeled the detector components in SolidWorks.',
+      'Presented the detector at a global tech expo.',
     ],
     tags: ['Quantum Optics', 'SolidWorks', 'QKD'],
     projects: ['snspd-qkd'],
@@ -169,18 +171,18 @@ export const leadership: Experience[] = [
     end: 'Sep 2026',
     location: 'Dubai, UAE',
     bullets: [
-      'Founded a free research-mentorship organization that partnered with 200+ undergraduate and graduate students from universities including Princeton and Penn to mentor 1,000+ high school students globally.',
-      'Led student research initiatives resulting in the publication of 150+ academic papers.',
+      'Started a free research-mentorship program that paired 1,000+ high schoolers around the world with 200+ mentors from universities like Princeton and Penn.',
+      'Students in the program have published 150+ research papers.',
     ],
   },
   {
-    role: 'World Science Scholar (2024–25 Cohort)',
+    role: 'World Science Scholar (2024–25 cohort)',
     org: 'World Science Festival',
     start: 'Jun 2024',
     end: 'Jun 2025',
     location: 'New York, USA',
     bullets: [
-      'Selected 1 of 52 students globally for advanced courses and projects in theoretical physics, mathematics, and computational science, led by scientists including Brian Greene, Stephen Wolfram, and Cumrun Vafa.',
+      'One of 52 students picked worldwide for advanced courses and projects in theoretical physics, math, and computation, taught by scientists including Brian Greene, Stephen Wolfram, and Cumrun Vafa.',
     ],
   },
   {
@@ -190,8 +192,7 @@ export const leadership: Experience[] = [
     start: '2025',
     location: 'Online',
     bullets: [
-      'Wrote international-olympiad-level problems on quantum physics, relativity, and electromagnetism for a competition with 900+ participants.',
-      'Assessed 70 competition entries.',
+      'Wrote olympiad-level problems on quantum physics, relativity, and electromagnetism for a competition with 900+ participants, and graded 70 entries.',
     ],
   },
   {
@@ -199,8 +200,8 @@ export const leadership: Experience[] = [
     org: 'Cosmic Society, Dubai International Academy',
     location: 'Dubai, UAE',
     bullets: [
-      'Taught 60+ students in Grades 7–9 special relativity, quantum theory, and astrophysics.',
-      "Hosted events including NASA's International Astronomical Search Collaboration (IASC), expert panels, and competitions.",
+      'Taught special relativity, quantum theory, and astrophysics to 60+ students in Grades 7–9.',
+      "Ran events including NASA's International Astronomical Search Collaboration (IASC), expert panels, and competitions.",
     ],
   },
 ];
@@ -218,7 +219,7 @@ export type Award = {
 export const awards: Award[] = [
   {
     rank: 'Top 50',
-    context: 'of 1,000+ teams worldwide',
+    context: 'of 508 teams worldwide',
     title: 'Beamline for Schools Competition',
     org: 'CERN',
     level: 'International',
@@ -269,32 +270,32 @@ export const skills: { group: string; items: string[] }[] = [
 // ── Personal (About page) ────────────────────────────────────
 // Highlights shown as big numbers on the About page. All are from the resume.
 export const highlights: { value: string; label: string }[] = [
-  { value: '1 of 52', label: 'World Science Scholars selected globally' },
+  { value: '1 of 52', label: 'World Science Scholars picked worldwide' },
   { value: '1,000+', label: 'High schoolers mentored through Erudios' },
-  { value: '150+', label: 'Student research papers published' },
-  { value: '40/45', label: 'IB Diploma score' },
+  { value: '150+', label: 'Papers published by Erudios students' },
+  { value: '40/45', label: 'IB Diploma' },
 ];
 
 // "Currently" list on the About page. Keep it short and update it often.
 export const now: string[] = [
-  'First year at UIUC, studying Aerospace Engineering & Physics',
-  'Modeling blown-wing aerodynamics with Midwest Nice Aerospace Group',
-  'Building rocket fuel-grain manufacturing hardware with the ISS Hybrid team',
-  'Joining the CHESS hypersonics lab in January 2027',
+  'First semester at UIUC',
+  'Modeling a blown-wing PA-28 with the Midwest Nice Aerospace Group',
+  'Designing spin-caster parts for the ISS Hybrid team',
+  'Getting ready to start at CHESS in January',
 ];
 
 // "Beyond engineering" section on the About page (hidden if empty).
 export const interests: { title: string; text: string }[] = [
   {
     title: 'Golf',
-    text: 'Varsity golfer at Dubai International Academy, playing since Grade 7 (4.8 handicap index). UAE interschool champions in 2023–24, two junior tournament wins at DASSA, and coaching newer teammates.',
+    text: "I've played since Grade 7 and was on my school's varsity team. Highlights: two junior tournament wins at DASSA, a UAE interschool title in 2023–24, and a 4.8 handicap. I also helped coach the newer players.",
   },
   {
     title: 'Guitar',
-    text: 'I play guitar.',
+    text: 'I play guitar in my spare time.',
   },
   {
-    title: 'Volunteer tutoring',
-    text: 'With Bachpan Bachao, I led bi-weekly sessions for 30+ underserved students in India in math, physics, digital literacy, and English, and organized a book drive that collected 500+ books.',
+    title: 'Tutoring',
+    text: 'Through Bachpan Bachao, I ran bi-weekly lessons in math, physics, digital literacy, and English for 30+ kids in India, and organized a book drive that collected 500+ books.',
   },
 ];

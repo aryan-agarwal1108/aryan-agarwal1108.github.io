@@ -22,6 +22,11 @@ timeline: Month Year – Month Year
 team: 5 engineers (optional)
 status: In progress (optional)
 cover: /images/your-image.jpg # optional; put the file in public/images/
+# Captioned figures (click to enlarge). 2–6 is ideal: renders, plots, build photos.
+# Say what each one proves, e.g. "Measured apogee vs. OpenRocket prediction".
+gallery:
+  - { src: /images/example-render.png, caption: "CAD render of the full assembly" }
+  - { src: /images/example-plot.png, caption: "Altitude vs. time: flight data against the simulation" }
 links:
   github: https://github.com/...
   report: /files/report.pdf
@@ -29,24 +34,23 @@ metrics:
   - { value: "25%", label: "What improved" }
 ---
 
-## The problem
+## The goal
 
-What were you solving, and why did it matter?
+What were you trying to do, and what were the requirements? One short paragraph.
 
-## Constraints
+## My part
 
-- Budget, weight, time, safety, manufacturing limits…
+- Start each bullet with a strong verb: designed, machined, simulated, tested
+- Say what YOU did, not what the team did ("I was responsible for…")
 
-## Approach
+## How it works
 
-Your key design decisions and the reasoning behind them. Add images:
-
-![Description of the image](/images/example.jpg)
+The key design decisions and why you made them. Keep it short and let the figures do the work.
 
 ## Results
 
-What happened, with numbers where possible.
+What happened, measured against the goal. Numbers if you have them, and be honest about what didn't work.
 
 ## What I'd do differently
 
-What you learned.
+One or two lessons.

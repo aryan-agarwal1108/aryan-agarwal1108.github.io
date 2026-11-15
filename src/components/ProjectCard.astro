@@ -17,14 +17,15 @@ const p = project.data;
   href={url(`/projects/${project.id}`)}
   class="card reveal group flex h-full flex-col overflow-hidden"
   data-category={p.category}
+  data-tags={p.tags.map((t) => t.toLowerCase()).join('|')}
 >
   <div class="rounded-t-[11px] border-b border-line">
     <ProjectCover title={p.title} category={p.category} art={p.art} cover={p.cover} fig={pad(index + 1)} />
   </div>
   <div class="flex flex-1 flex-col gap-3 p-5">
-    <div class="flex items-center justify-between font-mono text-[0.68rem] tracking-wider text-faint uppercase">
-      <span>{pad(index + 1)} · {p.category}</span>
-      <span>{p.year}</span>
+    <div class="flex items-center justify-between gap-3 font-mono text-[0.68rem] tracking-wider text-faint uppercase">
+      <span class="text-accent-2">{p.category}</span>
+      <span class="truncate">{p.timeline}</span>
     </div>
     <h3 class:list={['font-semibold tracking-tight text-fg', size === 'lg' ? 'text-xl' : 'text-lg']}>
       {p.title}
@@ -37,14 +38,16 @@ const p = project.data;
     <p class="text-sm leading-relaxed text-muted">{p.summary}</p>
     {
       p.result && (
-        <p class="flex items-center gap-2 text-sm text-fg">
-          <span class="h-px w-4 shrink-0 bg-accent" />
+        <p class="flex items-start gap-2 text-sm text-fg">
+          <span class="mt-[0.6em] h-px w-4 shrink-0 bg-accent" />
           {p.result}
         </p>
       )
     }
-    {p.org && <p class="font-mono text-[0.68rem] tracking-wide text-faint">{p.org}</p>}
-    <ul class="mt-auto flex flex-wrap gap-1.5 pt-2" aria-label="Technologies">
+    <p class="text-xs leading-relaxed text-faint">
+      <span class="text-muted">{p.role}</span>{p.org && <> · {p.org}</>}
+    </p>
+    <ul class="mt-auto flex flex-wrap gap-1.5 pt-2" aria-label="Tools">
       {p.tags.slice(0, 5).map((t) => <li class="tag">{t}</li>)}
     </ul>
   </div>

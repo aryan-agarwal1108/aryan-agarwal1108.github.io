@@ -1,7 +1,7 @@
 ---
 title: Explainable Quantum Reinforcement Learning (XQRL)
-summary: New metrics and a unified framework for explaining the decisions of quantum reinforcement-learning agents, tested on hybrid quantum-classical simulations.
-result: First XQRL metrics · arXiv preprint
+summary: We came up with the first metrics for explaining why quantum reinforcement-learning agents make the decisions they do. The paper is on arXiv and submitted to IEEE.
+result: First XQRL metrics · preprint on arXiv
 year: 2025
 category: Quantum
 tags: [Python, PennyLane, Qiskit, TensorFlow, SHAP, LIME]
@@ -10,30 +10,30 @@ order: 4
 role: Student Researcher
 org: NYU Abu Dhabi, eBRAIN Lab
 timeline: Aug 2025 – Mar 2026
-status: Preprint on arXiv · submitted to IEEE TQE
+status: On arXiv · submitted to IEEE TQE
 ---
 
 <!--
   TODO (Aryan): add the arXiv link so recruiters can read the paper:
     links:
       paper: https://arxiv.org/abs/XXXX.XXXXX
-  A figure comparing explanations would make a great cover image.
+  A figure comparing explanations would make a good `gallery:` item.
 -->
 
-## Overview
+## The goal
 
-Quantum reinforcement learning (QRL) agents use parameterized quantum circuits to decide which action to take. Like many neural-network policies, they're hard to interpret: it isn't obvious *why* an agent picked a given action. At NYU Abu Dhabi's eBRAIN Lab, working with Dr. Nouhaila Innan, I helped make those decisions explainable.
+Quantum reinforcement-learning agents use quantum circuits to pick their next action. Like a lot of machine learning, they work as a black box: you can see what they did, but not why. At NYU Abu Dhabi's eBRAIN Lab, working with Dr. Nouhaila Innan, I helped build ways to open that box.
 
-## What I did
+## My part
 
-- Co-developed the **first Explainable Quantum Reinforcement Learning (XQRL) metrics** and a **unified framework** for explaining quantum reinforcement-learning policies
-- Built **hybrid quantum-classical simulation pipelines** in **Python** using **PennyLane**, **TensorFlow**, and **Qiskit**
-- Applied **LIME**, **SHAP**, and **feature occlusion** to explain **Quantum Q-Learning** and **Q-DQN** policies
+- Co-developed the **first Explainable Quantum Reinforcement Learning (XQRL) metrics** and a framework that ties them together
+- Built **hybrid quantum-classical simulation pipelines** in **Python** with **PennyLane**, **TensorFlow**, and **Qiskit**
+- Used **LIME**, **SHAP**, and **feature occlusion** to explain **Quantum Q-Learning** and **Q-DQN** policies
 
-## Approach
+## How it works
 
-LIME, SHAP, and feature occlusion are standard explainable-AI methods. Each one estimates how much every input feature contributed to a model's output. Applying them to quantum policies, and defining metrics to compare the explanations, makes it possible to check what a quantum agent has actually learned.
+LIME, SHAP, and feature occlusion are standard tools for explaining machine-learning models. Each one estimates how much every input mattered to a model's choice. We applied them to quantum agents and defined metrics for comparing the explanations, so you can check what an agent has actually learned.
 
-## Publication
+## The paper
 
-The work is **pre-published on arXiv** and has been **submitted to *IEEE Transactions on Quantum Engineering***.
+The paper is on **arXiv** and has been submitted to ***IEEE Transactions on Quantum Engineering***.

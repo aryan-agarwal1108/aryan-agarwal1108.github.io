@@ -49,6 +49,11 @@ const dates = (e: Experience) =>
                 e.org
               )}
             </span>
+            {e.supervisor && (
+              <span class="mt-1 block font-mono text-[0.7rem] font-normal tracking-wide text-faint">
+                Supervised by <span class="text-muted">{e.supervisor}</span>
+              </span>
+            )}
           </h3>
           <ul class="mt-3 space-y-2 text-sm leading-relaxed text-muted">
             {e.bullets.map((b) => (

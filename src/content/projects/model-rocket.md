@@ -1,10 +1,10 @@
 ---
 title: Model Rocket Flight & Data Analysis
-summary: A model rocket I built and flew for AE 100. I simulated its flight path in OpenRocket before launch, then analyzed the recorded flight data in Python afterwards.
+summary: My AE 100 rocket. I simulated the flight in OpenRocket, built and flew it, then went through the flight data in Python.
 result: Simulated in OpenRocket, analyzed in Python
 year: 2026
 category: Rocketry
-tags: [OpenRocket, Python, NumPy, Matplotlib]
+tags: [OpenRocket, Flight Simulation, Python, NumPy, Matplotlib]
 featured: false
 order: 6
 role: Builder & flight analyst
@@ -16,21 +16,21 @@ status: Flown
 <!--
   TODO (Aryan): this one is very visual. Good additions:
   - A launch photo as the cover: cover: /images/rocket.jpg
-  - Your Matplotlib plot of altitude / velocity vs. time (and the OpenRocket prediction on the same axes)
+  - Your Matplotlib plot of altitude vs. time, with the OpenRocket prediction on the same axes, under `gallery:`
   - metrics: predicted vs. actual apogee, max velocity, flight time
-  - A link to your analysis notebook or script under links: github:
+  - A link to your analysis script under links: github:
 -->
 
-## Overview
+## The goal
 
-As part of **AE 100** at UIUC, I built and flew a model rocket. The goal was to go through the full loop of a real flight program: predict the flight with simulation, fly the vehicle, then check the prediction against what actually happened.
+For AE 100, I built and flew a model rocket, with a simulation before launch and data analysis after it.
 
-## What I did
+## My part
 
-- Built and flew the model rocket
-- Simulated the **flight path** in **OpenRocket** before launch
-- Analyzed the **post-flight data** in **Python** using **NumPy** and **Matplotlib**
+- Built and flew the rocket
+- Simulated the flight path in **OpenRocket** before launch
+- Analyzed the flight data in **Python** with **NumPy** and **Matplotlib**
 
-## Approach
+## How the simulation works
 
-OpenRocket models the rocket's mass, center of gravity, center of pressure, and motor thrust curve, then integrates the equations of motion to predict the trajectory: boost, coast to apogee, and recovery. After the flight, I processed the recorded data in Python and plotted it to see how the real flight compared with the simulation.
+OpenRocket takes the rocket's mass, center of gravity, center of pressure, and the motor's thrust curve, then steps through the flight: boost, coast up to apogee, then recovery. After the flight I loaded the data into Python and plotted it to see how the real flight lined up with the prediction.

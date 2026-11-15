@@ -5,52 +5,112 @@ import ProjectCard from '../../components/ProjectCard.astro';
 
 const projects = await getProjects();
 const categories = ['All', ...new Set(projects.map((p) => p.data.category))];
+
+// Every tool used across projects, most-used first
+const toolCounts = new Map<string, number>();
+projects.forEach((p) => p.data.tags.forEach((t) => toolCounts.set(t, (toolCounts.get(t) ?? 0) + 1)));
+const tools = [...toolCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 ---
 
-<BaseLayout title="Projects" description="Aerospace, propulsion, mechanical design, and quantum physics projects by Aryan Agarwal.">
+<BaseLayout title="Projects" description="Aerospace, propulsion, design, and quantum physics projects by Aryan Agarwal.">
   <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
     <div class="reveal">
       <p class="label flex items-center gap-3"><span class="text-accent">INDEX</span><span class="h-px w-8 bg-line-strong"></span>All projects</p>
       <h1 class="mt-4 text-4xl font-semibold tracking-[-0.035em] sm:text-6xl">Projects<span class="text-accent">.</span></h1>
       <p class="mt-4 max-w-xl text-lg text-muted">
-        Each one is a write-up of the problem, my design decisions, and what happened when it met reality.
+        Research, club, and class work. Each page covers what the project was for, what my part was, and the tools I used.
       </p>
     </div>
 
-    <div class="reveal mt-10 flex flex-wrap items-center gap-2" role="group" aria-label="Filter by category">
-      {
-        categories.map((c, i) => (
-          <button
-            type="button"
-            data-filter={c}
-            aria-pressed={i === 0 ? 'true' : 'false'}
-            class="rounded-full border border-line bg-surface px-3.5 py-1.5 font-mono text-xs text-muted transition-colors hover:border-line-strong hover:text-fg aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-fg"
-          >
-            {c}
-            <span class="ml-1 text-faint">
-              {c === 'All' ? projects.length : projects.filter((p) => p.data.category === c).length}
-            </span>
-          </button>
-        ))
-      }
+    <div class="reveal mt-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by discipline">
+        {
+          categories.map((c, i) => (
+            <button
+              type="button"
+              data-filter={c}
+              aria-pressed={i === 0 ? 'true' : 'false'}
+              class="rounded-full border border-line bg-surface px-3.5 py-1.5 font-mono text-xs text-muted transition-colors hover:border-line-strong hover:text-fg aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-fg"
+            >
+              {c}
+              <span class="ml-1 text-faint">
+                {c === 'All' ? projects.length : projects.filter((p) => p.data.category === c).length}
+              </span>
+            </button>
+          ))
+        }
+      </div>
+      <label class="flex items-center gap-2 font-mono text-xs text-faint">
+        <span class="shrink-0 uppercase tracking-wider">Tool</span>
+        <select
+          id="tool"
+          class="h-8 w-full rounded-md border border-line bg-surface px-2 text-xs text-fg outline-none hover:border-line-strong focus-visible:border-accent-2 lg:w-56"
+        >
+          <option value="">Any tool</option>
+          {tools.map(([t, n]) => <option value={t.toLowerCase()}>{t} ({n})</option>)}
+        </select>
+      </label>
     </div>
 
-    <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" id="grid">
+    <p id="status" class="mt-5 font-mono text-xs text-faint" aria-live="polite"></p>
+
+    <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" id="grid">
       {projects.map((p, i) => <ProjectCard project={p} index={i} />)}
     </div>
+    <p id="empty" class="hidden py-16 text-center text-muted">No projects match that combination.</p>
   </section>
 </BaseLayout>
 
 <script>
   const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const select = document.getElementById('tool') as HTMLSelectElement;
   const cards = document.querySelectorAll<HTMLElement>('#grid [data-category]');
+  const status = document.getElementById('status')!;
+  const empty = document.getElementById('empty')!;
+  let category = 'All';
+
+  function apply(updateUrl = true) {
+    const tool = select.value;
+    let shown = 0;
+    cards.forEach((c) => {
+      const ok =
+        (category === 'All' || c.dataset.category === category) &&
+        (!tool || (c.dataset.tags ?? '').split('|').includes(tool));
+      c.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    empty.classList.toggle('hidden', shown > 0);
+    const label = select.selectedOptions[0]?.textContent?.replace(/\s*\(\d+\)$/, '');
+    status.textContent =
+      category === 'All' && !tool
+        ? ''
+        : `Showing ${shown} project${shown === 1 ? '' : 's'}${category !== 'All' ? ` in ${category}` : ''}${tool ? ` using ${label}` : ''}`;
+    if (updateUrl) {
+      const u = new URL(location.href);
+      tool ? u.searchParams.set('tool', tool) : u.searchParams.delete('tool');
+      category !== 'All' ? u.searchParams.set('discipline', category) : u.searchParams.delete('discipline');
+      history.replaceState(null, '', u);
+    }
+  }
+
   buttons.forEach((btn) =>
     btn.addEventListener('click', () => {
-      const f = btn.dataset.filter;
+      category = btn.dataset.filter!;
       buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-      cards.forEach((c) => {
-        c.style.display = f === 'All' || c.dataset.category === f ? '' : 'none';
-      });
+      apply();
     }),
   );
+  select.addEventListener('change', () => apply());
+
+  // Deep links: /projects?tool=solidworks or ?discipline=Quantum
+  const params = new URLSearchParams(location.search);
+  const t = params.get('tool')?.toLowerCase();
+  if (t && [...select.options].some((o) => o.value === t)) select.value = t;
+  const d = params.get('discipline');
+  const match = [...buttons].find((b) => b.dataset.filter === d);
+  if (match) {
+    category = d!;
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === match)));
+  }
+  if (t || d) apply(false);
 </script>

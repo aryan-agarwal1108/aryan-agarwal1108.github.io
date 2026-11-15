@@ -1,0 +1,53 @@
+---
+// Click any figure ([data-zoom]) or image inside a write-up (.prose img) to view it large.
+---
+
+<dialog
+  id="lightbox"
+  class="m-auto max-h-[92vh] w-[min(96vw,1200px)] overflow-visible bg-transparent p-0 text-fg outline-none"
+  aria-label="Enlarged image"
+>
+  <figure class="flex flex-col items-center gap-3">
+    <img id="lightbox-img" src="" alt="" class="max-h-[80vh] w-auto max-w-full rounded-lg border border-line-strong bg-surface object-contain shadow-2xl" />
+    <figcaption id="lightbox-cap" class="max-w-3xl text-center text-sm text-[#c9d1df]"></figcaption>
+  </figure>
+  <button
+    type="button"
+    id="lightbox-close"
+    class="fixed top-4 right-4 grid size-10 place-items-center rounded-full border border-white/20 bg-black/50 text-white transition-colors hover:bg-black/70"
+    aria-label="Close"
+  >
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+  </button>
+</dialog>
+
+<script>
+  const dlg = document.getElementById('lightbox') as HTMLDialogElement;
+  const img = document.getElementById('lightbox-img') as HTMLImageElement;
+  const cap = document.getElementById('lightbox-cap')!;
+
+  function open(src: string, alt: string, caption: string) {
+    img.src = src;
+    img.alt = alt;
+    cap.textContent = caption;
+    dlg.showModal();
+  }
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    const zoom = target.closest<HTMLElement>('[data-zoom]');
+    if (zoom) {
+      const inner = zoom.querySelector('img');
+      open(zoom.dataset.zoom!, inner?.alt ?? '', zoom.dataset.caption ?? '');
+      return;
+    }
+    if (target instanceof HTMLImageElement && target.closest('.prose')) {
+      const fig = target.closest('figure')?.querySelector('figcaption')?.textContent ?? target.alt;
+      open(target.currentSrc || target.src, target.alt, fig);
+    }
+  });
+  document.getElementById('lightbox-close')!.addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => {
+    if (e.target === dlg || (e.target as HTMLElement).tagName === 'FIGURE') dlg.close();
+  });
+</script>

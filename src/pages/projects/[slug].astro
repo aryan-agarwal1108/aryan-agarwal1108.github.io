@@ -27,6 +27,7 @@ const spec = (
   [
     ['Role', p.role],
     ['Organization', p.org],
+    ['Supervisor', p.supervisor],
     ['Timeline', p.timeline],
     ['Team', p.team],
     ['Discipline', p.category],
@@ -49,7 +50,7 @@ const links = [
 
     <header class="reveal mt-8 max-w-3xl">
       <p class="label flex items-center gap-3">
-        <span class="text-accent">PRJ-{pad(index + 1)}</span><span class="h-px w-8 bg-line-strong"></span>{p.category} · {p.year}
+        <span class="text-accent">PRJ-{pad(index + 1)}</span><span class="h-px w-8 bg-line-strong"></span>{p.category} · {p.timeline}
       </p>
       <h1 class="mt-4 text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">{p.title}</h1>
       <p class="mt-5 text-lg leading-relaxed text-pretty text-muted sm:text-xl">{p.summary}</p>
@@ -73,8 +74,38 @@ const links = [
     }
 
     <div class="mt-14 grid gap-12 lg:grid-cols-[1fr_300px]">
-      <div class="prose reveal max-w-none min-w-0 [&>h2:first-child]:mt-0 [&>h2:first-child]:border-0 [&>h2:first-child]:pt-0">
-        <Content />
+      <div class="min-w-0">
+        <div class="prose reveal max-w-none [&>h2:first-child]:mt-0 [&>h2:first-child]:border-0 [&>h2:first-child]:pt-0">
+          <Content />
+        </div>
+
+        {
+          p.gallery.length > 0 && (
+            <section class="mt-14 border-t border-line pt-10" aria-labelledby="figures">
+              <h2 id="figures" class="label mb-6 flex items-center gap-3">
+                <span class="text-accent">§</span>Figures
+              </h2>
+              <div class:list={['grid gap-5', p.gallery.length > 1 && 'sm:grid-cols-2']}>
+                {p.gallery.map((g, i) => (
+                  <figure class="figure reveal">
+                    <button
+                      type="button"
+                      class="corners block w-full overflow-hidden rounded-lg border border-line bg-surface-2"
+                      data-zoom={url(g.src)}
+                      data-caption={`Fig. ${index + 1}.${i + 1} — ${g.caption}`}
+                      aria-label={`Enlarge figure: ${g.caption}`}
+                    >
+                      <img src={url(g.src)} alt={g.alt ?? g.caption} loading="lazy" decoding="async" class="aspect-[4/3] w-full object-cover" />
+                    </button>
+                    <figcaption>
+                      <span class="font-mono text-accent">Fig. {index + 1}.{i + 1}</span> {g.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </section>
+          )
+        }
       </div>
 
       <aside class="order-first lg:order-last">
@@ -94,7 +125,13 @@ const links = [
             }
             <div class="px-5 py-3">
               <dt class="font-mono text-[0.68rem] tracking-wider text-faint uppercase">Tools</dt>
-              <dd class="mt-2 flex flex-wrap gap-1.5">{p.tags.map((t) => <span class="tag">{t}</span>)}</dd>
+              <dd class="mt-2 flex flex-wrap gap-1.5">
+                {p.tags.map((t) => (
+                  <a href={url(`/projects?tool=${encodeURIComponent(t.toLowerCase())}`)} class="tag transition-colors" title={`Other projects using ${t}`}>
+                    {t}
+                  </a>
+                ))}
+              </dd>
             </div>
           </dl>
           {
@@ -114,6 +151,15 @@ const links = [
               </div>
             )
           }
+          <div class="no-print border-t border-line px-4 py-3">
+            <button
+              type="button"
+              onclick="window.print()"
+              class="flex w-full items-center justify-center gap-2 rounded-md py-1.5 font-mono text-[0.7rem] tracking-wider text-faint uppercase transition-colors hover:text-fg"
+            >
+              <Icon name="download" size={13} /> Print / save as PDF
+            </button>
+          </div>
         </div>
       </aside>
     </div>

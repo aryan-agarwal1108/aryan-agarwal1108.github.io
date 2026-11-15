@@ -1,7 +1,7 @@
 ---
 title: Hybrid Rocket Fuel-Grain Spin-Caster
-summary: Mechanical components and thermal analysis for an apparatus that spin-casts solid fuel grains for the Illinois Space Society's hybrid rocket engine.
-result: Designed in Siemens NX, built with 3D printing
+summary: Parts and thermal analysis for the rig that casts solid fuel grains for the Illinois Space Society's hybrid rocket engine.
+result: Parts designed in Siemens NX, made with 3D printing
 year: 2026
 category: Propulsion
 tags: [Siemens NX, 3D Printing, FEA, Thermal Analysis]
@@ -14,23 +14,21 @@ status: In progress
 ---
 
 <!--
-  TODO (Aryan): add photos of the printed parts / assembly and an FEA
-  temperature plot (cover: /images/spin-caster.jpg), plus any numbers you
-  can share (cast time, temperature range, grain dimensions).
+  TODO (Aryan): add photos of the printed parts and assembly, and an FEA
+  temperature plot, under `gallery:` with captions. Add any numbers you can
+  share (cast time, temperature range, grain size) under `metrics:`.
 -->
 
-## Overview
+## The goal
 
-A **hybrid rocket** carries a liquid or gas oxidizer and a solid fuel. The fuel is cast as a hollow cylinder called a **grain**, and the oxidizer burns along the hole through its middle. **Spin-casting** rotates the mold while the fuel cures, so centrifugal force gives an even wall and a smooth, consistent port.
+A hybrid rocket burns a solid fuel with a liquid or gas oxidizer. The fuel is cast as a hollow cylinder called a grain, and the oxidizer flows down the hole through the middle. Spin-casting rotates the mold while the fuel cures, so it sets with an even wall and a smooth bore. On the ISS Hybrid team, I'm working on the rig that does the spinning.
 
-As part of the Illinois Space Society's Hybrid team, I'm working on the apparatus that makes these grains.
+## My part
 
-## What I did
+- Designed mechanical parts for the spin-caster in **Siemens NX**
+- Made them with **3D printing**
+- Ran **FEA** on heat distribution, thermal gradients, and heat transfer during a cast
 
-- Designed mechanical components for the spin-casting apparatus in **Siemens NX**
-- Fabricated those components with **3D printing**
-- Ran **finite element analysis (FEA)** of heat distribution, thermal gradients, and heat transfer during the spin-casting process
+## Why the thermal side matters
 
-## Why the thermal analysis matters
-
-Fuel curing gives off heat, and the apparatus spins throughout. Uneven temperatures can leave internal stresses or voids in the grain, and parts close to the heat need to keep their shape. The FEA shows where heat builds up so the design can keep the process consistent.
+Curing fuel gives off heat, and the rig is spinning the whole time. If the temperature isn't even, the grain can end up with internal stresses or voids, and parts close to the heat have to hold their shape. The FEA shows where heat builds up so the design can account for it.

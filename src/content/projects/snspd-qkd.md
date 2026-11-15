@@ -1,6 +1,6 @@
 ---
 title: Single-Photon Detector for Satellite QKD
-summary: Developed the UAE's only superconducting nanowire single-photon detector for the Abu Dhabi Quantum Optical Ground Station, with reduced dark-count rates for satellite quantum key distribution.
+summary: A summer at TII designing the UAE's only superconducting nanowire single-photon detector, built for the country's quantum optical ground station.
 result: Presented at a global tech expo
 year: 2024
 category: Quantum
@@ -17,23 +17,21 @@ metrics:
 ---
 
 <!--
-  TODO (Aryan): add a CAD render of the detector components as the cover, and
-  any detail you're allowed to share about the photon-absorption mechanism.
+  TODO (Aryan): add a CAD render of the detector components under `gallery:`,
+  and any detail you're allowed to share about the photon-absorption mechanism.
 -->
 
-## Overview
+## The goal
 
-**Quantum key distribution (QKD)** lets two parties share an encryption key with security guaranteed by physics: any eavesdropper disturbs the quantum states being sent. **BB84** is the original QKD protocol, and running it between a satellite and a ground station needs extremely sensitive receivers that can register single photons.
+Quantum key distribution (QKD) lets two people share an encryption key that physics itself protects, because anyone listening in disturbs the photons. BB84 is the original QKD protocol. Running it between a satellite and the ground means catching single photons, which takes extremely sensitive detectors. At TII, as the institute's youngest quantum researcher, I worked on this for the **Abu Dhabi Quantum Optical Ground Station (ADQOGS)**.
 
-At the Technology Innovation Institute, the UAE's only government-funded quantum research facility, I was **selected as the youngest intern** and contributed to its **satellite QKD** work for the **Abu Dhabi Quantum Optical Ground Station (ADQOGS)**.
-
-## What I did
+## My part
 
 - Researched **BB84 QKD receivers**
-- Developed the **UAE's only Superconducting Nanowire Single-Photon Detector (SNSPD)** for ADQOGS, designed for **reduced dark-count rates**
-- Investigated a **novel photon-absorption mechanism**, and modeled the design components in **SolidWorks**
-- **Presented** the work at a **global tech expo**
+- Designed a **superconducting nanowire single-photon detector (SNSPD)** with **lower dark-count rates**, the only one in the UAE
+- Looked into a **new photon-absorption mechanism** and modeled the detector components in **SolidWorks**
+- Presented the detector at a **global tech expo**
 
-## Why dark counts matter
+## Why lower dark counts matter
 
-A **dark count** is a false click: the detector registers a photon that never arrived. In QKD, every false click adds errors to the shared key, and that limits how far and how fast a key can be exchanged. That's especially true for satellite links, where very few photons arrive. Lowering the dark-count rate directly improves the link.
+A dark count is a false click: the detector reports a photon that never showed up. In QKD every false click adds errors to the key, which limits how far and how fast you can share one. Satellite links feel this most, because so few photons make it to the ground.

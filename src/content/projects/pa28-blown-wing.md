@@ -1,7 +1,7 @@
 ---
 title: PA-28 Blown-Wing Aerodynamic Model
-summary: Python models of a Piper PA-28 blown wing, built on blade-element momentum theory, to predict how propeller slipstream changes lift and takeoff performance.
-result: Thrust, power-loading & takeoff analysis
+summary: Python models that predict how much extra lift a Piper PA-28's wing gets when propellers blow faster air over it, and what that does for takeoff.
+result: Models lift gain, thrust, and takeoff performance
 year: 2026
 category: Aerodynamics
 tags: [Python, BEMT, Aerodynamic Modeling]
@@ -11,27 +11,26 @@ role: Undergraduate Researcher
 org: Midwest Nice Aerospace Group
 timeline: Aug 2026 – Present
 status: In progress
+supervisor: Dr. Elle Wroblewski
 ---
 
 <!--
   TODO (Aryan): flesh this page out when you can. Good additions:
-  - A plot from your model (lift vs. airspeed, blown vs. unblown) as the cover: cover: /images/pa28.png
-  - Key numbers in `metrics:` above (e.g. lift increase, takeoff-distance change)
+  - A plot from your model (lift vs. airspeed, blown vs. unblown), added under `gallery:` with a caption
+  - Key numbers in `metrics:` (e.g. lift increase, takeoff-distance change)
   - A "Results" and a "What I'd do differently" section
 -->
 
-## Overview
+## The goal
 
-On a **blown wing**, propellers sit ahead of the wing so their slipstream speeds up the air flowing over it. That raises the lift the wing can make at low flight speeds, which is valuable for short takeoffs and distributed-propulsion aircraft.
+On a blown wing, the propellers sit in front of the wing and push faster-moving air over it, so the wing makes more lift at low speed. That matters for short takeoffs, and for newer aircraft designs that spread lots of small electric propellers along the wing. With the Midwest Nice Aerospace Group, supervised by Dr. Elle Wroblewski, I'm modeling how much of a difference this makes on a Piper PA-28.
 
-With the Midwest Nice Aerospace Group, I'm building aerodynamic models of this effect on a **Piper PA-28** wing.
+## My part
 
-## What I did
+- Wrote Python aerodynamic models of the blown wing using **blade-element momentum theory (BEMT)**
+- Simulated the **propeller slipstream** and the extra lift it creates
+- Used the results to look at **thrust**, **power loading**, and **takeoff performance**
 
-- Developed **Python** aerodynamic models of the PA-28 blown wing using **blade-element momentum theory (BEMT)**
-- Simulated the **propeller slipstream** and the resulting **lift augmentation** across the wing
-- Analyzed **thrust**, **power loading**, and **takeoff performance** from the model outputs
+## How the model works
 
-## Approach
-
-Blade-element momentum theory combines two views of a propeller. Blade-element theory splits each blade into small airfoil sections and adds up their lift and drag. Momentum theory treats the rotor as a disk that speeds up the air passing through it. Solving the two together at each radius gives the thrust distribution and the induced velocity in the slipstream, and that velocity is the input for estimating extra lift on the section of wing behind the propeller.
+BEMT treats each propeller blade as a stack of thin airfoil slices and works out the lift and drag on each one. It pairs that with momentum theory, which treats the whole propeller as a disk that speeds up the air passing through it. Solving the two together gives the thrust and the speed of the slipstream, and that slipstream speed is what drives the extra lift on the part of the wing behind each propeller.

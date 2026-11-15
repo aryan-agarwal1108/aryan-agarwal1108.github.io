@@ -18,12 +18,18 @@ const projects = defineCollection({
     cover: z.string().optional(),
     // Optional: pick a different placeholder drawing than the category's (e.g. "Detector")
     art: z.string().optional(),
+    // Captioned figures shown on the project page (click to enlarge).
+    // Aim for 2–6: CAD renders, plots, photos of the build, diagrams.
+    gallery: z
+      .array(z.object({ src: z.string(), caption: z.string(), alt: z.string().optional() }))
+      .default([]),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
     order: z.number().default(99),
     // Spec sheet
     role: z.string(),
     org: z.string().optional(),
+    supervisor: z.string().optional(),
     timeline: z.string(),
     team: z.string().optional(),
     status: z.string().optional(),
