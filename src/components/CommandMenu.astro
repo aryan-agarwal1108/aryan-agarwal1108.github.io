@@ -9,8 +9,8 @@ type Item = { group: string; label: string; hint?: string; href?: string; action
 const items: Item[] = [
   { group: 'Pages', label: 'Home', href: url('/') },
   { group: 'Pages', label: 'All projects', href: url('/projects') },
-  { group: 'Pages', label: 'Experience', href: url('/#experience') },
-  { group: 'Pages', label: 'Awards & competitions', href: url('/#awards') },
+  { group: 'Pages', label: 'Experience', href: url('/experience') },
+  { group: 'Pages', label: 'Awards & competitions', href: url('/awards') },
   { group: 'Pages', label: 'About', href: url('/about') },
   { group: 'Pages', label: 'Resume', href: url('/resume') },
   ...projects.map((p) => ({ group: 'Projects', label: p.data.title, hint: p.data.category, href: url(`/projects/${p.id}`) })),

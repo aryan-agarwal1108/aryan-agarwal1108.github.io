@@ -2,16 +2,54 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import Timeline from '../components/Timeline.astro';
 import Icon from '../components/Icon.astro';
-import Awards from '../components/Awards.astro';
-import { site, experience, leadership, skills, highlights } from '../config';
-import { getProjects, getToolCounts } from '../lib/projects';
+import { site, experience, awards, highlights } from '../config';
+import { getProjects } from '../lib/projects';
 import { url } from '../utils';
 
 const all = await getProjects();
 const featured = all.filter((p) => p.data.featured).slice(0, 4);
-const toolCounts = await getToolCounts();
+const currentRoles = experience.filter((e) => !e.upcoming).length;
+
+// Cards that point to each of the other pages
+const explore = [
+  {
+    href: '/experience',
+    kicker: 'Experience',
+    stat: String(currentRoles),
+    statLabel: 'research & engineering roles',
+    title: "Where I've worked",
+    text: 'Labs at UIUC, NYU Abu Dhabi, and TII, plus leadership, activities, and the tools I use.',
+    cta: 'See experience',
+  },
+  {
+    href: '/awards',
+    kicker: 'Awards',
+    stat: awards[0].rank,
+    statLabel: `${awards[0].org} ${awards[0].title}`,
+    title: 'Competition results',
+    text: 'Physics, astronomy, and math competitions, plus recognition from my research.',
+    cta: 'See awards',
+  },
+  {
+    href: '/about',
+    kicker: 'About',
+    stat: highlights[1].value,
+    statLabel: highlights[1].label.toLowerCase(),
+    title: 'A bit about me',
+    text: 'How I went from Dubai to UIUC, what I do now, and life outside engineering.',
+    cta: 'About me',
+  },
+  {
+    href: '/resume',
+    kicker: 'Resume',
+    stat: 'PDF',
+    statLabel: 'one page',
+    title: 'My resume',
+    text: 'Read it on the page or download the PDF.',
+    cta: 'View resume',
+  },
+];
 
 const specs = [
   ['Name', site.name],
@@ -115,103 +153,26 @@ const specs = [
     </div>
   </section>
 
-  <!-- ── EXPERIENCE ───────────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6" id="experience">
-    <SectionHeading index="02" label="Experience" title="Where I've worked" />
-    <Timeline items={experience} />
-
-    <div class="mt-16">
-      <h3 class="reveal label mb-8 flex items-center gap-3"><span class="h-px w-8 bg-line-strong"></span>Leadership & activities</h3>
-      <Timeline items={leadership} compact />
-    </div>
-  </section>
-
-  <!-- ── AWARDS ───────────────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6" id="awards">
-    <SectionHeading index="03" label="Awards & competitions" title="Competition results" />
-    <Awards />
-  </section>
-
-  <!-- ── SKILLS ───────────────────────────────────────────── -->
+  <!-- ── EXPLORE (links to the other pages) ───────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="04" label="Toolkit" title="What I work with" id="skills">
-      <p class="max-w-xs text-sm text-muted">
-        Tools with a <span class="font-mono text-accent-2">number</span> link to the projects I used them on.
-      </p>
-    </SectionHeading>
-    <div class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
+    <SectionHeading index="02" label="Explore" title="More about me" />
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
-        skills.map((s) => (
-          <div class="reveal bg-surface p-6">
-            <h3 class="label mb-4">{s.group}</h3>
-            <ul class="flex flex-wrap gap-2">
-              {s.items.map((i) => {
-                const n = toolCounts.get(i.toLowerCase());
-                return (
-                  <li>
-                    {n ? (
-                      <a
-                        href={url(`/projects?tool=${encodeURIComponent(i.toLowerCase())}`)}
-                        class="skill inline-flex items-center gap-2 rounded-md border border-line bg-surface-2 px-2.5 py-1 text-sm text-fg transition-colors"
-                        title={`See ${n} project${n === 1 ? '' : 's'} using ${i}`}
-                      >
-                        {i}
-                        <span class="rounded bg-accent-2-soft px-1.5 font-mono text-[0.65rem] text-accent-2">{n}</span>
-                      </a>
-                    ) : (
-                      <span class="inline-block rounded-md border border-line bg-surface-2 px-2.5 py-1 text-sm text-muted">{i}</span>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+        explore.map((e, i) => (
+          <a href={url(e.href)} class="card reveal group flex flex-col p-6">
+            <span class="font-mono text-[0.68rem] tracking-wider text-faint uppercase">
+              <span class="text-accent">{String(i + 1).padStart(2, '0')}</span> · {e.kicker}
+            </span>
+            <span class="mt-4 text-3xl font-semibold tracking-tight text-fg">{e.stat}</span>
+            <span class="mt-1 text-xs text-faint">{e.statLabel}</span>
+            <span class="mt-5 text-lg font-medium text-fg">{e.title}</span>
+            <span class="mt-1.5 text-sm leading-relaxed text-muted">{e.text}</span>
+            <span class="mt-auto flex items-center gap-1.5 pt-5 text-sm text-muted transition-colors group-hover:text-fg">
+              {e.cta} <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </a>
         ))
       }
-    </div>
-  </section>
-
-  <!-- ── ABOUT (personal) ─────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="05" label="About me" title="A bit about me" id="about-me" />
-    <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
-      <div class="reveal corners w-full max-w-[280px] self-start overflow-hidden rounded-xl border border-line bg-surface">
-        <div class="blueprint-fill grid aspect-square place-items-center">
-          <!-- Swap for a photo: <img src={url('/images/headshot.jpg')} alt="Aryan Agarwal" class="size-full object-cover" /> -->
-          <span class="font-mono text-6xl font-medium tracking-tight text-accent/80">{site.initials}</span>
-        </div>
-        <div class="flex items-center gap-2 border-t border-line px-4 py-3 text-sm text-muted">
-          <Icon name="pin" size={15} />{site.location} · prev. {site.previously}
-        </div>
-      </div>
-      <div class="reveal flex flex-col">
-        <div class="space-y-4 text-lg leading-relaxed text-muted">
-          <p>
-            I'm <span class="text-fg">{site.firstName}</span>. I'm in my first year at Illinois, doing a dual degree in{' '}
-            <span class="text-fg">Aerospace Engineering and Physics</span>. Before college I was in Dubai, and I spent a lot of
-            high school in research labs around the UAE, working on single-photon detectors at TII, then a water-landing drone and
-            quantum machine learning at NYU Abu Dhabi.
-          </p>
-          <p>
-            Outside my own projects, I started <a href={leadership[0].href} target="_blank" rel="noopener" class="text-fg underline decoration-accent underline-offset-4">Erudios</a>,
-            a free mentorship program that paired over 1,000 high schoolers with university students to do real research. I
-            also play golf and guitar.
-          </p>
-        </div>
-        <dl class="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
-          {
-            highlights.map((h) => (
-              <div class="bg-surface p-4">
-                <dd class="text-2xl font-semibold tracking-tight text-fg">{h.value}</dd>
-                <dt class="mt-1 text-xs leading-snug text-faint">{h.label}</dt>
-              </div>
-            ))
-          }
-        </dl>
-        <a href={url('/about')} class="group mt-6 inline-flex items-center gap-1.5 self-start text-sm text-muted transition-colors hover:text-fg">
-          More about me <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-0.5" />
-        </a>
-      </div>
     </div>
   </section>
 
@@ -219,7 +180,7 @@ const specs = [
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="contact" aria-labelledby="contact-h">
     <div class="reveal corners relative overflow-hidden rounded-2xl border border-line bg-surface px-6 py-14 sm:px-12 sm:py-20">
       <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_100%_100%,var(--accent-soft),transparent_70%)]" aria-hidden="true"></div>
-      <p class="label relative flex items-center gap-3"><span class="text-accent">06</span><span class="h-px w-8 bg-line-strong"></span>Contact</p>
+      <p class="label relative flex items-center gap-3"><span class="text-accent">03</span><span class="h-px w-8 bg-line-strong"></span>Contact</p>
       <h2 id="contact-h" class="relative mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">
         Want to talk<span class="text-accent">?</span>
       </h2>
@@ -259,3 +220,10 @@ const specs = [
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Old links like /#experience or /#awards now live on their own pages
+  const moved: Record<string, string> = { '#experience': 'experience', '#awards': 'awards', '#skills': 'experience', '#about-me': 'about' };
+  const to = moved[location.hash];
+  if (to) location.replace(new URL(to, document.baseURI).href);
+</script>

@@ -1,0 +1,39 @@
+---
+// Skills grouped by area. Tools used in at least one project link to /projects?tool=…
+import { skills } from '../config';
+import { getToolCounts } from '../lib/projects';
+import { url } from '../utils';
+
+const toolCounts = await getToolCounts();
+---
+
+<div class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
+  {
+    skills.map((s) => (
+      <div class="reveal bg-surface p-6">
+        <h3 class="label mb-4">{s.group}</h3>
+        <ul class="flex flex-wrap gap-2">
+          {s.items.map((i) => {
+            const n = toolCounts.get(i.toLowerCase());
+            return (
+              <li>
+                {n ? (
+                  <a
+                    href={url(`/projects?tool=${encodeURIComponent(i.toLowerCase())}`)}
+                    class="skill inline-flex items-center gap-2 rounded-md border border-line bg-surface-2 px-2.5 py-1 text-sm text-fg transition-colors"
+                    title={`See ${n} project${n === 1 ? '' : 's'} using ${i}`}
+                  >
+                    {i}
+                    <span class="rounded bg-accent-2-soft px-1.5 font-mono text-[0.65rem] text-accent-2">{n}</span>
+                  </a>
+                ) : (
+                  <span class="inline-block rounded-md border border-line bg-surface-2 px-2.5 py-1 text-sm text-muted">{i}</span>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ))
+  }
+</div>

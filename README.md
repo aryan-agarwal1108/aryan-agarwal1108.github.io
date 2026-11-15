@@ -42,7 +42,7 @@ My personal website and engineering portfolio. I study Aerospace Engineering & P
     ├── content/projects/*.md      # ← one file per project
     ├── components/                # header, cards, command menu, …
     ├── layouts/BaseLayout.astro   # <head>, SEO, theme, page shell
-    ├── pages/                     # home, projects, about, resume, 404
+    ├── pages/                     # home, projects, experience, awards, about, resume, 404
     └── styles/global.css          # design tokens + theme
 ```
 

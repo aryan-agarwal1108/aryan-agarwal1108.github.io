@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
-import Timeline from '../components/Timeline.astro';
 import { site, education, leadership, highlights, now, interests } from '../config';
 import { url } from '../utils';
 
@@ -132,17 +131,10 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
       </div>
     </div>
 
-    <!-- Leadership -->
-    <div class="mt-20">
-      <p class="reveal label flex items-center gap-3"><span class="text-accent">02</span><span class="h-px w-8 bg-line-strong"></span>Leadership & activities</p>
-      <h2 class="reveal mt-3 mb-10 text-3xl font-semibold tracking-tight sm:text-4xl">Outside the lab</h2>
-      <Timeline items={leadership} compact />
-    </div>
-
     {
       interests.length > 0 && (
         <div class="mt-20">
-          <p class="reveal label flex items-center gap-3"><span class="text-accent">03</span><span class="h-px w-8 bg-line-strong" />Off the clock</p>
+          <p class="reveal label flex items-center gap-3"><span class="text-accent">02</span><span class="h-px w-8 bg-line-strong" />Off the clock</p>
           <h2 class="reveal mt-3 mb-10 text-3xl font-semibold tracking-tight sm:text-4xl">Beyond engineering</h2>
           <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {interests.map((it) => (
@@ -155,5 +147,14 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
         </div>
       )
     }
+
+    <div class="reveal mt-16 flex flex-wrap gap-3">
+      <a href={url('/experience')} class="inline-flex h-10 items-center gap-2 rounded-lg border border-line px-4 text-sm text-muted transition-colors hover:border-line-strong hover:text-fg">
+        Leadership & activities <Icon name="arrow" size={15} />
+      </a>
+      <a href={url('/awards')} class="inline-flex h-10 items-center gap-2 rounded-lg border border-line px-4 text-sm text-muted transition-colors hover:border-line-strong hover:text-fg">
+        Awards <Icon name="arrow" size={15} />
+      </a>
+    </div>
   </section>
 </BaseLayout>

@@ -259,6 +259,16 @@ export const awards: Award[] = [
   },
 ];
 
+// Other recognition shown on the Awards page (from roles and projects above)
+export const recognition: { what: string; detail: string; year: string; href?: string }[] = [
+  { what: 'World Science Scholar', detail: 'One of 52 students picked worldwide (World Science Festival)', year: '2024–25', href: '/experience' },
+  { what: 'Youngest quantum researcher at TII', detail: "Technology Innovation Institute, the UAE's government quantum research facility", year: '2024', href: '/projects/snspd-qkd' },
+  { what: 'Presented at a global tech expo', detail: 'Single-photon detector for the Abu Dhabi Quantum Optical Ground Station', year: '2024', href: '/projects/snspd-qkd' },
+  { what: 'Presented at a national symposium', detail: 'eVTOL drone with emergency water-landing floats (NYU Abu Dhabi)', year: '2025', href: '/projects/evtol-water-landing' },
+  { what: 'Research paper on arXiv', detail: 'Explainable quantum RL metrics; submitted to IEEE Transactions on Quantum Engineering', year: '2025–26', href: '/projects/xqrl' },
+  { what: 'IB Diploma: 40/45', detail: 'Dubai International Academy Emirates Hills', year: '2026', href: '/about' },
+];
+
 // ── Skills ───────────────────────────────────────────────────
 export const skills: { group: string; items: string[] }[] = [
   { group: 'CAD & Engineering Software', items: ['SolidWorks', 'Siemens NX', 'ANSYS Fluent', 'OpenRocket'] },

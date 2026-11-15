@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Awards from '../components/Awards.astro';
+import Icon from '../components/Icon.astro';
+import { site, recognition } from '../config';
+import { url } from '../utils';
+---
+
+<BaseLayout title="Awards" description={`Competition results and recognition for ${site.name}.`}>
+  <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
+    <PageHeader tag="AWARDS" label="Competitions & recognition" title="Awards">
+      Physics, astronomy, and math competitions I've placed in, plus recognition that came out of my research.
+    </PageHeader>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-10 sm:px-6">
+    <SectionHeading index="01" label="Competitions" title="Competition results" />
+    <Awards />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <SectionHeading index="02" label="Recognition" title="Other recognition" />
+    <ul class="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
+      {
+        recognition.map((r) => {
+          const Tag = r.href ? 'a' : 'div';
+          return (
+            <li class="reveal">
+              <Tag
+                href={r.href ? url(r.href) : undefined}
+                class="group grid gap-1 px-5 py-4 transition-colors hover:bg-surface-2 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6 sm:px-6"
+              >
+                <div>
+                  <p class="font-medium text-fg">{r.what}</p>
+                  <p class="mt-0.5 text-sm text-muted">{r.detail}</p>
+                </div>
+                <div class="flex items-center gap-3 font-mono text-xs text-faint">
+                  {r.year}
+                  {r.href && <Icon name="arrow" size={14} class="text-faint transition-all group-hover:translate-x-0.5 group-hover:text-accent" />}
+                </div>
+              </Tag>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</BaseLayout>
