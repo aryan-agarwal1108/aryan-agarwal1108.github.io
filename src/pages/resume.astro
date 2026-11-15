@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import PageHeader from '../components/PageHeader.astro';
 import { site, education, experience, leadership, skills, awards, type Experience } from '../config';
 import { url } from '../utils';
 
@@ -14,19 +15,16 @@ const dates = (e: Experience) =>
 
 <BaseLayout title="Resume" description={`Resume of ${site.name}, ${site.major} student at ${site.schoolShort}.`}>
   <section class="mx-auto max-w-4xl px-4 pt-16 sm:px-6 sm:pt-20">
-    <div class="reveal flex flex-wrap items-end justify-between gap-6">
-      <div>
-        <p class="label flex items-center gap-3"><span class="text-accent">DOC-002</span><span class="h-px w-8 bg-line-strong"></span>Resume</p>
-        <h1 class="mt-4 text-4xl font-semibold tracking-[-0.035em] sm:text-6xl">Resume<span class="text-accent">.</span></h1>
-      </div>
-      <div class="no-print flex flex-wrap gap-3">
-        <a href={url(site.resume)} download class="inline-flex h-11 items-center gap-2 rounded-lg bg-fg px-5 text-sm font-medium text-bg transition-opacity hover:opacity-85">
-          <Icon name="download" size={16} /> Download PDF
-        </a>
-        <a href={url(site.resume)} target="_blank" rel="noopener" class="inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong px-5 text-sm font-medium transition-colors hover:border-fg">
-          Open <Icon name="external" size={15} />
-        </a>
-      </div>
+    <PageHeader tag="DOC-002" label="One page" title="Resume">
+      Everything on one page. Read it here or grab the PDF.
+    </PageHeader>
+    <div class="no-print hero-in mt-8 flex flex-wrap gap-3" style="--d:0.4s">
+      <a href={url(site.resume)} download class="inline-flex h-12 items-center gap-2 bg-fg px-6 text-sm font-semibold tracking-[0.06em] text-bg uppercase transition-colors hover:bg-accent hover:text-white">
+        <Icon name="download" size={16} /> Download PDF
+      </a>
+      <a href={url(site.resume)} target="_blank" rel="noopener" class="inline-flex h-12 items-center gap-2 border border-fg px-6 text-sm font-semibold tracking-[0.06em] uppercase transition-colors hover:bg-fg hover:text-bg">
+        Open <Icon name="external" size={15} />
+      </a>
     </div>
 
     <!-- HTML version: readable on phones and searchable by applicant-tracking systems -->

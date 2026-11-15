@@ -3,46 +3,53 @@
 @custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
 
 /* ── Design tokens ───────────────────────────────────────────
-   Palette: "blueprint ink" navy + international orange (the classic
-   aerospace safety color) + a cool sky blue for data/links.
-   Light mode is drafting paper with navy ink and blue grid lines. */
+   "Flight manual" palette:
+   - Light: warm manual paper, ink black, international orange
+   - Dark: night-flight black, cream ink, the same orange
+   - Blueprint: deep cyanotype blue panels for drawings and covers  */
 :root {
-  --bg: #f5f3ee;
-  --surface: #fffdf9;
-  --surface-2: #efece4;
-  --border: #e3ded3;
-  --border-strong: #cdc6b7;
-  --fg: #121826;
-  --muted: #4a5366;
-  --faint: #646b7d;
-  --accent: #b93f08;
-  --accent-soft: rgb(185 63 8 / 0.09);
-  --accent-2: #1f5fbf;
-  --accent-2-soft: rgb(31 95 191 / 0.09);
-  --grid: rgb(31 95 191 / 0.06);
-  --glow: rgb(185 63 8 / 0.05);
-  --sky: rgb(31 95 191 / 0.07);
-  --ok: #15803d;
+  --bg: #f0ece2;
+  --surface: #f7f4ec;
+  --surface-2: #e7e2d5;
+  --border: #d6cfbf;
+  --border-strong: #b3ab98;
+  --fg: #12141a;
+  --muted: #474b54;
+  --faint: #686c74;
+  --accent: #c63f0a;
+  --accent-bright: #ff5a1f;
+  --accent-soft: rgb(198 63 10 / 0.1);
+  --accent-2: #1d4f8c;
+  --accent-2-soft: rgb(29 79 140 / 0.1);
+  --bp: #1b4675;
+  --bp-deep: #143657;
+  --bp-ink: #e8f0fa;
+  --bp-line: rgb(232 240 250 / 0.13);
+  --ok: #17803d;
+  --shadow: 0 1px 0 rgb(18 20 26 / 0.04), 0 18px 40px -24px rgb(18 20 26 / 0.35);
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --bg: #090d16;
-  --surface: #0e1420;
-  --surface-2: #141b2a;
-  --border: #1c2536;
-  --border-strong: #2a3650;
-  --fg: #e9edf5;
-  --muted: #a3adbf;
-  --faint: #7b879d;
-  --accent: #ff6b1f;
-  --accent-soft: rgb(255 107 31 / 0.12);
-  --accent-2: #7cc4ff;
-  --accent-2-soft: rgb(124 196 255 / 0.1);
-  --grid: rgb(124 196 255 / 0.045);
-  --glow: rgb(255 107 31 / 0.08);
-  --sky: rgb(124 196 255 / 0.07);
-  --ok: #34d399;
+  --bg: #0b0c0f;
+  --surface: #121419;
+  --surface-2: #191c22;
+  --border: #252830;
+  --border-strong: #3b3f4a;
+  --fg: #ede8dc;
+  --muted: #aeaba3;
+  --faint: #858790;
+  --accent: #ff5a1f;
+  --accent-bright: #ff6a33;
+  --accent-soft: rgb(255 90 31 / 0.12);
+  --accent-2: #8db6e6;
+  --accent-2-soft: rgb(141 182 230 / 0.12);
+  --bp: #163a61;
+  --bp-deep: #0f2944;
+  --bp-ink: #e3edf9;
+  --bp-line: rgb(227 237 249 / 0.11);
+  --ok: #3ccf7d;
+  --shadow: 0 1px 0 rgb(0 0 0 / 0.3), 0 22px 50px -26px rgb(0 0 0 / 0.8);
   color-scheme: dark;
 }
 
@@ -59,9 +66,17 @@
   --color-accent-soft: var(--accent-soft);
   --color-accent-2: var(--accent-2);
   --color-accent-2-soft: var(--accent-2-soft);
+  --color-bp: var(--bp);
+  --color-bp-ink: var(--bp-ink);
   --color-ok: var(--ok);
-  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-display: 'Archivo', 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  /* Sharper, more technical corners everywhere */
+  --radius-md: 0.2rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.3rem;
+  --radius-2xl: 0.4rem;
 }
 
 /* ── Base ────────────────────────────────────────────────── */
@@ -76,21 +91,29 @@ html {
 
 body {
   background-color: var(--bg);
-  background-image:
-    radial-gradient(ellipse 80% 50% at 50% -10%, var(--sky), transparent 70%),
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size:
-    100% 100%,
-    32px 32px,
-    32px 32px;
-  background-position:
-    0 0,
-    -1px -1px,
-    -1px -1px;
-  background-repeat: no-repeat, repeat, repeat;
   min-height: 100vh;
   overflow-x: hidden;
+  font-feature-settings: 'ss02';
+}
+
+/* Paper grain (very subtle) so flat colors don't feel digital */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+h1,
+h2,
+.display {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
 ::selection {
@@ -101,29 +124,29 @@ body {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
-/* Cursor spotlight (set by JS on body) */
-.spotlight {
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  background: radial-gradient(600px circle at var(--mx, 50%) var(--my, -20%), var(--glow), transparent 70%);
-  transition: opacity 0.3s;
+/* Wide "livery" lettering for the name and big statements */
+.livery {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: 0.88;
 }
 
-/* Section label: "01 — SELECTED WORK" */
+/* Small technical labels */
 .label {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--faint);
 }
 
-/* Blueprint corner registration marks */
+/* Corner brackets (registration marks) */
 .corners {
   position: relative;
 }
@@ -131,129 +154,247 @@ body {
 .corners::after {
   content: '';
   position: absolute;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-color: var(--accent);
   border-style: solid;
-  opacity: 0.8;
   pointer-events: none;
-  z-index: 2;
+  z-index: 3;
+  transition:
+    width 0.35s,
+    height 0.35s;
 }
 .corners::before {
   top: -1px;
   left: -1px;
-  border-width: 1.5px 0 0 1.5px;
+  border-width: 2px 0 0 2px;
 }
 .corners::after {
   bottom: -1px;
   right: -1px;
-  border-width: 0 1.5px 1.5px 0;
+  border-width: 0 2px 2px 0;
 }
 
-/* Card hover glow follows cursor (per-card vars set by JS) */
+/* Cards: sharp, flat, ink-bordered on hover with brackets that grow */
 .card {
   position: relative;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: var(--radius-xl);
   transition:
     border-color 0.25s,
-    transform 0.25s;
-}
-.card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(400px circle at var(--cx, 50%) var(--cy, 50%), var(--glow), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
+    transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.35s;
 }
 .card::after {
-  /* thin accent line that draws across the top edge on hover */
   content: '';
   position: absolute;
+  left: -1px;
   top: -1px;
-  left: 12px;
-  right: 12px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
-  transform: scaleX(0);
-  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  height: 3px;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
   pointer-events: none;
+  z-index: 4;
 }
 .card:hover {
   border-color: var(--border-strong);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px -18px rgb(0 0 0 / 0.35);
-}
-.card:hover::before {
-  opacity: 1;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
 }
 .card:hover::after {
-  transform: scaleX(1);
+  width: calc(100% + 2px);
+}
+.card .cover-art {
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.card:hover .cover-art {
+  transform: scale(1.04);
 }
 
-/* A skill/tool chip that links to the projects that used it */
-a.tag:hover,
-a.skill:hover {
-  border-color: var(--accent-2);
-  color: var(--fg);
-}
-
+/* Tool chips */
 .tag {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
-  padding: 0.2rem 0.55rem;
-  border-radius: 999px;
+  font-size: 0.68rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 2px;
   border: 1px solid var(--border);
   background: var(--surface-2);
   color: var(--muted);
   white-space: nowrap;
 }
-
-/* Cover placeholder: blueprint drawing fill */
-.blueprint-fill {
-  background-color: var(--surface-2);
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size:
-    8px 8px,
-    8px 8px,
-    40px 40px,
-    40px 40px;
+a.tag:hover,
+a.skill:hover {
+  border-color: var(--accent);
+  color: var(--fg);
 }
 
-/* Reveal-on-scroll */
-/* Only hidden when JS is running (html.js), so content always shows without it */
+/* ── Blueprint panels ─────────────────────────────────────── */
+.blueprint-fill,
+.bp {
+  color: var(--bp-ink);
+  background-color: var(--bp);
+  background-image:
+    radial-gradient(ellipse at 30% 0%, rgb(255 255 255 / 0.08), transparent 60%),
+    linear-gradient(var(--bp-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--bp-line) 1px, transparent 1px),
+    linear-gradient(rgb(232 240 250 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(232 240 250 / 0.05) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    48px 48px,
+    48px 48px,
+    12px 12px,
+    12px 12px;
+}
+
+/* Plotter reveal: drawings "draw" left→right with a scan line when they scroll in */
+.plot {
+  position: relative;
+}
+.js .plot .plot-art {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.6s cubic-bezier(0.6, 0.05, 0.25, 1);
+}
+.js .plot.in .plot-art {
+  clip-path: inset(0 0 0 0);
+}
+.js .plot::after {
+  content: '';
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  left: 0;
+  width: 2px;
+  background: var(--accent-bright);
+  box-shadow: 0 0 12px var(--accent-bright);
+  opacity: 0;
+  pointer-events: none;
+}
+.js .plot.in::after {
+  animation: scan 1.6s cubic-bezier(0.6, 0.05, 0.25, 1) forwards;
+}
+@keyframes scan {
+  0% {
+    left: 11%;
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    left: 89%;
+    opacity: 0;
+  }
+}
+
+/* ── Motion ───────────────────────────────────────────────── */
+/* Reveal on scroll (only hidden once JS is running) */
 .js .reveal {
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(22px);
   transition:
-    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0s);
 }
 .js .reveal.in {
   opacity: 1;
   transform: none;
 }
 
-/* Above-the-fold entrance: pure CSS, never waits on JS */
+/* Masked line reveal for headings: text slides up from behind a mask */
+.rise {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.rise > span {
+  display: inline-block;
+  animation: rise 1s cubic-bezier(0.2, 0.75, 0.15, 1) both;
+  animation-delay: var(--d, 0s);
+}
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+/* Above-the-fold entrance */
 .hero-in {
-  animation: hero-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: hero-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--d, 0s);
 }
 .hero-in-2 {
-  animation-delay: 0.12s;
+  --d: 0.15s;
 }
 @keyframes hero-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(16px);
   }
+}
+
+/* Ticker / marquee */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 2.5rem;
+  padding-right: 2.5rem;
+  animation: marquee 38s linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* Scroll progress (thin orange "altitude" bar under the header) */
+#progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--p, 0));
+  background: var(--accent-bright);
+  z-index: 60;
+}
+
+/* Data plate rivets */
+.rivets {
+  position: relative;
+}
+.rivets > .rivet {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, var(--surface), var(--border-strong));
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+}
+
+/* Ruler tick strip used as section dividers */
+.ruler {
+  height: 10px;
+  background-image:
+    repeating-linear-gradient(90deg, var(--border-strong) 0 1px, transparent 1px 10px),
+    repeating-linear-gradient(90deg, var(--fg) 0 1px, transparent 1px 100px);
+  background-size:
+    100% 5px,
+    100% 10px;
+  background-repeat: no-repeat;
+  background-position: 0 100%, 0 100%;
+  opacity: 0.55;
 }
 
 .pulse-dot {
@@ -279,29 +420,77 @@ a.skill:hover {
   }
 }
 
+/* Blinking cursor for the departure-board text */
+.caret::after {
+  content: '▌';
+  margin-left: 2px;
+  color: var(--accent);
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Page transitions between pages (supported browsers; others just navigate) */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: vt-out 0.25s ease both;
+}
+::view-transition-new(root) {
+  animation: vt-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+.site-header {
+  view-transition-name: site-header;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .js .reveal {
+  .js .reveal,
+  .js .plot .plot-art {
     opacity: 1;
     transform: none;
     transition: none;
+    clip-path: none;
   }
+  .js .plot::after,
   .pulse-dot::after,
-  .hero-in {
-    animation: none;
+  .hero-in,
+  .rise > span,
+  .marquee-track,
+  .caret::after {
+    animation: none !important;
   }
   .card,
   .card:hover {
     transform: none;
   }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
 }
 
-/* ── Long-form case study prose ──────────────────────────── */
+/* ── Long-form write-ups ─────────────────────────────────── */
 .prose {
   color: var(--muted);
-  font-size: 1.02rem;
+  font-size: 1.04rem;
   line-height: 1.75;
 }
 .prose > * + * {
@@ -309,18 +498,21 @@ a.skill:hover {
 }
 .prose h2 {
   color: var(--fg);
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  margin-top: 2.6em;
-  padding-top: 1.2em;
+  font-size: 1.45rem;
+  margin-top: 2.4em;
+  padding-top: 1.1em;
   border-top: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
 }
 .prose h2::before {
-  content: '§ ';
-  font-family: var(--font-mono);
-  color: var(--accent);
-  font-weight: 400;
+  content: '';
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--accent);
+  flex-shrink: 0;
+  transform: translateY(-0.12em);
 }
 .prose h3 {
   color: var(--fg);
@@ -347,14 +539,16 @@ a.skill:hover {
   padding-left: 1.4em;
 }
 .prose ul li + li {
-  margin-top: 0.4em;
+  margin-top: 0.45em;
 }
 .prose ul li::before {
-  content: '→';
+  content: '';
   position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-family: var(--font-mono);
+  left: 0.15em;
+  top: 0.72em;
+  width: 0.5em;
+  height: 2px;
+  background: var(--accent);
 }
 .prose ol {
   list-style: decimal;
@@ -366,14 +560,14 @@ a.skill:hover {
   background: var(--surface-2);
   border: 1px solid var(--border);
   padding: 0.1em 0.4em;
-  border-radius: 5px;
+  border-radius: 2px;
   color: var(--fg);
 }
 .prose pre {
   font-size: 0.85rem;
   line-height: 1.6;
   padding: 1.1rem 1.2rem;
-  border-radius: 10px;
+  border-radius: 4px;
   border: 1px solid var(--border);
   overflow-x: auto;
 }
@@ -385,14 +579,15 @@ a.skill:hover {
   color: inherit;
 }
 .prose blockquote {
-  border-left: 2px solid var(--accent);
+  border-left: 3px solid var(--accent);
   padding-left: 1rem;
   color: var(--fg);
   font-style: italic;
 }
 .prose img {
-  border-radius: 10px;
+  border-radius: 4px;
   border: 1px solid var(--border);
+  cursor: zoom-in;
 }
 .prose table {
   width: 100%;
@@ -413,7 +608,7 @@ a.skill:hover {
   letter-spacing: 0.08em;
 }
 
-/* ── Figures (captioned visuals on project pages) ────────── */
+/* ── Figures ─────────────────────────────────────────────── */
 .figure img {
   cursor: zoom-in;
 }
@@ -427,17 +622,12 @@ a.skill:hover {
   line-height: 1.5;
   color: var(--faint);
 }
-.prose img {
-  cursor: zoom-in;
-}
-
-/* Lightbox */
 #lightbox::backdrop {
-  background: rgb(4 7 13 / 0.85);
+  background: rgb(6 8 12 / 0.88);
   backdrop-filter: blur(4px);
 }
 
-/* ── Print: clean, ink-friendly pages (resume + project write-ups) ── */
+/* ── Print ───────────────────────────────────────────────── */
 @media print {
   :root,
   :root[data-theme='dark'] {
@@ -449,28 +639,31 @@ a.skill:hover {
     --fg: #000;
     --muted: #333;
     --faint: #555;
-    --accent: #b93f08;
-    --accent-2: #1f5fbf;
-    --grid: transparent;
-    --sky: transparent;
+    --accent: #c63f0a;
     color-scheme: light;
   }
   body {
     background: #fff !important;
   }
+  body::before,
   header,
   footer,
-  .spotlight,
+  #progress,
   .no-print,
   #cmdk,
-  #lightbox {
+  #lightbox,
+  #mnav {
     display: none !important;
   }
   .js .reveal,
-  .hero-in {
+  .hero-in,
+  .rise > span {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
+  }
+  .js .plot .plot-art {
+    clip-path: none !important;
   }
   .card,
   .corners {

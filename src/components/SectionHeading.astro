@@ -8,14 +8,14 @@ interface Props {
 const { index, label, title, id } = Astro.props;
 ---
 
-<div class="reveal mb-10 flex flex-col gap-3" id={id}>
-  <p class="label flex items-center gap-3">
-    <span class="text-accent">{index}</span>
-    <span class="h-px w-8 bg-line-strong"></span>
-    {label}
-  </p>
-  <div class="flex flex-wrap items-end justify-between gap-4">
-    <h2 class="text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{title}</h2>
+<div class="reveal mb-10" id={id}>
+  <div class="flex items-center gap-3">
+    <span class="grid h-6 min-w-7 place-items-center bg-accent px-1.5 font-mono text-[0.68rem] font-medium text-white">{index}</span>
+    <span class="label !text-fg">{label}</span>
+    <span class="ruler h-[10px] flex-1"></span>
+  </div>
+  <div class="mt-5 flex flex-wrap items-end justify-between gap-4">
+    <h2 class="text-3xl leading-[1.05] text-balance sm:text-5xl">{title}</h2>
     <slot />
   </div>
 </div>

@@ -1,0 +1,33 @@
+---
+// Logo mark: two nested delta-wing chevrons (the two A's of "Aryan Agarwal")
+// pierced by a tilted orbit, with a small satellite riding the orbit.
+interface Props {
+  size?: number;
+  class?: string;
+  animate?: boolean;
+}
+const { size = 34, class: cls = '', animate = true } = Astro.props;
+const orbit = 'M3 22.5 A17 6.2 -14 1 1 37 14.5 A17 6.2 -14 1 1 3 22.5';
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 40 40"
+  fill="none"
+  class:list={['logo-mark shrink-0', cls]}
+  aria-hidden="true"
+>
+  <!-- back half of the orbit (behind the wings) -->
+  <path d="M3 22.5 A17 6.2 -14 0 1 37 14.5" stroke="currentColor" stroke-width="1.4" opacity="0.45" />
+  <!-- outer delta: first A -->
+  <path d="M6 33 L20 5 L34 33 L27.5 33 L20 17.5 L12.5 33 Z" fill="currentColor" />
+  <!-- inner delta: second A, in orange -->
+  <path d="M16.2 33 L20 25 L23.8 33 Z" fill="var(--accent-bright)" />
+  <!-- front half of the orbit (in front of the wings) -->
+  <path d="M37 14.5 A17 6.2 -14 0 1 3 22.5" stroke="var(--accent-bright)" stroke-width="1.6" />
+  <!-- satellite -->
+  <circle r="1.9" fill="var(--accent-bright)">
+    {animate && <animateMotion dur="7s" repeatCount="indefinite" path={orbit} rotate="auto" />}
+  </circle>
+</svg>

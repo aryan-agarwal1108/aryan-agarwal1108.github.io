@@ -29,7 +29,7 @@ const ogImage = new URL(url(image), Astro.site);
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
     <link rel="sitemap" href={url('/sitemap-index.xml')} />
-    <meta name="theme-color" content="#090d16" />
+    <meta name="theme-color" content="#0b0c0f" />
 
     <!-- Link previews (LinkedIn, Handshake, Slack, iMessage, Discord) -->
     <meta property="og:type" content="website" />
@@ -47,7 +47,7 @@ const ogImage = new URL(url(image), Astro.site);
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
       rel="stylesheet"
     />
 
@@ -62,11 +62,10 @@ const ogImage = new URL(url(image), Astro.site);
       })();
     </script>
   </head>
-  <body class="font-sans text-fg">
-    <div class="spotlight" aria-hidden="true"></div>
+  <body id="top" class="font-sans text-fg">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-white"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:bg-accent focus:px-3 focus:py-2 focus:text-white"
       >Skip to content</a
     >
     <Header />
@@ -78,64 +77,7 @@ const ogImage = new URL(url(image), Astro.site);
     <Lightbox />
 
     <script>
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      // Cursor spotlight + per-card glow
-      if (!reduce && window.matchMedia('(pointer: fine)').matches) {
-        const root = document.body;
-        window.addEventListener(
-          'pointermove',
-          (e) => {
-            root.style.setProperty('--mx', `${e.clientX}px`);
-            root.style.setProperty('--my', `${e.clientY}px`);
-          },
-          { passive: true },
-        );
-        document.querySelectorAll<HTMLElement>('.card').forEach((card) => {
-          card.addEventListener('pointermove', (e) => {
-            const r = card.getBoundingClientRect();
-            card.style.setProperty('--cx', `${e.clientX - r.left}px`);
-            card.style.setProperty('--cy', `${e.clientY - r.top}px`);
-          });
-        });
-      }
-
-      // Reveal on scroll
-      const els = document.querySelectorAll('.reveal');
-      if (reduce || !('IntersectionObserver' in window)) {
-        els.forEach((el) => el.classList.add('in'));
-      } else {
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('in');
-                io.unobserve(entry.target);
-              }
-            });
-          },
-          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
-        );
-        els.forEach((el) => io.observe(el));
-      }
-
-      // Copy-email buttons
-      document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
-        btn.addEventListener('click', async () => {
-          const text = btn.dataset.copy!;
-          const label = btn.querySelector('[data-copy-label]');
-          try {
-            await navigator.clipboard.writeText(text);
-            if (label) {
-              const prev = label.textContent;
-              label.textContent = 'Copied ✓';
-              setTimeout(() => (label.textContent = prev), 1800);
-            }
-          } catch {
-            window.location.href = `mailto:${text}`;
-          }
-        });
-      });
+      import '../scripts/motion';
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 ---
-// Shared header for top-level pages: mono label, big title, short intro.
+// Shared header for top-level pages: label, huge livery title that rises in, short intro.
 interface Props {
   tag: string;
   label: string;
@@ -8,14 +8,16 @@ interface Props {
 const { tag, label, title } = Astro.props;
 ---
 
-<div class="reveal">
-  <p class="label flex items-center gap-3">
-    <span class="text-accent">{tag}</span><span class="h-px w-8 bg-line-strong"></span>{label}
+<div>
+  <p class="hero-in flex items-center gap-3">
+    <span class="grid h-6 place-items-center bg-accent px-2 font-mono text-[0.68rem] font-medium text-white">{tag}</span>
+    <span class="label">{label}</span>
   </p>
-  <h1 class="mt-4 text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">
-    {title}<span class="text-accent">.</span>
+  <h1 class="livery mt-6 text-[clamp(2.6rem,9vw,7rem)]">
+    <span class="rise"><span>{title}<span class="text-accent">.</span></span></span>
   </h1>
-  <div class="mt-4 max-w-2xl text-lg leading-relaxed text-muted">
+  <div class="ruler hero-in mt-8" style="--d:0.25s"></div>
+  <div class="hero-in mt-6 max-w-2xl text-lg leading-relaxed text-muted" style="--d:0.3s">
     <slot />
   </div>
 </div>

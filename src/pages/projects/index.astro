@@ -2,6 +2,7 @@
 import { getProjects } from '../../lib/projects';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import PageHeader from '../../components/PageHeader.astro';
 
 const projects = await getProjects();
 const categories = ['All', ...new Set(projects.map((p) => p.data.category))];
@@ -14,15 +15,11 @@ const tools = [...toolCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].local
 
 <BaseLayout title="Projects" description="Aerospace, propulsion, design, and quantum physics projects by Aryan Agarwal.">
   <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
-    <div class="reveal">
-      <p class="label flex items-center gap-3"><span class="text-accent">INDEX</span><span class="h-px w-8 bg-line-strong"></span>All projects</p>
-      <h1 class="mt-4 text-4xl font-semibold tracking-[-0.035em] sm:text-6xl">Projects<span class="text-accent">.</span></h1>
-      <p class="mt-4 max-w-xl text-lg text-muted">
-        Research, club, and class work. Each page covers what the project was for, what my part was, and the tools I used.
-      </p>
-    </div>
+    <PageHeader tag="INDEX" label={`${projects.length} projects`} title="Projects">
+      Research, club, and class work. Each page covers what the project was for, what my part was, and the tools I used.
+    </PageHeader>
 
-    <div class="reveal mt-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div class="reveal mt-12 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
       <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by discipline">
         {
           categories.map((c, i) => (

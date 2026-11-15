@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import Logo from './Logo.astro';
 import { site } from '../config';
 import { url } from '../utils';
 
@@ -11,34 +12,42 @@ const nav = [
   { href: '/about', label: 'About' },
   { href: '/resume', label: 'Resume' },
 ];
-const isActive = (href: string) => !href.includes('#') && path.startsWith(href);
+const isActive = (href: string) => path.startsWith(href);
 ---
 
-<header class="sticky top-0 z-40 border-b border-line bg-bg/75 backdrop-blur-md">
-  <div class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-    <a href={url('/')} class="group flex items-center gap-2.5" aria-label={`${site.name} — home`}>
-      <span
-        class="grid size-7 place-items-center rounded-md border border-line-strong bg-surface font-mono text-[0.7rem] font-medium tracking-tight transition-colors group-hover:border-accent group-hover:text-accent"
-        >{site.initials}</span
-      >
-      <span class="hidden text-sm font-medium tracking-tight sm:inline">{site.name}</span>
+<div id="progress" aria-hidden="true"></div>
+
+<header class="site-header sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur-md">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+    <a href={url('/')} class="group flex items-center gap-3" aria-label={`${site.name}, home`}>
+      <Logo size={34} class="text-fg transition-transform duration-500 group-hover:-rotate-6" />
+      <span class="leading-none">
+        <span class="display block text-[0.95rem] font-extrabold tracking-[0.02em] uppercase [font-stretch:125%]">{site.name}</span>
+        <span class="mt-1 hidden font-mono text-[0.62rem] tracking-[0.14em] text-faint uppercase sm:block">Aerospace · Physics · UIUC</span>
+      </span>
     </a>
 
-    <nav aria-label="Main" class="flex items-center gap-1">
-      <ul class="hidden items-center gap-1 md:flex">
+    <nav aria-label="Main" class="flex items-center gap-2">
+      <ul class="hidden items-center md:flex">
         {
           nav.map((item) => (
             <li>
               <a
                 href={url(item.href)}
                 class:list={[
-                  'relative rounded-md px-3 py-1.5 text-sm transition-colors hover:text-fg',
+                  'group/nav relative block px-3 py-2 text-[0.82rem] font-medium tracking-[0.06em] uppercase transition-colors hover:text-fg',
                   isActive(item.href) ? 'text-fg' : 'text-muted',
                 ]}
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
                 {item.label}
-                {isActive(item.href) && <span class="absolute inset-x-3 -bottom-[11px] h-px bg-accent" aria-hidden="true" />}
+                <span
+                  class:list={[
+                    'absolute inset-x-3 -bottom-[13px] h-[3px] origin-left bg-accent transition-transform duration-300',
+                    isActive(item.href) ? 'scale-x-100' : 'scale-x-0 group-hover/nav:scale-x-100',
+                  ]}
+                  aria-hidden="true"
+                />
               </a>
             </li>
           ))
@@ -47,36 +56,67 @@ const isActive = (href: string) => !href.includes('#') && path.startsWith(href);
 
       <button
         type="button"
-        data-cmdk-open
-        class="ml-1 flex h-8 items-center gap-2 rounded-md border border-line bg-surface px-2.5 text-xs text-muted transition-colors hover:border-line-strong hover:text-fg"
-        aria-label="Open command menu"
+        id="theme-toggle"
+        class="grid size-9 place-items-center rounded-full border border-line text-muted transition-colors hover:border-fg hover:text-fg"
+        aria-label="Toggle light and dark mode"
       >
-        <span class="md:hidden"><Icon name="menu" size={15} /></span>
-        <span class="hidden md:inline"><Icon name="search" size={14} /></span>
-        <span class="md:hidden">Menu</span>
-        <span class="hidden md:inline">Search</span>
-        <kbd class="hidden rounded border border-line bg-surface-2 px-1.5 font-mono text-[0.65rem] md:inline" data-kbd
-          >Ctrl K</kbd
-        >
+        <span class="hidden dark:block"><Icon name="sun" size={16} /></span>
+        <span class="block dark:hidden"><Icon name="moon" size={16} /></span>
       </button>
 
       <button
         type="button"
-        id="theme-toggle"
-        class="grid size-8 place-items-center rounded-md border border-line bg-surface text-muted transition-colors hover:border-line-strong hover:text-fg"
-        aria-label="Toggle color theme"
+        id="mnav-open"
+        class="flex h-9 items-center gap-2 rounded-full border border-line px-3.5 text-xs font-medium tracking-[0.08em] uppercase md:hidden"
+        aria-controls="mnav"
+        aria-expanded="false"
       >
-        <span class="hidden dark:block"><Icon name="sun" size={15} /></span>
-        <span class="block dark:hidden"><Icon name="moon" size={15} /></span>
+        <Icon name="menu" size={15} /> Menu
       </button>
     </nav>
   </div>
 </header>
 
-<script>
-  const kbd = document.querySelector('[data-kbd]');
-  if (kbd && /Mac|iPhone|iPad/.test(navigator.platform)) kbd.textContent = '⌘K';
+<!-- Mobile navigation: full-screen panel with big type -->
+<div id="mnav" class="fixed inset-0 z-50 hidden flex-col bg-bg md:hidden" role="dialog" aria-modal="true" aria-label="Site menu">
+  <div class="flex h-16 items-center justify-between border-b border-line px-4">
+    <span class="flex items-center gap-3"><Logo size={30} class="text-fg" animate={false} /><span class="label">Menu</span></span>
+    <button type="button" id="mnav-close" class="grid size-9 place-items-center rounded-full border border-line" aria-label="Close menu">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+    </button>
+  </div>
+  <ul class="flex flex-1 flex-col justify-center gap-1 px-6">
+    <li class="mnav-item"><a href={url('/')} class="livery block py-2 text-[clamp(1.9rem,10vw,2.6rem)]">Home</a></li>
+    {
+      nav.map((item, i) => (
+        <li class="mnav-item" style={`--i:${i + 1}`}>
+          <a href={url(item.href)} class:list={['livery block py-2 text-[clamp(1.9rem,10vw,2.6rem)]', isActive(item.href) && 'text-accent']}>
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="border-t border-line px-6 py-5 font-mono text-xs text-faint">{site.email}</p>
+</div>
 
+<style>
+  #mnav.open {
+    display: flex;
+  }
+  #mnav.open .mnav-item {
+    animation: mnav-in 0.5s cubic-bezier(0.2, 0.75, 0.15, 1) both;
+    animation-delay: calc(var(--i, 0) * 50ms);
+  }
+  @keyframes mnav-in {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+  }
+</style>
+
+<script>
   function setTheme(t: string) {
     document.documentElement.setAttribute('data-theme', t);
     try {
@@ -88,4 +128,17 @@ const isActive = (href: string) => !href.includes('#') && path.startsWith(href);
     setTheme(cur === 'dark' ? 'light' : 'dark');
   };
   document.getElementById('theme-toggle')?.addEventListener('click', () => (window as any).__toggleTheme());
+
+  // Mobile menu
+  const mnav = document.getElementById('mnav')!;
+  const openBtn = document.getElementById('mnav-open')!;
+  const setOpen = (open: boolean) => {
+    mnav.classList.toggle('open', open);
+    openBtn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    if (open) (document.getElementById('mnav-close') as HTMLElement).focus();
+  };
+  openBtn.addEventListener('click', () => setOpen(true));
+  document.getElementById('mnav-close')!.addEventListener('click', () => setOpen(false));
+  window.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
 </script>

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import FlightProfile from '../components/FlightProfile.astro';
 import Icon from '../components/Icon.astro';
 import { site, experience, awards, highlights } from '../config';
 import { getProjects } from '../lib/projects';
@@ -11,11 +12,22 @@ const all = await getProjects();
 const featured = all.filter((p) => p.data.featured).slice(0, 4);
 const currentRoles = experience.filter((e) => !e.upcoming).length;
 
-// Cards that point to each of the other pages
+const plate = [
+  ['Studying', 'Aerospace Eng. + Physics'],
+  ['School', 'UIUC'],
+  ['Class of', site.gradYear],
+  ['Based in', site.location],
+  ['Next', 'CHESS · Jan 2027'],
+];
+
+const ticker = ['Aerodynamics', 'Propulsion', 'Hypersonics', 'Quantum optics', 'CFD', 'FEA', 'Rocketry', 'Aircraft design'];
+
+// Cards that point to each of the other pages. `count` animates up when visible.
 const explore = [
   {
     href: '/experience',
     kicker: 'Experience',
+    count: currentRoles,
     stat: String(currentRoles),
     statLabel: 'research & engineering roles',
     title: "Where I've worked",
@@ -34,8 +46,10 @@ const explore = [
   {
     href: '/about',
     kicker: 'About',
+    count: 1000,
+    suffix: '+',
     stat: highlights[1].value,
-    statLabel: highlights[1].label.toLowerCase(),
+    statLabel: 'high schoolers mentored through Erudios',
     title: 'A bit about me',
     text: 'How I went from Dubai to UIUC, what I do now, and life outside engineering.',
     cta: 'About me',
@@ -50,105 +64,102 @@ const explore = [
     cta: 'View resume',
   },
 ];
-
-const specs = [
-  ['Name', site.name],
-  ['Studying', 'Aerospace Eng. + Physics'],
-  ['School', site.schoolShort],
-  ['Class of', site.gradYear],
-  ['Based in', site.location],
-  ['Previously', site.previously],
-  ['Projects', String(all.length).padStart(2, '0')],
-];
 ---
 
 <BaseLayout>
   <!-- ── HERO ─────────────────────────────────────────────── -->
-  <section class="relative mx-auto max-w-6xl px-4 pt-16 pb-20 sm:px-6 sm:pt-24 lg:pb-28">
-    <!-- Faint trajectory sketch behind the hero -->
-    <svg
-      class="pointer-events-none absolute -top-6 right-0 -z-0 hidden h-[460px] w-[760px] text-accent-2 opacity-40 lg:block"
-      viewBox="0 0 760 460"
-      fill="none"
-      stroke="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M20 440C180 120 470 30 740 120" stroke-dasharray="2 7" stroke-width="1.2" />
-      <path d="M60 440C230 190 450 110 700 170" stroke-dasharray="1 9" stroke-width="1" opacity="0.6" />
-      <ellipse cx="560" cy="210" rx="230" ry="70" transform="rotate(-12 560 210)" stroke-dasharray="3 6" opacity="0.5" />
-      <circle cx="740" cy="120" r="3" fill="currentColor" />
-    </svg>
+  <section class="relative mx-auto max-w-6xl px-4 pt-12 pb-14 sm:px-6 sm:pt-20">
+    <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
+      <div>
+        <!-- Departure-board status -->
+        <p class="hero-in mb-8 inline-flex items-stretch overflow-hidden rounded-sm border border-[#2a2d34] font-mono text-[0.68rem] tracking-[0.12em] uppercase">
+          <span class="bg-accent px-2.5 py-1.5 font-medium text-white">Status</span>
+          <span class="caret bg-[#14161b] px-3 py-1.5 text-[#ffb547]" data-scramble={site.status.text.toUpperCase()}>{site.status.text.toUpperCase()}</span>
+        </p>
 
-    <div class="relative grid items-center gap-12 lg:grid-cols-[1.35fr_1fr]">
-      <div class="hero-in">
-        {
-          site.status.available && (
-            <p class="mb-8 inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-3 py-1.5 text-xs text-muted">
-              <span class="pulse-dot" />
-              {site.status.text}
-            </p>
-          )
-        }
-        <h1 class="text-5xl leading-[0.95] font-semibold tracking-[-0.045em] text-balance sm:text-7xl">
-          {site.name}<span class="text-accent">.</span>
+        <h1 class="livery text-[clamp(2.9rem,6vw,5.25rem)]">
+          <span class="rise"><span>Aryan</span></span>
+          <span class="rise"><span style="--d:0.12s">Agarwal<span class="text-accent">.</span></span></span>
         </h1>
-        <p class="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-muted sm:text-xl">
-          <span class="text-fg">{site.major} @ {site.schoolShort}.</span>{' '}
+
+        <p class="hero-in mt-7 flex flex-wrap items-baseline gap-x-3 gap-y-1 font-mono text-sm tracking-[0.08em] uppercase" style="--d:0.3s">
+          <span class="text-fg">Aero Eng + Physics @ UIUC</span>
+          <span class="text-faint">/</span>
+          <span class="text-accent" data-rotate="Aerodynamics|Propulsion|Hypersonics|Quantum optics">Aerodynamics</span>
+        </p>
+        <p class="hero-in mt-5 max-w-xl text-lg leading-relaxed text-pretty text-muted" style="--d:0.38s">
           {site.tagline}
         </p>
-        <div class="mt-9 flex flex-wrap items-center gap-3">
+
+        <div class="hero-in mt-9 flex flex-wrap items-center gap-3" style="--d:0.46s">
           <a
             href={url('/projects')}
-            class="inline-flex h-11 items-center gap-2 rounded-lg bg-fg px-5 text-sm font-medium text-bg transition-opacity hover:opacity-85"
+            class="group inline-flex h-12 items-center gap-2.5 bg-fg px-6 text-sm font-semibold tracking-[0.06em] text-bg uppercase transition-colors hover:bg-accent hover:text-white"
           >
-            See my projects <Icon name="arrow" size={16} />
+            See my projects <Icon name="arrow" size={16} class="transition-transform group-hover:translate-x-1" />
           </a>
           <a
             href={url('/resume')}
-            class="inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong bg-surface px-5 text-sm font-medium transition-colors hover:border-fg"
+            class="inline-flex h-12 items-center gap-2 border border-fg px-6 text-sm font-semibold tracking-[0.06em] uppercase transition-colors hover:bg-fg hover:text-bg"
           >
             <Icon name="file" size={16} /> Resume
           </a>
-          <div class="ml-1 flex items-center gap-1">
-            <a href={site.links.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn" class="grid size-11 place-items-center rounded-lg text-muted transition-colors hover:text-fg"><Icon name="linkedin" size={18} /></a>
-            <a href={site.links.github} target="_blank" rel="noopener" aria-label="GitHub" class="grid size-11 place-items-center rounded-lg text-muted transition-colors hover:text-fg"><Icon name="github" size={19} /></a>
-            <a href={`mailto:${site.email}`} aria-label="Email" class="grid size-11 place-items-center rounded-lg text-muted transition-colors hover:text-fg"><Icon name="mail" size={19} /></a>
+          <div class="ml-1 flex items-center">
+            <a href={site.links.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn" class="grid size-12 place-items-center text-muted transition-colors hover:text-accent"><Icon name="linkedin" size={18} /></a>
+            <a href={site.links.github} target="_blank" rel="noopener" aria-label="GitHub" class="grid size-12 place-items-center text-muted transition-colors hover:text-accent"><Icon name="github" size={19} /></a>
+            <a href={`mailto:${site.email}`} aria-label="Email" class="grid size-12 place-items-center text-muted transition-colors hover:text-accent"><Icon name="mail" size={19} /></a>
           </div>
         </div>
       </div>
 
-      <!-- Datasheet card -->
-      <aside class="hero-in hero-in-2 corners rounded-xl border border-line bg-surface/85 shadow-[0_24px_60px_-30px_rgb(0_0_0/0.45)] backdrop-blur-sm" aria-label="Quick facts">
-        <div class="flex items-center justify-between border-b border-line px-5 py-3">
-          <span class="label">Datasheet</span>
-          <span class="font-mono text-[0.65rem] text-faint">DOC-001 · REV B</span>
-        </div>
-        <dl class="divide-y divide-line">
-          {
-            specs.map(([k, v]) => (
-              <div class="flex items-baseline justify-between gap-6 px-5 py-3">
-                <dt class="font-mono text-xs tracking-wider text-faint uppercase">{k}</dt>
-                <dd class="text-right text-sm text-fg">{v}</dd>
-              </div>
-            ))
-          }
-        </dl>
-        <div class="flex items-center justify-between border-t border-line px-5 py-3 font-mono text-[0.65rem] text-faint">
-          <span>STATUS</span>
-          <span class="flex items-center gap-2 text-ok"><span class="size-1.5 rounded-full bg-ok"></span>AVAILABLE · SUMMER 2027</span>
-        </div>
-      </aside>
+      <div class="hero-in" style="--d:0.2s">
+        <FlightProfile />
+      </div>
+    </div>
+
+    <!-- Data plate -->
+    <div class="hero-in rivets mt-14" style="--d:0.55s">
+      <dl class="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3 lg:grid-cols-5">
+        {
+          plate.map(([k, v], i) => (
+            <div class:list={['bg-surface px-5 py-4', i === plate.length - 1 && 'col-span-2 sm:col-span-1']}>
+              <dt class="label">{k}</dt>
+              <dd class="display mt-1.5 text-[0.95rem] font-semibold">{v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <span class="rivet top-2 left-2"></span><span class="rivet top-2 right-2"></span>
+      <span class="rivet bottom-2 left-2"></span><span class="rivet right-2 bottom-2"></span>
     </div>
   </section>
 
+  <!-- ── TICKER ───────────────────────────────────────────── -->
+  <div class="border-y border-line bg-surface py-4" aria-hidden="true">
+    <div class="marquee">
+      {
+        [0, 1].map(() => (
+          <div class="marquee-track">
+            {ticker.map((t) => (
+              <span class="flex items-center gap-10">
+                <span class="livery text-2xl text-fg/85 sm:text-3xl">{t}</span>
+                <svg width="18" height="18" viewBox="0 0 20 20" class="text-accent"><path d="M2 16 L10 3 L18 16 L14 16 L10 9 L6 16Z" fill="currentColor" /></svg>
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
   <!-- ── SELECTED WORK ────────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="work">
+  <section class="mx-auto max-w-6xl px-4 pt-24 pb-16 sm:px-6" aria-labelledby="work">
     <SectionHeading index="01" label="Selected work" title="A few things I've worked on" id="work">
-      <a href={url('/projects')} class="group inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-fg">
-        All {all.length} projects <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-0.5" />
+      <a href={url('/projects')} class="group inline-flex items-center gap-2 border-b border-fg pb-1 text-sm font-semibold tracking-[0.06em] uppercase transition-colors hover:border-accent hover:text-accent">
+        All {all.length} projects <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-1" />
       </a>
     </SectionHeading>
-    <div class="grid gap-5 md:grid-cols-2">
+    <div class="grid gap-6 md:grid-cols-2">
       {featured.map((p, i) => <ProjectCard project={p} index={i} size="lg" />)}
     </div>
   </section>
@@ -156,20 +167,21 @@ const specs = [
   <!-- ── EXPLORE (links to the other pages) ───────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
     <SectionHeading index="02" label="Explore" title="More about me" />
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
       {
         explore.map((e, i) => (
-          <a href={url(e.href)} class="card reveal group flex flex-col p-6">
-            <span class="font-mono text-[0.68rem] tracking-wider text-faint uppercase">
-              <span class="text-accent">{String(i + 1).padStart(2, '0')}</span> · {e.kicker}
+          <a href={url(e.href)} class="reveal group relative flex flex-col bg-surface p-6 transition-colors hover:bg-surface-2">
+            <span class="font-mono text-[0.68rem] tracking-[0.12em] text-faint uppercase">
+              <span class="text-accent">{String(i + 1).padStart(2, '0')}</span> / {e.kicker}
             </span>
-            <span class="mt-4 text-3xl font-semibold tracking-tight text-fg">{e.stat}</span>
-            <span class="mt-1 text-xs text-faint">{e.statLabel}</span>
-            <span class="mt-5 text-lg font-medium text-fg">{e.title}</span>
+            <span class="livery mt-6 text-5xl" data-count={e.count} data-suffix={e.suffix}>{e.stat}</span>
+            <span class="mt-2 text-xs text-faint">{e.statLabel}</span>
+            <span class="display mt-6 text-lg">{e.title}</span>
             <span class="mt-1.5 text-sm leading-relaxed text-muted">{e.text}</span>
-            <span class="mt-auto flex items-center gap-1.5 pt-5 text-sm text-muted transition-colors group-hover:text-fg">
-              {e.cta} <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-0.5" />
+            <span class="mt-auto flex items-center gap-2 pt-6 text-xs font-semibold tracking-[0.08em] uppercase">
+              {e.cta} <Icon name="arrow" size={14} class="text-accent transition-transform group-hover:translate-x-1" />
             </span>
+            <span class="absolute bottom-0 left-0 h-[3px] w-0 bg-accent transition-all duration-500 group-hover:w-full" />
           </a>
         ))
       }
@@ -178,13 +190,14 @@ const specs = [
 
   <!-- ── CONTACT ──────────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="contact" aria-labelledby="contact-h">
-    <div class="reveal corners relative overflow-hidden rounded-2xl border border-line bg-surface px-6 py-14 sm:px-12 sm:py-20">
-      <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_100%_100%,var(--accent-soft),transparent_70%)]" aria-hidden="true"></div>
-      <p class="label relative flex items-center gap-3"><span class="text-accent">03</span><span class="h-px w-8 bg-line-strong"></span>Contact</p>
-      <h2 id="contact-h" class="relative mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">
-        Want to talk<span class="text-accent">?</span>
+    <div class="reveal bp corners relative overflow-hidden rounded-xl px-6 py-14 sm:px-12 sm:py-20">
+      <p class="flex items-center gap-3 font-mono text-[0.68rem] tracking-[0.12em] uppercase opacity-80">
+        <span class="bg-accent px-1.5 py-0.5 text-white">03</span>Contact
+      </p>
+      <h2 id="contact-h" class="livery relative mt-6 max-w-3xl text-[clamp(2.6rem,7vw,5.5rem)]">
+        Want to talk<span class="text-[var(--accent-bright)]">?</span>
       </h2>
-      <p class="relative mt-5 max-w-lg text-muted">
+      <p class="relative mt-6 max-w-lg opacity-85">
         I'm looking for a Summer 2027 internship in aerospace, propulsion, or research. If you're hiring, have a question about
         something here, or just want to talk rockets, send me an email.
       </p>
@@ -192,30 +205,27 @@ const specs = [
         <button
           type="button"
           data-copy={site.email}
-          class="inline-flex h-11 items-center gap-2 rounded-lg bg-accent px-5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          class="inline-flex h-12 items-center gap-2 bg-[var(--accent-bright)] px-6 text-sm font-semibold tracking-[0.06em] text-white uppercase transition-transform hover:-translate-y-0.5"
         >
           <Icon name="copy" size={16} /><span data-copy-label>Copy email</span>
         </button>
-        <a
-          href={`mailto:${site.email}`}
-          class="inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong px-5 text-sm font-medium transition-colors hover:border-fg"
-        >
+        <a href={`mailto:${site.email}`} class="inline-flex h-12 items-center gap-2 border border-white/40 px-6 text-sm font-medium transition-colors hover:border-white hover:bg-white/10">
           <Icon name="mail" size={16} />{site.email}
         </a>
-        <a
-          href={site.links.linkedin}
-          target="_blank"
-          rel="noopener"
-          class="inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong px-5 text-sm font-medium transition-colors hover:border-fg"
-        >
+        <a href={site.links.linkedin} target="_blank" rel="noopener" class="inline-flex h-12 items-center gap-2 border border-white/40 px-6 text-sm font-medium transition-colors hover:border-white hover:bg-white/10">
           <Icon name="linkedin" size={15} />LinkedIn
         </a>
       </div>
-      <svg class="pointer-events-none absolute -right-16 -bottom-16 hidden h-80 w-80 text-line-strong md:block" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true">
-        <circle cx="100" cy="100" r="90" stroke-dasharray="2 4" />
-        <circle cx="100" cy="100" r="60" />
-        <circle cx="100" cy="100" r="30" stroke-dasharray="6 4" />
-        <path d="M100 0v200M0 100h200" stroke-dasharray="1 5" />
+      <!-- Orbit graphic -->
+      <svg class="pointer-events-none absolute -right-20 -bottom-24 hidden h-[26rem] w-[26rem] md:block" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true">
+        <circle cx="100" cy="100" r="40" stroke-width="0.8" opacity="0.5" />
+        <ellipse cx="100" cy="100" rx="92" ry="34" transform="rotate(-18 100 100)" stroke-dasharray="2 4" opacity="0.6" />
+        <ellipse cx="100" cy="100" rx="70" ry="62" transform="rotate(30 100 100)" stroke-width="0.6" opacity="0.35" />
+        <g transform="rotate(-18 100 100)">
+          <circle r="3" fill="var(--accent-bright)" stroke="none">
+            <animateMotion dur="9s" repeatCount="indefinite" path="M8 100 A92 34 0 1 1 192 100 A92 34 0 1 1 8 100" />
+          </circle>
+        </g>
       </svg>
     </div>
   </section>

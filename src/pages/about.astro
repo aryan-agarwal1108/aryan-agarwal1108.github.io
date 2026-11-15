@@ -19,12 +19,17 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
 <BaseLayout title="About" description={`About ${site.name}: background, education, and what I'm working on now.`}>
   <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
     <div class="grid gap-12 lg:grid-cols-[1fr_320px]">
-      <div class="reveal">
-        <p class="label flex items-center gap-3"><span class="text-accent">ABOUT</span><span class="h-px w-8 bg-line-strong"></span>Background</p>
-        <h1 class="mt-4 text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">
-          Hi, I'm {site.firstName}<span class="text-accent">.</span>
+      <div>
+        <p class="hero-in flex items-center gap-3">
+          <span class="grid h-6 place-items-center bg-accent px-2 font-mono text-[0.68rem] font-medium text-white">ABOUT</span>
+          <span class="label">Background</span>
+        </p>
+        <h1 class="livery mt-6 text-[clamp(2.6rem,8vw,6rem)]">
+          <span class="rise"><span>Hi, I'm</span></span>
+          <span class="rise"><span style="--d:0.1s">{site.firstName}<span class="text-accent">.</span></span></span>
         </h1>
-        <div class="prose mt-8 max-w-2xl">
+        <div class="ruler hero-in mt-8" style="--d:0.25s"></div>
+        <div class="prose hero-in mt-8 max-w-2xl" style="--d:0.3s">
           <p>
             I'm a first-year at the <strong>University of Illinois</strong>, doing a dual degree in{' '}
             <strong>Aerospace Engineering and Physics</strong> (class of {site.gradYear}). Space and quantum physics are the two
