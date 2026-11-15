@@ -1,0 +1,215 @@
+---
+// Interactive airfoil: angle of attack, airspeed, and prop-wash "blowing".
+// Thin-airfoil lift with a simple stall model. For intuition only.
+
+// NACA 2412 outline in chord units
+function naca(m = 0.02, p = 0.4, t = 0.12, n = 60) {
+  const up: [number, number][] = [];
+  const lo: [number, number][] = [];
+  for (let i = 0; i <= n; i++) {
+    const x = (1 - Math.cos((i / n) * Math.PI)) / 2;
+    const yt = 5 * t * (0.2969 * Math.sqrt(x) - 0.126 * x - 0.3516 * x * x + 0.2843 * x ** 3 - 0.1015 * x ** 4);
+    const yc = x < p ? (m / p ** 2) * (2 * p * x - x * x) : (m / (1 - p) ** 2) * (1 - 2 * p + 2 * p * x - x * x);
+    const dyc = x < p ? ((2 * m) / p ** 2) * (p - x) : ((2 * m) / (1 - p) ** 2) * (p - x);
+    const th = Math.atan(dyc);
+    up.push([x - yt * Math.sin(th), yc + yt * Math.cos(th)]);
+    lo.push([x + yt * Math.sin(th), yc - yt * Math.cos(th)]);
+  }
+  return [...up.reverse(), ...lo.slice(1)];
+}
+const CHORD = 250;
+const CX = 175; // quarter-chord pivot (svg units)
+const CY = 150;
+const pts = naca()
+  .map(([x, y], i) => `${i ? 'L' : 'M'}${(CX + (x - 0.25) * CHORD).toFixed(1)} ${(CY - y * CHORD).toFixed(1)}`)
+  .join(' ') + 'Z';
+const lines = [-110, -80, -54, -30, 30, 54, 80, 110];
+---
+
+<figure class="airfoil bp corners relative overflow-hidden rounded-xl" data-airfoil>
+  <div class="flex items-center justify-between border-b border-white/15 px-4 py-2.5 font-mono text-[0.62rem] tracking-[0.14em] uppercase">
+    <span class="opacity-80">Fig. A · Airfoil lift explorer</span>
+    <span class="flex items-center gap-1.5 opacity-80"><span class="size-1.5 rounded-full bg-[#7ee2a8]"></span>Interactive</span>
+  </div>
+
+  <div class="grid lg:grid-cols-[1fr_250px]">
+    <svg viewBox="0 0 520 300" class="block w-full" fill="none" stroke="currentColor" font-family="IBM Plex Mono, monospace" aria-hidden="true">
+      <g class="streams" stroke-width="1.1" stroke-linecap="round">
+        {lines.map((y0) => <path data-y0={y0} d={`M0 ${CY + y0} H520`} />)}
+      </g>
+      <g class="sep" opacity="0"></g>
+      <g class="wing">
+        <path d={pts} fill="var(--bp-ink)" fill-opacity="0.92" stroke="none" />
+        <path d={`M${CX - 0.25 * CHORD - 6} ${CY} H${CX + 0.75 * CHORD + 6}`} stroke-dasharray="3 4" stroke-width="0.8" opacity="0.5" />
+      </g>
+      <!-- Lift arrow -->
+      <g class="lift" stroke="var(--accent-bright)" stroke-width="3">
+        <path class="lift-shaft" d={`M${CX} ${CY} V${CY - 80}`} />
+        <path class="lift-head" d={`M${CX - 7} ${CY - 72} L${CX} ${CY - 86} L${CX + 7} ${CY - 72}`} stroke-linejoin="round" />
+        <text class="lift-label" x={CX + 12} y={CY - 70} font-size="11" fill="var(--accent-bright)" stroke="none">LIFT</text>
+      </g>
+      <text x="14" y="22" font-size="9.5" fill="currentColor" stroke="none" opacity="0.75">V∞ →</text>
+      <text class="aoa-label" x="14" y="286" font-size="9.5" fill="currentColor" stroke="none" opacity="0.75">α = 5°</text>
+      <text class="stall-label" x="506" y="286" text-anchor="end" font-size="10" fill="#ffb547" stroke="none" opacity="0">FLOW SEPARATED · STALL</text>
+    </svg>
+
+    <div class="flex flex-col border-t border-white/15 lg:border-t-0 lg:border-l">
+      <dl class="grid grid-cols-3 font-mono text-[0.62rem] tracking-[0.1em] uppercase lg:grid-cols-1">
+        <div class="border-r border-b border-white/15 px-4 py-3 lg:border-r-0"><dt class="opacity-65">Lift coeff. C<sub>L</sub></dt><dd class="mt-1 text-lg font-medium tracking-normal" data-cl>0.69</dd></div>
+        <div class="border-r border-b border-white/15 px-4 py-3 lg:border-r-0"><dt class="opacity-65">Lift N / m span</dt><dd class="mt-1 text-lg font-medium tracking-normal" data-lift>610</dd></div>
+        <div class="border-b border-white/15 px-4 py-3"><dt class="opacity-65">Vs. unblown</dt><dd class="mt-1 text-lg font-medium tracking-normal" data-gain>+0%</dd></div>
+      </dl>
+      <div class="flex flex-1 flex-col justify-center gap-4 px-4 py-4">
+        <label class="block font-mono text-[0.6rem] tracking-[0.12em] uppercase">
+          <span class="flex justify-between"><span class="opacity-70">Angle of attack</span><b data-aoa-out>5°</b></span>
+          <input type="range" min="-4" max="20" step="0.5" value="5" data-aoa class="mt-2 w-full accent-[var(--accent-bright)]" aria-label="Angle of attack in degrees" />
+        </label>
+        <label class="block font-mono text-[0.6rem] tracking-[0.12em] uppercase">
+          <span class="flex justify-between"><span class="opacity-70">Airspeed</span><b data-v-out>30 m/s</b></span>
+          <input type="range" min="20" max="45" step="1" value="30" data-v class="mt-2 w-full accent-[var(--accent-bright)]" aria-label="Airspeed in meters per second" />
+        </label>
+        <label class="flex cursor-pointer items-center justify-between gap-3 font-mono text-[0.6rem] tracking-[0.12em] uppercase">
+          <span class="opacity-70">Prop wash (blown wing)</span>
+          <input type="checkbox" data-blown class="peer sr-only" />
+          <span class="relative h-5 w-9 rounded-full border border-white/40 bg-white/10 transition-colors peer-checked:border-[var(--accent-bright)] peer-checked:bg-[var(--accent-bright)] after:absolute after:top-0.5 after:left-0.5 after:size-3.5 after:rounded-full after:bg-white after:transition-transform peer-checked:after:translate-x-4 peer-focus-visible:outline-2 peer-focus-visible:outline-white"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <figcaption class="border-t border-white/10 px-4 py-2 font-mono text-[0.58rem] leading-relaxed tracking-[0.06em] opacity-60">
+    NACA 2412 section, PA-28-like 1.6 m chord, sea-level air. Thin-airfoil lift with a simple stall model; prop wash modeled as a 35% faster local flow. My research model uses BEMT.
+  </figcaption>
+</figure>
+
+<style>
+  .airfoil .streams path {
+    stroke-dasharray: 7 9;
+    animation: flow var(--flow, 1.2s) linear infinite;
+    opacity: 0.55;
+  }
+  .airfoil.blown .streams path {
+    opacity: 0.85;
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -32;
+    }
+  }
+  .airfoil .wing,
+  .airfoil .lift {
+    transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .airfoil .sep,
+  .airfoil .stall-label {
+    transition: opacity 0.3s;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .airfoil .streams path {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  const CX = 175;
+  const CY = 150;
+  const RHO = 1.225;
+  const CHORD_M = 1.6;
+  const A0 = -2.1; // zero-lift angle of NACA 2412 (deg)
+  const STALL = 15;
+
+  function cl(aoa: number) {
+    const lin = 2 * Math.PI * ((aoa - A0) * Math.PI) / 180 * 0.92;
+    if (aoa <= STALL) return lin;
+    const peak = 2 * Math.PI * ((STALL - A0) * Math.PI) / 180 * 0.92;
+    return Math.max(0.75, peak - 0.11 * (aoa - STALL) ** 1.25); // post-stall drop
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-airfoil]').forEach((fig) => {
+    const aoaIn = fig.querySelector<HTMLInputElement>('[data-aoa]')!;
+    const vIn = fig.querySelector<HTMLInputElement>('[data-v]')!;
+    const blownIn = fig.querySelector<HTMLInputElement>('[data-blown]')!;
+    const wing = fig.querySelector<SVGGElement>('.wing')!;
+    const shaft = fig.querySelector<SVGPathElement>('.lift-shaft')!;
+    const head = fig.querySelector<SVGPathElement>('.lift-head')!;
+    const liftLabel = fig.querySelector<SVGTextElement>('.lift-label')!;
+    const sep = fig.querySelector<SVGGElement>('.sep')!;
+    const stallLabel = fig.querySelector<SVGTextElement>('.stall-label')!;
+    const aoaLabel = fig.querySelector<SVGTextElement>('.aoa-label')!;
+    const streams = [...fig.querySelectorAll<SVGPathElement>('.streams path')];
+    const o = {
+      cl: fig.querySelector<HTMLElement>('[data-cl]')!,
+      lift: fig.querySelector<HTMLElement>('[data-lift]')!,
+      gain: fig.querySelector<HTMLElement>('[data-gain]')!,
+      aoa: fig.querySelector<HTMLElement>('[data-aoa-out]')!,
+      v: fig.querySelector<HTMLElement>('[data-v-out]')!,
+    };
+
+    function update() {
+      const aoa = Number(aoaIn.value);
+      const V = Number(vIn.value);
+      const blown = blownIn.checked;
+      const Veff = blown ? V * 1.35 : V;
+      const c = cl(aoa);
+      const lift = 0.5 * RHO * Veff * Veff * CHORD_M * c;
+      const liftBase = 0.5 * RHO * V * V * CHORD_M * c;
+      const stalled = aoa > STALL;
+
+      // Wing pitch (nose up = counter-clockwise on screen)
+      wing.setAttribute('transform', `rotate(${-aoa} ${CX} ${CY})`);
+
+      // Lift arrow: length scaled to the largest lift this explorer can produce
+      const maxLift = 0.5 * RHO * (45 * 1.35) ** 2 * CHORD_M * cl(STALL);
+      const len = Math.max(0, 14 + (lift / maxLift) * 120);
+      shaft.setAttribute('d', `M${CX} ${CY} V${CY - len}`);
+      head.setAttribute('d', `M${CX - 7} ${CY - len + 8} L${CX} ${CY - len - 6} L${CX + 7} ${CY - len + 8}`);
+      liftLabel.setAttribute('y', String(CY - len + 4));
+      head.style.opacity = c > 0.02 ? '1' : '0';
+
+      // Streamlines: upwash ahead, flow over the thickness, downwash behind
+      const turn = (aoa - A0) * (stalled ? 0.45 : 1);
+      streams.forEach((p) => {
+        const y0 = Number(p.dataset.y0);
+        const near = Math.exp(-Math.abs(y0) / 70);
+        let d = '';
+        for (let x = 0; x <= 520; x += 10) {
+          const rel = (x - (CX + 50)) / 70;
+          const bump = Math.exp(-(rel * rel)) * 9 * Math.sign(y0) * near;
+          const down = (0.5 * (1 + Math.tanh(rel)) - 0.5) * turn * 2.1 * near;
+          let y = CY + y0 - bump + down;
+          if (stalled && y0 < 0 && Math.abs(y0) < 60 && x > CX) {
+            y += Math.sin(x / 9 + performance.now() / 300) * (aoa - STALL + 2) * 0.9 * near;
+          }
+          d += `${x ? 'L' : 'M'}${x} ${y.toFixed(1)}`;
+        }
+        p.setAttribute('d', d);
+      });
+
+      // Separation bubble above the trailing part of the wing when stalled
+      sep.style.opacity = stalled ? '1' : '0';
+      if (stalled) {
+        let s = '';
+        for (let k = 0; k < 7; k++) {
+          const x = CX + 40 + k * 26;
+          const y = CY - 22 - (k % 2) * 10 - aoa * 0.9;
+          s += `<path d="M${x} ${y} q8 -10 16 0 t16 0" stroke="#ffb547" stroke-width="1.1" opacity="0.8"/>`;
+        }
+        sep.innerHTML = s;
+      }
+      stallLabel.style.opacity = stalled ? '1' : '0';
+
+      fig.style.setProperty('--flow', `${(1.6 * 30) / Veff}s`);
+      fig.classList.toggle('blown', blown);
+      aoaLabel.textContent = `α = ${aoa}°`;
+      o.aoa.textContent = `${aoa}°`;
+      o.v.textContent = `${V} m/s`;
+      o.cl.textContent = c.toFixed(2);
+      o.lift.textContent = Math.round(lift).toLocaleString('en-US');
+      o.gain.textContent = blown && liftBase > 1 ? `+${Math.round((lift / liftBase - 1) * 100)}%` : '+0%';
+      o.cl.style.color = stalled ? '#ffb547' : '';
+    }
+
+    [aoaIn, vIn, blownIn].forEach((el) => el.addEventListener('input', update));
+    update();
+  });
+</script>

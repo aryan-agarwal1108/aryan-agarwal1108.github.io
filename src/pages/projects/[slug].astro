@@ -4,6 +4,8 @@ import { getProjects } from '../../lib/projects';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCover from '../../components/ProjectCover.astro';
 import Icon from '../../components/Icon.astro';
+import AirfoilLab from '../../components/AirfoilLab.astro';
+import FlightProfile from '../../components/FlightProfile.astro';
 import { url, pad } from '../../utils';
 
 export async function getStaticPaths() {
@@ -25,7 +27,7 @@ const { Content } = await render(project);
 
 const spec = (
   [
-    ['Role', p.role],
+    [/^AE \d+/.test(p.role) ? 'Course' : 'Role', p.role],
     ['Organization', p.org],
     ['Supervisor', p.supervisor],
     ['Timeline', p.timeline],
@@ -65,7 +67,7 @@ const links = [
         <dl class:list={['reveal mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line', p.metrics.length >= 4 ? 'md:grid-cols-4' : p.metrics.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2']}>
           {p.metrics.map((m) => (
             <div class="bg-surface p-5 sm:p-6">
-              <dd class="livery text-3xl text-fg sm:text-4xl">{m.value}</dd>
+              <dd class="livery text-3xl normal-case text-fg sm:text-4xl">{m.value}</dd>
               <dt class="mt-1 font-mono text-[0.7rem] tracking-wider text-faint uppercase">{m.label}</dt>
             </div>
           ))}
@@ -78,6 +80,20 @@ const links = [
         <div class="prose reveal max-w-none [&>h2:first-child]:mt-0 [&>h2:first-child]:border-0 [&>h2:first-child]:pt-0">
           <Content />
         </div>
+
+        {
+          p.interactive && (
+            <section class="no-print mt-14 border-t border-line pt-10" aria-labelledby="try-it">
+              <h2 id="try-it" class="text-2xl">Try it yourself</h2>
+              <p class="mt-2 mb-6 max-w-xl text-muted">
+                {p.interactive === 'airfoil'
+                  ? 'A simplified version of the physics behind this project. Change the angle of attack, then switch on prop wash to see how blowing the wing raises lift.'
+                  : 'A simplified version of what OpenRocket does. Pick a motor and launch angle, then launch and watch how apogee and range change.'}
+              </p>
+              {p.interactive === 'airfoil' ? <AirfoilLab /> : <FlightProfile defaultMotor="C6" defaultAngle={85} title="Launch sim" />}
+            </section>
+          )
+        }
 
         {
           p.gallery.length > 0 && (

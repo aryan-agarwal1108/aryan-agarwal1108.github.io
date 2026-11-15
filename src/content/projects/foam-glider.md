@@ -7,15 +7,14 @@ category: Aircraft Design
 tags: [Aircraft Design, Weight & Balance, Balsa & Foam Fabrication, Epoxy]
 featured: false
 order: 7
-role: Design & build (team project)
-org: "AE 100: Intro to Aerospace Engineering, UIUC"
+role: AE 100 @ UIUC
 timeline: Fall 2026
 team: Group project
 ---
 
 <!--
-  TODO (Aryan): please confirm this was part of AE 100 (change `org:` above if not).
-  Then add a photo of the glider (cover: /images/glider.jpg), your wingspan /
+  TODO (Aryan):
+  Add a photo of the glider (cover: /images/glider.jpg), your wingspan /
   aspect ratio / mass in `metrics:`, and how far or how long it flew.
 -->
 

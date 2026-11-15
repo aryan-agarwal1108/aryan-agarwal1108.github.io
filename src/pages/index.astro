@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import FlightProfile from '../components/FlightProfile.astro';
+import AirfoilLab from '../components/AirfoilLab.astro';
 import Icon from '../components/Icon.astro';
 import { site, experience, awards, highlights } from '../config';
 import { getProjects } from '../lib/projects';
@@ -12,12 +13,35 @@ const all = await getProjects();
 const featured = all.filter((p) => p.data.featured).slice(0, 4);
 const currentRoles = experience.filter((e) => !e.upcoming).length;
 
-const plate = [
-  ['Studying', 'Aerospace Eng. + Physics'],
-  ['School', 'UIUC'],
-  ['Class of', site.gradYear],
-  ['Based in', site.location],
-  ['Next', 'CHESS · Jan 2027'],
+// Measured results strip (all from projects / awards on the site)
+const stats: { value: string; label: string; href: string; count?: number; prefix?: string; suffix?: string }[] = [
+  { value: '<8 s', label: 'Float deployment on my eVTOL drone', href: '/projects/evtol-water-landing' },
+  { value: 'Top 50', label: 'of 508 teams, CERN Beamline for Schools', href: '/awards' },
+  { value: '1 of 52', label: 'World Science Scholars worldwide', href: '/experience' },
+  { value: '1,000+', label: 'Students mentored through Erudios', href: '/about', count: 1000, suffix: '+' },
+  { value: 'Jan ’27', label: 'Starting hypersonics research at CHESS', href: '/experience' },
+];
+
+// "How I work": three steps, each grounded in real projects
+const process = [
+  {
+    n: '01',
+    title: 'Model it',
+    text: 'I start with the physics. BEMT for the blown wing, CFD for the drone floats, OpenRocket before a launch.',
+    links: [['PA-28 model', '/projects/pa28-blown-wing'], ['eVTOL floats', '/projects/evtol-water-landing']],
+  },
+  {
+    n: '02',
+    title: 'Build it',
+    text: 'Then I make the parts. Siemens NX and 3D printing for the spin-caster, SolidWorks for the drone, foam and balsa for the glider.',
+    links: [['Spin-caster', '/projects/fuel-grain-spin-caster'], ['Glider', '/projects/foam-glider']],
+  },
+  {
+    n: '03',
+    title: 'Test it',
+    text: 'Last, I check it against reality. FEA on the spin-caster’s heat, and flight data from my AE 100 rocket in Python.',
+    links: [['Model rocket', '/projects/model-rocket'], ['Spin-caster FEA', '/projects/fuel-grain-spin-caster']],
+  },
 ];
 
 const ticker = ['Aerodynamics', 'Propulsion', 'Hypersonics', 'Quantum optics', 'CFD', 'FEA', 'Rocketry', 'Aircraft design'];
@@ -69,7 +93,7 @@ const explore = [
 <BaseLayout>
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <section class="relative mx-auto max-w-6xl px-4 pt-12 pb-14 sm:px-6 sm:pt-20">
-    <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
+    <div class="grid grid-cols-[minmax(0,1fr)] items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
       <div>
         <!-- Departure-board status -->
         <p class="hero-in mb-8 inline-flex items-stretch overflow-hidden rounded-sm border border-[#2a2d34] font-mono text-[0.68rem] tracking-[0.12em] uppercase">
@@ -77,7 +101,7 @@ const explore = [
           <span class="caret bg-[#14161b] px-3 py-1.5 text-[#ffb547]" data-scramble={site.status.text.toUpperCase()}>{site.status.text.toUpperCase()}</span>
         </p>
 
-        <h1 class="livery text-[clamp(2.9rem,6vw,5.25rem)]">
+        <h1 class="livery text-[clamp(2.5rem,6vw,5.25rem)]">
           <span class="rise"><span>Aryan</span></span>
           <span class="rise"><span style="--d:0.12s">Agarwal<span class="text-accent">.</span></span></span>
         </h1>
@@ -117,18 +141,21 @@ const explore = [
       </div>
     </div>
 
-    <!-- Data plate -->
-    <div class="hero-in rivets mt-14" style="--d:0.55s">
-      <dl class="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3 lg:grid-cols-5">
+    <!-- Results strip: measured numbers, each links to the proof -->
+    <div class="reveal rivets mt-14">
+      <ul class="grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-3 lg:grid-cols-5">
         {
-          plate.map(([k, v], i) => (
-            <div class:list={['bg-surface px-5 py-4', i === plate.length - 1 && 'col-span-2 sm:col-span-1']}>
-              <dt class="label">{k}</dt>
-              <dd class="display mt-1.5 text-[0.95rem] font-semibold">{v}</dd>
-            </div>
+          stats.map((s, i) => (
+            <li class:list={['bg-surface', i === stats.length - 1 && 'col-span-2 sm:col-span-1']}>
+              <a href={url(s.href)} class="group relative block h-full px-5 pt-5 pb-4 transition-colors hover:bg-surface-2">
+                <span class="livery block text-[2rem] normal-case text-fg" data-count={s.count} data-suffix={s.suffix}>{s.value}</span>
+                <span class="mt-2 block text-xs leading-snug text-muted">{s.label}</span>
+                <span class="absolute bottom-0 left-0 h-[3px] w-0 bg-accent transition-all duration-500 group-hover:w-full" />
+              </a>
+            </li>
           ))
         }
-      </dl>
+      </ul>
       <span class="rivet top-2 left-2"></span><span class="rivet top-2 right-2"></span>
       <span class="rivet bottom-2 left-2"></span><span class="rivet right-2 bottom-2"></span>
     </div>
@@ -164,9 +191,47 @@ const explore = [
     </div>
   </section>
 
+  <!-- ── HOW I WORK ───────────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <SectionHeading index="02" label="Approach" title="How I work" />
+    <ol class="grid gap-6 md:grid-cols-3">
+      {
+        process.map((s, i) => (
+          <li class="reveal relative border-t-[3px] border-fg pt-6">
+            <span class="livery block text-6xl text-transparent [-webkit-text-stroke:1.5px_var(--accent)]">{s.n}</span>
+            <h3 class="display mt-4 text-2xl">{s.title}</h3>
+            <p class="mt-3 leading-relaxed text-muted">{s.text}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {s.links.map(([label, href]) => (
+                <a href={url(href)} class="tag inline-flex items-center gap-1.5 transition-colors">
+                  {label} <span aria-hidden="true">→</span>
+                </a>
+              ))}
+            </div>
+            {i < process.length - 1 && (
+              <svg class="absolute -top-[8.5px] -right-[21px] hidden bg-bg text-accent md:block" width="18" height="14" viewBox="0 0 22 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M0 7h19M13 1l6 6-6 6" />
+              </svg>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- ── FLIGHT LAB (interactive) ─────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <SectionHeading index="03" label="Flight lab" title="Play with the physics">
+      <p class="max-w-sm text-sm text-muted">
+        A simplified version of the aerodynamics behind my <a href={url('/projects/pa28-blown-wing')} class="text-fg underline decoration-accent underline-offset-4">blown-wing research</a>. Try a steep angle, then switch on prop wash.
+      </p>
+    </SectionHeading>
+    <div class="reveal"><AirfoilLab /></div>
+  </section>
+
   <!-- ── EXPLORE (links to the other pages) ───────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="02" label="Explore" title="More about me" />
+    <SectionHeading index="04" label="Explore" title="More about me" />
     <div class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
       {
         explore.map((e, i) => (
@@ -192,7 +257,7 @@ const explore = [
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="contact" aria-labelledby="contact-h">
     <div class="reveal bp corners relative overflow-hidden rounded-xl px-6 py-14 sm:px-12 sm:py-20">
       <p class="flex items-center gap-3 font-mono text-[0.68rem] tracking-[0.12em] uppercase opacity-80">
-        <span class="bg-accent px-1.5 py-0.5 text-white">03</span>Contact
+        <span class="bg-accent px-1.5 py-0.5 text-white">05</span>Contact
       </p>
       <h2 id="contact-h" class="livery relative mt-6 max-w-3xl text-[clamp(2.6rem,7vw,5.5rem)]">
         Want to talk<span class="text-[var(--accent-bright)]">?</span>

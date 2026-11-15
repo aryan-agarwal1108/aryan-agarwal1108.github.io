@@ -8,48 +8,50 @@
    - Dark: night-flight black, cream ink, the same orange
    - Blueprint: deep cyanotype blue panels for drawings and covers  */
 :root {
-  --bg: #f0ece2;
-  --surface: #f7f4ec;
-  --surface-2: #e7e2d5;
-  --border: #d6cfbf;
-  --border-strong: #b3ab98;
-  --fg: #12141a;
-  --muted: #474b54;
-  --faint: #686c74;
-  --accent: #c63f0a;
-  --accent-bright: #ff5a1f;
-  --accent-soft: rgb(198 63 10 / 0.1);
-  --accent-2: #1d4f8c;
-  --accent-2-soft: rgb(29 79 140 / 0.1);
-  --bp: #1b4675;
-  --bp-deep: #143657;
-  --bp-ink: #e8f0fa;
-  --bp-line: rgb(232 240 250 / 0.13);
-  --ok: #17803d;
-  --shadow: 0 1px 0 rgb(18 20 26 / 0.04), 0 18px 40px -24px rgb(18 20 26 / 0.35);
+  --bg: #faf8f3;
+  --surface: #ffffff;
+  --surface-2: #f1eee6;
+  --border: #e2ddd1;
+  --border-strong: #c3bba8;
+  --fg: #14161c;
+  --muted: #474b55;
+  --faint: #656a73;
+  --accent: #d6430b;
+  --accent-bright: #ff5b1a;
+  --accent-soft: rgb(214 67 11 / 0.1);
+  --accent-2: #1a63c4;
+  --accent-2-soft: rgb(26 99 196 / 0.1);
+  --bp: #1f5da3;
+  --bp-deep: #174a86;
+  --bp-ink: #f1f6fd;
+  --bp-line: rgb(241 246 253 / 0.16);
+  --sky-top: #d8ebfa;
+  --ok: #138a43;
+  --shadow: 0 1px 0 rgb(20 22 28 / 0.04), 0 18px 40px -24px rgb(20 40 80 / 0.3);
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --bg: #0b0c0f;
-  --surface: #121419;
-  --surface-2: #191c22;
-  --border: #252830;
-  --border-strong: #3b3f4a;
-  --fg: #ede8dc;
-  --muted: #aeaba3;
-  --faint: #858790;
-  --accent: #ff5a1f;
-  --accent-bright: #ff6a33;
-  --accent-soft: rgb(255 90 31 / 0.12);
-  --accent-2: #8db6e6;
-  --accent-2-soft: rgb(141 182 230 / 0.12);
-  --bp: #163a61;
-  --bp-deep: #0f2944;
-  --bp-ink: #e3edf9;
-  --bp-line: rgb(227 237 249 / 0.11);
-  --ok: #3ccf7d;
-  --shadow: 0 1px 0 rgb(0 0 0 / 0.3), 0 22px 50px -26px rgb(0 0 0 / 0.8);
+  --bg: #121722;
+  --surface: #1a2030;
+  --surface-2: #222a3b;
+  --border: #2e3749;
+  --border-strong: #46516a;
+  --fg: #f4f1ea;
+  --muted: #bcc2cf;
+  --faint: #929bab;
+  --accent: #ff6a2b;
+  --accent-bright: #ff7a3d;
+  --accent-soft: rgb(255 106 43 / 0.14);
+  --accent-2: #8cc4ff;
+  --accent-2-soft: rgb(140 196 255 / 0.14);
+  --bp: #1f5596;
+  --bp-deep: #17457c;
+  --bp-ink: #eef4fc;
+  --bp-line: rgb(238 244 252 / 0.14);
+  --sky-top: #1b2a45;
+  --ok: #4fdc8e;
+  --shadow: 0 1px 0 rgb(0 0 0 / 0.25), 0 22px 50px -26px rgb(0 0 0 / 0.7);
   color-scheme: dark;
 }
 
@@ -91,6 +93,9 @@ html {
 
 body {
   background-color: var(--bg);
+  /* A soft "dawn sky" wash at the top of every page */
+  background-image: linear-gradient(180deg, var(--sky-top) 0px, var(--bg) 620px);
+  background-repeat: no-repeat;
   min-height: 100vh;
   overflow-x: hidden;
   font-feature-settings: 'ss02';

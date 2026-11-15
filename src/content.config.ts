@@ -30,6 +30,8 @@ const projects = defineCollection({
     role: z.string(),
     org: z.string().optional(),
     supervisor: z.string().optional(),
+    // Optional interactive demo shown on the project page
+    interactive: z.enum(['airfoil', 'rocket']).optional(),
     timeline: z.string(),
     team: z.string().optional(),
     status: z.string().optional(),

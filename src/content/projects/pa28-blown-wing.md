@@ -12,6 +12,7 @@ org: Midwest Nice Aerospace Group
 timeline: Aug 2026 – Present
 status: In progress
 supervisor: Dr. Elle Wroblewski
+interactive: airfoil
 ---
 
 <!--

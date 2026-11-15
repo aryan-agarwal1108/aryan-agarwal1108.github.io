@@ -7,10 +7,10 @@ category: Rocketry
 tags: [OpenRocket, Flight Simulation, Python, NumPy, Matplotlib]
 featured: false
 order: 6
-role: Builder & flight analyst
-org: "AE 100: Intro to Aerospace Engineering, UIUC"
+role: AE 100 @ UIUC
 timeline: Fall 2026
 status: Flown
+interactive: rocket
 ---
 
 <!--

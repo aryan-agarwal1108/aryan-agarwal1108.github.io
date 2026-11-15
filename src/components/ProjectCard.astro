@@ -11,6 +11,10 @@ interface Props {
 }
 const { project, index, size = 'md' } = Astro.props;
 const p = project.data;
+
+// Short status pill: In progress / Flown / Preprint / Completed
+const live = /progress|present/i.test(`${p.status ?? ''} ${p.timeline}`);
+const pill = live ? 'In progress' : /flown/i.test(p.status ?? '') ? 'Flown' : /arxiv/i.test(p.status ?? '') ? 'Preprint' : 'Completed';
 ---
 
 <a
@@ -19,8 +23,17 @@ const p = project.data;
   data-category={p.category}
   data-tags={p.tags.map((t) => t.toLowerCase()).join('|')}
 >
-  <div class="overflow-hidden border-b border-line">
+  <div class="relative overflow-hidden border-b border-line">
     <ProjectCover title={p.title} category={p.category} art={p.art} cover={p.cover} fig={pad(index + 1)} />
+    <span
+      class:list={[
+        'absolute top-2.5 right-2.5 z-[5] inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 font-mono text-[0.6rem] font-medium tracking-[0.1em] uppercase shadow-sm',
+        live ? 'bg-white text-[#14161c]' : 'bg-white/90 text-[#14161c]',
+      ]}
+    >
+      <span class:list={['size-1.5 rounded-full', live ? 'animate-pulse bg-[#138a43]' : 'bg-[#8a8f98]']} />
+      {pill}
+    </span>
   </div>
   <div class="flex flex-1 flex-col gap-3 p-5">
     <div class="flex items-center justify-between gap-3 font-mono text-[0.68rem] tracking-wider text-faint uppercase">

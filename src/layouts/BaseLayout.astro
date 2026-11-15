@@ -29,7 +29,7 @@ const ogImage = new URL(url(image), Astro.site);
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
     <link rel="sitemap" href={url('/sitemap-index.xml')} />
-    <meta name="theme-color" content="#0b0c0f" />
+    <meta name="theme-color" content="#faf8f3" />
 
     <!-- Link previews (LinkedIn, Handshake, Slack, iMessage, Discord) -->
     <meta property="og:type" content="website" />
@@ -56,7 +56,7 @@ const ogImage = new URL(url(image), Astro.site);
       (function () {
         var t;
         try { t = localStorage.getItem('theme'); } catch (e) {}
-        if (!t) t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        if (!t) t = 'light'; // bright by default; visitors can switch to dark with the toggle
         document.documentElement.setAttribute('data-theme', t);
         document.documentElement.classList.add('js');
       })();
