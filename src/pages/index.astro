@@ -1,0 +1,196 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import { site, experience, skills } from '../config';
+import { url } from '../utils';
+
+const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured = all.filter((p) => p.data.featured).slice(0, 4);
+
+const specs = [
+  ['Name', site.name],
+  ['Discipline', site.major],
+  ['School', site.schoolShort],
+  ['Class of', site.gradYear],
+  ['Location', site.location],
+  ['Projects', String(all.length).padStart(2, '0')],
+];
+---
+
+<BaseLayout>
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-20 sm:px-6 sm:pt-24 lg:pb-28">
+    <div class="grid items-center gap-12 lg:grid-cols-[1.35fr_1fr]">
+      <div class="hero-in">
+        {
+          site.status.available && (
+            <p class="mb-8 inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-3 py-1.5 text-xs text-muted">
+              <span class="pulse-dot" />
+              {site.status.text}
+            </p>
+          )
+        }
+        <h1 class="text-5xl leading-[0.95] font-semibold tracking-[-0.045em] text-balance sm:text-7xl">
+          {site.name}<span class="text-accent">.</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-muted sm:text-xl">
+          <span class="text-fg">{site.major} @ {site.schoolShort}.</span>{' '}
+          {site.tagline}
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-3">
+          <a
+            href={url('/projects')}
+            class="inline-flex h-11 items-center gap-2 rounded-lg bg-fg px-5 text-sm font-medium text-bg transition-opacity hover:opacity-85"
+          >
+            View projects <Icon name="arrow" size={16} />
+          </a>
+          <a
+            href={url(site.resume)}
+            target="_blank"
+            rel="noopener"
+            class="inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong bg-surface px-5 text-sm font-medium transition-colors hover:border-fg"
+          >
+            <Icon name="file" size={16} /> Resume
+          </a>
+          <div class="ml-1 flex items-center gap-1">
+            <a href={site.links.github} target="_blank" rel="noopener" aria-label="GitHub" class="grid size-11 place-items-center rounded-lg text-muted transition-colors hover:text-fg"><Icon name="github" size={19} /></a>
+            <a href={site.links.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn" class="grid size-11 place-items-center rounded-lg text-muted transition-colors hover:text-fg"><Icon name="linkedin" size={18} /></a>
+            <a href={`mailto:${site.email}`} aria-label="Email" class="grid size-11 place-items-center rounded-lg text-muted transition-colors hover:text-fg"><Icon name="mail" size={19} /></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Datasheet card -->
+      <aside class="hero-in hero-in-2 corners rounded-xl border border-line bg-surface/80 backdrop-blur-sm" aria-label="Quick facts">
+        <div class="flex items-center justify-between border-b border-line px-5 py-3">
+          <span class="label">Datasheet</span>
+          <span class="font-mono text-[0.65rem] text-faint">DOC-001 · REV A</span>
+        </div>
+        <dl class="divide-y divide-line">
+          {
+            specs.map(([k, v]) => (
+              <div class="flex items-baseline justify-between gap-6 px-5 py-3">
+                <dt class="font-mono text-xs text-faint uppercase tracking-wider">{k}</dt>
+                <dd class="text-right text-sm text-fg">{v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <div class="flex items-center justify-between border-t border-line px-5 py-3 font-mono text-[0.65rem] text-faint">
+          <span>STATUS</span>
+          <span class="flex items-center gap-2 text-ok"><span class="size-1.5 rounded-full bg-ok"></span>OPERATIONAL</span>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ── SELECTED WORK ────────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="work">
+    <SectionHeading index="01" label="Selected work" title="Things I've designed & built" id="work">
+      <a href={url('/projects')} class="group inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-fg">
+        All projects <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-0.5" />
+      </a>
+    </SectionHeading>
+    <div class="grid gap-5 md:grid-cols-2">
+      {featured.map((p, i) => <ProjectCard project={p} index={i} size="lg" />)}
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE ───────────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6" id="experience" aria-labelledby="exp-h">
+    <SectionHeading index="02" label="Experience" title="Where I've worked" />
+    <ol class="relative border-l border-line pl-0">
+      {
+        experience.map((e) => (
+          <li class="reveal group relative grid gap-2 pb-10 pl-8 last:pb-0 md:grid-cols-[180px_1fr] md:gap-10">
+            <span class="absolute top-1.5 -left-[5px] size-[9px] rounded-full border border-line-strong bg-bg transition-colors group-hover:border-accent group-hover:bg-accent" />
+            <p class="font-mono text-xs leading-6 tracking-wide text-faint uppercase">
+              {e.start} — {e.end}
+            </p>
+            <div>
+              <h3 class="text-lg font-medium tracking-tight">
+                {e.role} <span class="text-faint">·</span>{' '}
+                {e.href ? <a href={e.href} class="text-muted hover:text-fg" target="_blank" rel="noopener">{e.org}</a> : <span class="text-muted">{e.org}</span>}
+              </h3>
+              <ul class="mt-3 space-y-2 text-sm leading-relaxed text-muted">
+                {e.bullets.map((b) => (
+                  <li class="relative pl-5">
+                    <span class="absolute left-0 font-mono text-accent">→</span>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              {e.tags && (
+                <ul class="mt-4 flex flex-wrap gap-1.5">
+                  {e.tags.map((t) => <li class="tag">{t}</li>)}
+                </ul>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- ── SKILLS ───────────────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="skills-h">
+    <SectionHeading index="03" label="Toolkit" title="Skills & tools" id="skills-h" />
+    <div class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
+      {
+        skills.map((s) => (
+          <div class="reveal bg-surface p-6">
+            <h3 class="label mb-4">{s.group}</h3>
+            <ul class="flex flex-wrap gap-2">
+              {s.items.map((i) => <li class="rounded-md border border-line bg-surface-2 px-2.5 py-1 text-sm text-fg">{i}</li>)}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ── CONTACT ──────────────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="contact" aria-labelledby="contact-h">
+    <div class="reveal corners relative overflow-hidden rounded-2xl border border-line bg-surface px-6 py-14 sm:px-12 sm:py-20">
+      <p class="label flex items-center gap-3"><span class="text-accent">04</span><span class="h-px w-8 bg-line-strong"></span>Contact</p>
+      <h2 id="contact-h" class="mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">
+        Let's build something<span class="text-accent">.</span>
+      </h2>
+      <p class="mt-5 max-w-lg text-muted">
+        I'm looking for internships for Summer 2027. If you're hiring, or just want to talk engineering, my inbox is open.
+      </p>
+      <div class="mt-9 flex flex-wrap gap-3">
+        <button
+          type="button"
+          data-copy={site.email}
+          class="inline-flex h-11 items-center gap-2 rounded-lg bg-accent px-5 text-sm font-medium text-white transition-opacity hover:opacity-90"
+        >
+          <Icon name="copy" size={16} /><span data-copy-label>Copy email</span>
+        </button>
+        <a
+          href={`mailto:${site.email}`}
+          class="inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong px-5 text-sm font-medium transition-colors hover:border-fg"
+        >
+          <Icon name="mail" size={16} />{site.email}
+        </a>
+        <a
+          href={site.links.linkedin}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong px-5 text-sm font-medium transition-colors hover:border-fg"
+        >
+          <Icon name="linkedin" size={15} />LinkedIn
+        </a>
+      </div>
+      <svg class="pointer-events-none absolute -right-16 -bottom-16 hidden h-80 w-80 text-line-strong md:block" viewBox="0 0 200 200" fill="none" stroke="currentColor" aria-hidden="true">
+        <circle cx="100" cy="100" r="90" stroke-dasharray="2 4" />
+        <circle cx="100" cy="100" r="60" />
+        <circle cx="100" cy="100" r="30" stroke-dasharray="6 4" />
+        <path d="M100 0v200M0 100h200" stroke-dasharray="1 5" />
+      </svg>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const categories = ['All', ...new Set(projects.map((p) => p.data.category))];
+---
+
+<BaseLayout title="Projects" description="Every engineering project I've built: software, hardware, embedded, CAD, and research.">
+  <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
+    <div class="reveal">
+      <p class="label flex items-center gap-3"><span class="text-accent">INDEX</span><span class="h-px w-8 bg-line-strong"></span>All projects</p>
+      <h1 class="mt-4 text-4xl font-semibold tracking-[-0.035em] sm:text-6xl">Projects<span class="text-accent">.</span></h1>
+      <p class="mt-4 max-w-xl text-lg text-muted">
+        Each one is a write-up of the problem, my design decisions, and what happened when it met reality.
+      </p>
+    </div>
+
+    <div class="reveal mt-10 flex flex-wrap items-center gap-2" role="group" aria-label="Filter by category">
+      {
+        categories.map((c, i) => (
+          <button
+            type="button"
+            data-filter={c}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+            class="rounded-full border border-line bg-surface px-3.5 py-1.5 font-mono text-xs text-muted transition-colors hover:border-line-strong hover:text-fg aria-pressed:border-accent aria-pressed:bg-accent-soft aria-pressed:text-fg"
+          >
+            {c}
+            <span class="ml-1 text-faint">
+              {c === 'All' ? projects.length : projects.filter((p) => p.data.category === c).length}
+            </span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" id="grid">
+      {projects.map((p, i) => <ProjectCard project={p} index={i} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('#grid [data-category]');
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      cards.forEach((c) => {
+        c.style.display = f === 'All' || c.dataset.category === f ? '' : 'none';
+      });
+    }),
+  );
+</script>

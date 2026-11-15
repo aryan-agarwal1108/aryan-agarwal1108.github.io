@@ -1,0 +1,23 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config';
+import { url } from '../utils';
+const year = new Date().getFullYear();
+---
+
+<footer class="relative z-10 mt-24 border-t border-line">
+  <div class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+    <div class="space-y-1">
+      <p class="text-sm text-fg">{site.name}</p>
+      <p class="font-mono text-xs text-faint">
+        © {year} · Built with Astro · <a href={url('/sitemap-index.xml')} class="hover:text-fg">Sitemap</a>
+      </p>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href={site.links.github} target="_blank" rel="noopener" aria-label="GitHub" class="grid size-9 place-items-center rounded-md border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"><Icon name="github" size={16} /></a>
+      <a href={site.links.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn" class="grid size-9 place-items-center rounded-md border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"><Icon name="linkedin" size={15} /></a>
+      <a href={`mailto:${site.email}`} aria-label="Email" class="grid size-9 place-items-center rounded-md border border-line text-muted transition-colors hover:border-line-strong hover:text-fg"><Icon name="mail" size={16} /></a>
+      <span class="ml-2 hidden font-mono text-[0.68rem] tracking-widest text-faint uppercase sm:inline">REV {year}.1</span>
+    </div>
+  </div>
+</footer>

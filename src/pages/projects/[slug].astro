@@ -1,0 +1,127 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectCover from '../../components/ProjectCover.astro';
+import Icon from '../../components/Icon.astro';
+import { url, pad } from '../../utils';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  return projects.map((project, i) => ({
+    params: { slug: project.id },
+    props: {
+      project,
+      index: i,
+      prev: projects[(i - 1 + projects.length) % projects.length],
+      next: projects[(i + 1) % projects.length],
+    },
+  }));
+}
+
+const { project, index, prev, next } = Astro.props;
+const p = project.data;
+const { Content } = await render(project);
+
+const spec = [
+  ['Role', p.role],
+  ['Timeline', p.timeline],
+  ['Team', p.team],
+  ['Category', p.category],
+  ['Status', p.status],
+];
+const links = [
+  p.links.github && { label: 'Source code', href: p.links.github, icon: 'github' as const },
+  p.links.demo && { label: 'Live demo', href: p.links.demo, icon: 'external' as const },
+  p.links.report && { label: 'Report (PDF)', href: url(p.links.report), icon: 'file' as const },
+].filter(Boolean) as { label: string; href: string; icon: 'github' | 'external' | 'file' }[];
+---
+
+<BaseLayout title={p.title} description={p.summary} image={p.cover ?? '/og.png'}>
+  <article class="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-14">
+    <a href={url('/projects')} class="group inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-fg">
+      <Icon name="arrow-left" size={15} class="transition-transform group-hover:-translate-x-0.5" /> All projects
+    </a>
+
+    <header class="reveal mt-8 max-w-3xl">
+      <p class="label flex items-center gap-3">
+        <span class="text-accent">PRJ-{pad(index + 1)}</span><span class="h-px w-8 bg-line-strong"></span>{p.category} · {p.year}
+      </p>
+      <h1 class="mt-4 text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">{p.title}</h1>
+      <p class="mt-5 text-lg leading-relaxed text-pretty text-muted sm:text-xl">{p.summary}</p>
+    </header>
+
+    <div class="reveal mt-10 overflow-hidden rounded-xl border border-line">
+      <ProjectCover title={p.title} category={p.category} cover={p.cover} fig={pad(index + 1)} eager />
+    </div>
+
+    {
+      p.metrics.length > 0 && (
+        <dl class="reveal mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4">
+          {p.metrics.map((m) => (
+            <div class="bg-surface p-5 sm:p-6">
+              <dd class="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{m.value}</dd>
+              <dt class="mt-1 font-mono text-[0.7rem] tracking-wider text-faint uppercase">{m.label}</dt>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+
+    <div class="mt-14 grid gap-12 lg:grid-cols-[1fr_300px]">
+      <div class="prose reveal max-w-none min-w-0 [&>h2:first-child]:mt-0 [&>h2:first-child]:border-0 [&>h2:first-child]:pt-0">
+        <Content />
+      </div>
+
+      <aside class="order-first lg:order-last">
+        <div class="corners sticky top-20 rounded-xl border border-line bg-surface">
+          <div class="flex items-center justify-between border-b border-line px-5 py-3">
+            <span class="label">Spec sheet</span>
+            <span class="font-mono text-[0.65rem] text-faint">PRJ-{pad(index + 1)}</span>
+          </div>
+          <dl class="divide-y divide-line">
+            {
+              spec.map(([k, v]) => (
+                <div class="px-5 py-3">
+                  <dt class="font-mono text-[0.68rem] tracking-wider text-faint uppercase">{k}</dt>
+                  <dd class="mt-0.5 text-sm text-fg">{v}</dd>
+                </div>
+              ))
+            }
+            <div class="px-5 py-3">
+              <dt class="font-mono text-[0.68rem] tracking-wider text-faint uppercase">Tools</dt>
+              <dd class="mt-2 flex flex-wrap gap-1.5">{p.tags.map((t) => <span class="tag">{t}</span>)}</dd>
+            </div>
+          </dl>
+          {
+            links.length > 0 && (
+              <div class="flex flex-col gap-2 border-t border-line p-4">
+                {links.map((l) => (
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener"
+                    class="flex items-center justify-between rounded-lg border border-line px-3.5 py-2.5 text-sm transition-colors hover:border-accent"
+                  >
+                    <span class="flex items-center gap-2.5"><Icon name={l.icon} size={15} />{l.label}</span>
+                    <Icon name="external" size={14} class="text-faint" />
+                  </a>
+                ))}
+              </div>
+            )
+          }
+        </div>
+      </aside>
+    </div>
+
+    <nav class="mt-20 grid gap-4 border-t border-line pt-8 sm:grid-cols-2" aria-label="More projects">
+      <a href={url(`/projects/${prev.id}`)} class="card group p-5">
+        <span class="label flex items-center gap-2"><Icon name="arrow-left" size={13} />Previous</span>
+        <span class="mt-2 block font-medium text-fg">{prev.data.title}</span>
+      </a>
+      <a href={url(`/projects/${next.id}`)} class="card group p-5 sm:text-right">
+        <span class="label flex items-center gap-2 sm:justify-end">Next<Icon name="arrow" size={13} /></span>
+        <span class="mt-2 block font-medium text-fg">{next.data.title}</span>
+      </a>
+    </nav>
+  </article>
+</BaseLayout>

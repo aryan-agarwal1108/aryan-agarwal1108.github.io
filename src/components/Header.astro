@@ -1,0 +1,89 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config';
+import { url } from '../utils';
+
+const path = Astro.url.pathname.replace(import.meta.env.BASE_URL.replace(/\/$/, ''), '') || '/';
+const nav = [
+  { href: '/projects', label: 'Projects' },
+  { href: '/#experience', label: 'Experience' },
+  { href: '/about', label: 'About' },
+  { href: '/resume', label: 'Resume' },
+];
+const isActive = (href: string) => !href.includes('#') && path.startsWith(href);
+---
+
+<header class="sticky top-0 z-40 border-b border-line bg-bg/75 backdrop-blur-md">
+  <div class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+    <a href={url('/')} class="group flex items-center gap-2.5" aria-label={`${site.name} — home`}>
+      <span
+        class="grid size-7 place-items-center rounded-md border border-line-strong bg-surface font-mono text-[0.7rem] font-medium tracking-tight transition-colors group-hover:border-accent group-hover:text-accent"
+        >{site.initials}</span
+      >
+      <span class="hidden text-sm font-medium tracking-tight sm:inline">{site.name}</span>
+    </a>
+
+    <nav aria-label="Main" class="flex items-center gap-1">
+      <ul class="hidden items-center gap-1 md:flex">
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={url(item.href)}
+                class:list={[
+                  'rounded-md px-3 py-1.5 text-sm transition-colors hover:text-fg',
+                  isActive(item.href) ? 'text-fg' : 'text-muted',
+                ]}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <button
+        type="button"
+        data-cmdk-open
+        class="ml-1 flex h-8 items-center gap-2 rounded-md border border-line bg-surface px-2.5 text-xs text-muted transition-colors hover:border-line-strong hover:text-fg"
+        aria-label="Open command menu"
+      >
+        <span class="md:hidden"><Icon name="menu" size={15} /></span>
+        <span class="hidden md:inline"><Icon name="search" size={14} /></span>
+        <span class="md:hidden">Menu</span>
+        <span class="hidden md:inline">Search</span>
+        <kbd class="hidden rounded border border-line bg-surface-2 px-1.5 font-mono text-[0.65rem] md:inline" data-kbd
+          >Ctrl K</kbd
+        >
+      </button>
+
+      <button
+        type="button"
+        id="theme-toggle"
+        class="grid size-8 place-items-center rounded-md border border-line bg-surface text-muted transition-colors hover:border-line-strong hover:text-fg"
+        aria-label="Toggle color theme"
+      >
+        <span class="hidden dark:block"><Icon name="sun" size={15} /></span>
+        <span class="block dark:hidden"><Icon name="moon" size={15} /></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const kbd = document.querySelector('[data-kbd]');
+  if (kbd && /Mac|iPhone|iPad/.test(navigator.platform)) kbd.textContent = '⌘K';
+
+  function setTheme(t: string) {
+    document.documentElement.setAttribute('data-theme', t);
+    try {
+      localStorage.setItem('theme', t);
+    } catch {}
+  }
+  (window as any).__toggleTheme = () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    setTheme(cur === 'dark' ? 'light' : 'dark');
+  };
+  document.getElementById('theme-toggle')?.addEventListener('click', () => (window as any).__toggleTheme());
+</script>

@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ProjectCover from './ProjectCover.astro';
+import Icon from './Icon.astro';
+import { url, pad } from '../utils';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+  size?: 'lg' | 'md';
+}
+const { project, index, size = 'md' } = Astro.props;
+const p = project.data;
+---
+
+<a
+  href={url(`/projects/${project.id}`)}
+  class="card reveal group flex h-full flex-col overflow-hidden"
+  data-category={p.category}
+>
+  <div class="rounded-t-[11px] border-b border-line">
+    <ProjectCover title={p.title} category={p.category} cover={p.cover} fig={pad(index + 1)} />
+  </div>
+  <div class="flex flex-1 flex-col gap-3 p-5">
+    <div class="flex items-center justify-between font-mono text-[0.68rem] tracking-wider text-faint uppercase">
+      <span>{pad(index + 1)} · {p.category}</span>
+      <span>{p.year}</span>
+    </div>
+    <h3 class:list={['font-semibold tracking-tight text-fg', size === 'lg' ? 'text-xl' : 'text-lg']}>
+      {p.title}
+      <Icon
+        name="external"
+        size={15}
+        class="ml-1 inline -translate-y-px text-faint transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
+      />
+    </h3>
+    <p class="text-sm leading-relaxed text-muted">{p.summary}</p>
+    <p class="flex items-center gap-2 text-sm text-fg">
+      <span class="h-px w-4 bg-accent"></span>
+      {p.result}
+    </p>
+    <ul class="mt-auto flex flex-wrap gap-1.5 pt-2" aria-label="Technologies">
+      {p.tags.slice(0, 5).map((t) => <li class="tag">{t}</li>)}
+    </ul>
+  </div>
+</a>

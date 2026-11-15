@@ -1,0 +1,162 @@
+---
+import { getCollection } from 'astro:content';
+import { site } from '../config';
+import { url } from '../utils';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+
+type Item = { group: string; label: string; hint?: string; href?: string; action?: string; external?: boolean };
+const items: Item[] = [
+  { group: 'Pages', label: 'Home', href: url('/') },
+  { group: 'Pages', label: 'All projects', href: url('/projects') },
+  { group: 'Pages', label: 'Experience', href: url('/#experience') },
+  { group: 'Pages', label: 'About', href: url('/about') },
+  { group: 'Pages', label: 'Resume', href: url('/resume') },
+  ...projects.map((p) => ({ group: 'Projects', label: p.data.title, hint: p.data.category, href: url(`/projects/${p.id}`) })),
+  { group: 'Actions', label: 'Copy email address', hint: site.email, action: 'copy-email' },
+  { group: 'Actions', label: 'Download resume (PDF)', href: url(site.resume), external: true },
+  { group: 'Actions', label: 'Toggle light / dark theme', action: 'theme' },
+  { group: 'Links', label: 'GitHub', href: site.links.github, external: true },
+  { group: 'Links', label: 'LinkedIn', href: site.links.linkedin, external: true },
+];
+const groups = [...new Set(items.map((i) => i.group))];
+---
+
+<dialog
+  id="cmdk"
+  class="m-auto mt-[12vh] w-[min(92vw,560px)] overflow-hidden rounded-xl border border-line-strong bg-surface p-0 text-fg shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-sm"
+  aria-label="Command menu"
+  data-email={site.email}
+>
+  <div class="flex items-center gap-3 border-b border-line px-4">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" class="text-faint" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+    <input
+      id="cmdk-input"
+      type="text"
+      placeholder="Search pages, projects, actions…"
+      class="h-12 w-full bg-transparent text-sm outline-none placeholder:text-faint focus-visible:outline-none"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="true"
+      aria-controls="cmdk-list"
+    />
+    <kbd class="rounded border border-line bg-surface-2 px-1.5 font-mono text-[0.65rem] text-faint">ESC</kbd>
+  </div>
+  <ul id="cmdk-list" role="listbox" class="max-h-[50vh] overflow-y-auto p-2">
+    {
+      groups.map((g) => (
+        <li role="presentation" data-group={g}>
+          <p class="label px-2 pt-2 pb-1.5 !text-[0.65rem]">{g}</p>
+          <ul role="presentation">
+            {items
+              .filter((i) => i.group === g)
+              .map((i) => (
+                <li
+                  role="option"
+                  aria-selected="false"
+                  data-item
+                  data-href={i.href}
+                  data-action={i.action}
+                  data-external={i.external ? '1' : undefined}
+                  data-search={`${i.label} ${i.hint ?? ''} ${g}`.toLowerCase()}
+                  class="flex cursor-pointer items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm text-muted aria-selected:bg-surface-2 aria-selected:text-fg"
+                >
+                  <span>{i.label}</span>
+                  {i.hint && <span class="truncate font-mono text-[0.7rem] text-faint">{i.hint}</span>}
+                </li>
+              ))}
+          </ul>
+        </li>
+      ))
+    }
+    <li id="cmdk-empty" class="hidden px-3 py-6 text-center text-sm text-faint">No results.</li>
+  </ul>
+  <div class="flex items-center gap-4 border-t border-line px-4 py-2 font-mono text-[0.65rem] text-faint">
+    <span>↑↓ navigate</span><span>↵ open</span><span>esc close</span>
+  </div>
+</dialog>
+
+<script>
+  const dlg = document.getElementById('cmdk') as HTMLDialogElement;
+  const input = document.getElementById('cmdk-input') as HTMLInputElement;
+  const empty = document.getElementById('cmdk-empty')!;
+  const all = Array.from(dlg.querySelectorAll<HTMLLIElement>('[data-item]'));
+  let visible: HTMLLIElement[] = all;
+  let idx = 0;
+
+  function select(i: number) {
+    visible.forEach((el) => el.setAttribute('aria-selected', 'false'));
+    if (!visible.length) return;
+    idx = (i + visible.length) % visible.length;
+    visible[idx].setAttribute('aria-selected', 'true');
+    visible[idx].scrollIntoView({ block: 'nearest' });
+  }
+
+  function filter() {
+    const q = input.value.trim().toLowerCase();
+    visible = [];
+    all.forEach((el) => {
+      const hit = !q || q.split(/\s+/).every((t) => el.dataset.search!.includes(t));
+      el.hidden = !hit;
+      if (hit) visible.push(el);
+    });
+    dlg.querySelectorAll<HTMLElement>('[data-group]').forEach((g) => {
+      g.hidden = !g.querySelector('[data-item]:not([hidden])');
+    });
+    empty.classList.toggle('hidden', visible.length > 0);
+    select(0);
+  }
+
+  function open() {
+    if (dlg.open) return;
+    input.value = '';
+    filter();
+    dlg.showModal();
+    input.focus();
+  }
+
+  async function run(el: HTMLLIElement) {
+    const { href, action, external } = el.dataset;
+    if (action === 'copy-email') {
+      try {
+        await navigator.clipboard.writeText(dlg.dataset.email!);
+        el.querySelector('span')!.textContent = 'Copied ✓';
+        setTimeout(() => dlg.close(), 600);
+      } catch {
+        location.href = `mailto:${dlg.dataset.email}`;
+      }
+      return;
+    }
+    if (action === 'theme') {
+      (window as any).__toggleTheme?.();
+      return;
+    }
+    dlg.close();
+    if (href) external ? window.open(href, '_blank', 'noopener') : (location.href = href);
+  }
+
+  document.querySelectorAll('[data-cmdk-open]').forEach((b) => b.addEventListener('click', open));
+  window.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      dlg.open ? dlg.close() : open();
+    }
+  });
+  input.addEventListener('input', filter);
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') (e.preventDefault(), select(idx + 1));
+    else if (e.key === 'ArrowUp') (e.preventDefault(), select(idx - 1));
+    else if (e.key === 'Enter' && visible[idx]) (e.preventDefault(), run(visible[idx]));
+  });
+  all.forEach((el) => {
+    el.addEventListener('click', () => run(el));
+    el.addEventListener('mousemove', () => {
+      const i = visible.indexOf(el);
+      if (i !== idx) select(i);
+    });
+  });
+  dlg.addEventListener('click', (e) => {
+    if (e.target === dlg) dlg.close();
+  });
+</script>
