@@ -1,12 +1,13 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
+import { getProjects } from '../../lib/projects';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCover from '../../components/ProjectCover.astro';
 import Icon from '../../components/Icon.astro';
 import { url, pad } from '../../utils';
 
 export async function getStaticPaths() {
-  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  const projects = await getProjects();
   return projects.map((project, i) => ({
     params: { slug: project.id },
     props: {
@@ -22,16 +23,20 @@ const { project, index, prev, next } = Astro.props;
 const p = project.data;
 const { Content } = await render(project);
 
-const spec = [
-  ['Role', p.role],
-  ['Timeline', p.timeline],
-  ['Team', p.team],
-  ['Category', p.category],
-  ['Status', p.status],
-];
+const spec = (
+  [
+    ['Role', p.role],
+    ['Organization', p.org],
+    ['Timeline', p.timeline],
+    ['Team', p.team],
+    ['Discipline', p.category],
+    ['Status', p.status],
+  ] as [string, string | undefined][]
+).filter(([, v]) => v) as [string, string][];
 const links = [
   p.links.github && { label: 'Source code', href: p.links.github, icon: 'github' as const },
   p.links.demo && { label: 'Live demo', href: p.links.demo, icon: 'external' as const },
+  p.links.paper && { label: 'Paper', href: p.links.paper, icon: 'file' as const },
   p.links.report && { label: 'Report (PDF)', href: url(p.links.report), icon: 'file' as const },
 ].filter(Boolean) as { label: string; href: string; icon: 'github' | 'external' | 'file' }[];
 ---
@@ -51,7 +56,7 @@ const links = [
     </header>
 
     <div class="reveal mt-10 overflow-hidden rounded-xl border border-line">
-      <ProjectCover title={p.title} category={p.category} cover={p.cover} fig={pad(index + 1)} eager />
+      <ProjectCover title={p.title} category={p.category} art={p.art} cover={p.cover} fig={pad(index + 1)} eager />
     </div>
 
     {

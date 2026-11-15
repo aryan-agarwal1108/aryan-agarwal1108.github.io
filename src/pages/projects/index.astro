@@ -1,13 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
+import { getProjects } from '../../lib/projects';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const projects = await getProjects();
 const categories = ['All', ...new Set(projects.map((p) => p.data.category))];
 ---
 
-<BaseLayout title="Projects" description="Every engineering project I've built: software, hardware, embedded, CAD, and research.">
+<BaseLayout title="Projects" description="Aerospace, propulsion, mechanical design, and quantum physics projects by Aryan Agarwal.">
   <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
     <div class="reveal">
       <p class="label flex items-center gap-3"><span class="text-accent">INDEX</span><span class="h-px w-8 bg-line-strong"></span>All projects</p>

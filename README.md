@@ -4,12 +4,12 @@
 
 ![Portfolio preview](public/og.png)
 
-My personal engineering portfolio, which collects my projects, experience, and resume in one place. The design is a dark "blueprint" theme: a faint engineering grid, datasheet-style spec boxes, and monospace drawing labels.
+My personal website and engineering portfolio. I study Aerospace Engineering & Physics at UIUC, and this site collects my projects, research, experience, and resume. The design is a dark "blueprint" theme: a faint engineering grid, datasheet-style spec boxes, and monospace drawing labels.
 
 ## Features
 
 - **Project case studies:** each project gets its own page with a spec sheet, key metrics, and a problem, approach, and results write-up
-- **Filterable project index** by discipline (Software / Hardware / Embedded / CAD / Research)
+- **Filterable project index** by discipline (Aerodynamics / Propulsion / Mechanical Design / Quantum / Optics)
 - **Command menu:** press <kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd> to jump anywhere, copy my email, or switch the theme
 - **Light and dark themes** that remember each visitor's choice
 - **HTML and PDF resume:** the HTML version reads well on phones and can be parsed by applicant-tracking systems
@@ -32,7 +32,7 @@ My personal engineering portfolio, which collects my projects, experience, and r
 ```
 ├── .github/workflows/deploy.yml   # build + deploy to GitHub Pages
 ├── public/
-│   ├── files/resume.pdf           # ← your resume
+│   ├── files/Aryan_Agarwal_Resume.pdf  # ← resume
 │   ├── images/                    # ← project photos and headshot
 │   ├── favicon.svg
 │   └── og.png                     # link-preview image (generated)
@@ -48,10 +48,10 @@ My personal engineering portfolio, which collects my projects, experience, and r
 
 ## Editing the content
 
-1. **Personal info:** edit `src/config.ts`.
-2. **Projects:** add a Markdown file to `src/content/projects/`. Copy an existing one to start, since the frontmatter fields (role, timeline, metrics, links) fill in the spec sheet automatically. Set `featured: true` to show the project on the home page.
+1. **Personal info, experience, skills, about-page content:** edit `src/config.ts`. Each role can link to several projects through its `projects:` list.
+2. **Projects:** copy `src/content/projects/_template.md` to a new file in the same folder, since the frontmatter fields (role, timeline, metrics, links) fill in the spec sheet automatically. Set `featured: true` to show the project on the home page.
 3. **Project images:** put them in `public/images/` and set `cover: /images/your-file.jpg` in the project's frontmatter.
-4. **Resume:** replace `public/files/resume.pdf`.
+4. **Resume:** replace `public/files/Aryan_Agarwal_Resume.pdf`.
 5. **Link-preview image:** after changing your name or title, run `node scripts/make-og.mjs`.
 
 ## Running locally

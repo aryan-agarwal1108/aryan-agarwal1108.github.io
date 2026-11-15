@@ -1,8 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
-import { site, experience, skills, coursework } from '../config';
+import { site, education, experience, leadership, skills, type Experience } from '../config';
 import { url } from '../utils';
+
+const sections: { title: string; items: Experience[] }[] = [
+  { title: 'Experience', items: experience },
+  { title: 'Leadership & Honors', items: leadership },
+];
 ---
 
 <BaseLayout title="Resume" description={`Resume of ${site.name}, ${site.major} student at ${site.schoolShort}.`}>
@@ -28,45 +33,60 @@ import { url } from '../utils';
         <h2 class="text-2xl font-semibold tracking-tight">{site.name}</h2>
         <p class="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-muted">
           <a href={`mailto:${site.email}`} class="hover:text-fg">{site.email}</a>
-          <a href={site.links.github} class="hover:text-fg">{site.links.github.replace('https://', '')}</a>
           <a href={site.links.linkedin} class="hover:text-fg">{site.links.linkedin.replace('https://www.', '')}</a>
           <span>{site.location}</span>
         </p>
       </header>
 
       <div class="mt-8">
-        <h3 class="label mb-3">Education</h3>
-        <div class="flex flex-wrap justify-between gap-2">
-          <p class="font-medium">{site.school}</p>
-          <p class="font-mono text-xs text-faint">EXPECTED MAY {site.gradYear}</p>
-        </div>
-        <p class="mt-1 text-sm text-muted">B.S. in {site.major}</p>
-        <p class="mt-2 text-sm text-muted"><span class="text-fg">Coursework:</span> {coursework.join(', ')}</p>
-      </div>
-
-      <div class="mt-8">
-        <h3 class="label mb-3">Experience</h3>
-        <div class="space-y-6">
+        <h3 class="label mb-4">Education</h3>
+        <div class="space-y-5">
           {
-            experience.map((e) => (
+            education.map((e) => (
               <div>
-                <div class="flex flex-wrap justify-between gap-2">
-                  <p class="font-medium">
-                    {e.role} <span class="text-muted">· {e.org}</span>
-                  </p>
-                  <p class="font-mono text-xs text-faint uppercase">{e.start} — {e.end}</p>
+                <div class="flex flex-wrap justify-between gap-x-4 gap-y-1">
+                  <p class="font-medium">{e.school}</p>
+                  <p class="font-mono text-xs text-faint uppercase">{e.location} · {e.date}</p>
                 </div>
-                <ul class="mt-2 space-y-1 text-sm text-muted">
-                  {e.bullets.map((b) => <li class="relative pl-4"><span class="absolute left-0 text-accent">·</span>{b}</li>)}
-                </ul>
+                <p class="mt-1 text-sm text-muted italic">{e.degree}</p>
+                {e.details && (
+                  <ul class="mt-1.5 space-y-1 text-sm text-muted">
+                    {e.details.map((d) => <li class="relative pl-4"><span class="absolute left-0 text-accent">·</span>{d}</li>)}
+                  </ul>
+                )}
               </div>
             ))
           }
         </div>
       </div>
 
-      <div class="mt-8">
-        <h3 class="label mb-3">Skills</h3>
+      {
+        sections.map((s) => (
+          <div class="mt-9">
+            <h3 class="label mb-4">{s.title}</h3>
+            <div class="space-y-6">
+              {s.items.map((e) => (
+                <div>
+                  <div class="flex flex-wrap justify-between gap-x-4 gap-y-1">
+                    <p class="font-medium">{e.role}</p>
+                    <p class="font-mono text-xs text-faint uppercase">{e.location}</p>
+                  </div>
+                  <div class="flex flex-wrap justify-between gap-x-4 gap-y-1">
+                    <p class="text-sm text-muted italic">{e.org}</p>
+                    <p class="font-mono text-xs text-faint uppercase">{e.start} – {e.end}</p>
+                  </div>
+                  <ul class="mt-2 space-y-1 text-sm text-muted">
+                    {e.bullets.map((b) => <li class="relative pl-4"><span class="absolute left-0 text-accent">·</span>{b}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+
+      <div class="mt-9">
+        <h3 class="label mb-4">Technical Skills</h3>
         <dl class="space-y-1.5 text-sm">
           {skills.map((s) => <div class="flex flex-wrap gap-x-2"><dt class="text-fg">{s.group}:</dt><dd class="text-muted">{s.items.join(', ')}</dd></div>)}
         </dl>

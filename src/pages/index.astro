@@ -1,21 +1,23 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import Timeline from '../components/Timeline.astro';
 import Icon from '../components/Icon.astro';
-import { site, experience, skills } from '../config';
+import { site, experience, leadership, skills, highlights } from '../config';
+import { getProjects } from '../lib/projects';
 import { url } from '../utils';
 
-const all = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const all = await getProjects();
 const featured = all.filter((p) => p.data.featured).slice(0, 4);
 
 const specs = [
   ['Name', site.name],
-  ['Discipline', site.major],
+  ['Discipline', 'Aerospace Eng. + Physics'],
   ['School', site.schoolShort],
   ['Class of', site.gradYear],
-  ['Location', site.location],
+  ['Based in', site.location],
+  ['Previously', site.previously],
   ['Projects', String(all.length).padStart(2, '0')],
 ];
 ---
@@ -48,16 +50,14 @@ const specs = [
             View projects <Icon name="arrow" size={16} />
           </a>
           <a
-            href={url(site.resume)}
-            target="_blank"
-            rel="noopener"
+            href={url('/resume')}
             class="inline-flex h-11 items-center gap-2 rounded-lg border border-line-strong bg-surface px-5 text-sm font-medium transition-colors hover:border-fg"
           >
             <Icon name="file" size={16} /> Resume
           </a>
           <div class="ml-1 flex items-center gap-1">
-            <a href={site.links.github} target="_blank" rel="noopener" aria-label="GitHub" class="grid size-11 place-items-center rounded-lg text-muted transition-colors hover:text-fg"><Icon name="github" size={19} /></a>
             <a href={site.links.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn" class="grid size-11 place-items-center rounded-lg text-muted transition-colors hover:text-fg"><Icon name="linkedin" size={18} /></a>
+            <a href={site.links.github} target="_blank" rel="noopener" aria-label="GitHub" class="grid size-11 place-items-center rounded-lg text-muted transition-colors hover:text-fg"><Icon name="github" size={19} /></a>
             <a href={`mailto:${site.email}`} aria-label="Email" class="grid size-11 place-items-center rounded-lg text-muted transition-colors hover:text-fg"><Icon name="mail" size={19} /></a>
           </div>
         </div>
@@ -73,7 +73,7 @@ const specs = [
           {
             specs.map(([k, v]) => (
               <div class="flex items-baseline justify-between gap-6 px-5 py-3">
-                <dt class="font-mono text-xs text-faint uppercase tracking-wider">{k}</dt>
+                <dt class="font-mono text-xs tracking-wider text-faint uppercase">{k}</dt>
                 <dd class="text-right text-sm text-fg">{v}</dd>
               </div>
             ))
@@ -81,7 +81,7 @@ const specs = [
         </dl>
         <div class="flex items-center justify-between border-t border-line px-5 py-3 font-mono text-[0.65rem] text-faint">
           <span>STATUS</span>
-          <span class="flex items-center gap-2 text-ok"><span class="size-1.5 rounded-full bg-ok"></span>OPERATIONAL</span>
+          <span class="flex items-center gap-2 text-ok"><span class="size-1.5 rounded-full bg-ok"></span>CLEARED FOR TAKEOFF</span>
         </div>
       </aside>
     </div>
@@ -89,9 +89,9 @@ const specs = [
 
   <!-- ── SELECTED WORK ────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="work">
-    <SectionHeading index="01" label="Selected work" title="Things I've designed & built" id="work">
+    <SectionHeading index="01" label="Selected work" title="Things I've designed, built & researched" id="work">
       <a href={url('/projects')} class="group inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-fg">
-        All projects <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-0.5" />
+        All {all.length} projects <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-0.5" />
       </a>
     </SectionHeading>
     <div class="grid gap-5 md:grid-cols-2">
@@ -100,44 +100,19 @@ const specs = [
   </section>
 
   <!-- ── EXPERIENCE ───────────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6" id="experience" aria-labelledby="exp-h">
-    <SectionHeading index="02" label="Experience" title="Where I've worked" />
-    <ol class="relative border-l border-line pl-0">
-      {
-        experience.map((e) => (
-          <li class="reveal group relative grid gap-2 pb-10 pl-8 last:pb-0 md:grid-cols-[180px_1fr] md:gap-10">
-            <span class="absolute top-1.5 -left-[5px] size-[9px] rounded-full border border-line-strong bg-bg transition-colors group-hover:border-accent group-hover:bg-accent" />
-            <p class="font-mono text-xs leading-6 tracking-wide text-faint uppercase">
-              {e.start} — {e.end}
-            </p>
-            <div>
-              <h3 class="text-lg font-medium tracking-tight">
-                {e.role} <span class="text-faint">·</span>{' '}
-                {e.href ? <a href={e.href} class="text-muted hover:text-fg" target="_blank" rel="noopener">{e.org}</a> : <span class="text-muted">{e.org}</span>}
-              </h3>
-              <ul class="mt-3 space-y-2 text-sm leading-relaxed text-muted">
-                {e.bullets.map((b) => (
-                  <li class="relative pl-5">
-                    <span class="absolute left-0 font-mono text-accent">→</span>
-                    {b}
-                  </li>
-                ))}
-              </ul>
-              {e.tags && (
-                <ul class="mt-4 flex flex-wrap gap-1.5">
-                  {e.tags.map((t) => <li class="tag">{t}</li>)}
-                </ul>
-              )}
-            </div>
-          </li>
-        ))
-      }
-    </ol>
+  <section class="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6" id="experience">
+    <SectionHeading index="02" label="Experience" title="Research & engineering roles" />
+    <Timeline items={experience} />
+
+    <div class="mt-16">
+      <h3 class="reveal label mb-8 flex items-center gap-3"><span class="h-px w-8 bg-line-strong"></span>Leadership & honors</h3>
+      <Timeline items={leadership} compact />
+    </div>
   </section>
 
   <!-- ── SKILLS ───────────────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" aria-labelledby="skills-h">
-    <SectionHeading index="03" label="Toolkit" title="Skills & tools" id="skills-h" />
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <SectionHeading index="03" label="Toolkit" title="Skills & tools" id="skills" />
     <div class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
       {
         skills.map((s) => (
@@ -152,15 +127,54 @@ const specs = [
     </div>
   </section>
 
+  <!-- ── ABOUT (personal) ─────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <SectionHeading index="04" label="About me" title="Beyond the résumé" id="about-me" />
+    <div class="grid gap-8 lg:grid-cols-[280px_1fr]">
+      <div class="reveal corners w-full max-w-[280px] self-start overflow-hidden rounded-xl border border-line bg-surface">
+        <div class="blueprint-fill grid aspect-square place-items-center">
+          <!-- Swap for a photo: <img src={url('/images/headshot.jpg')} alt="Aryan Agarwal" class="size-full object-cover" /> -->
+          <span class="font-mono text-6xl font-medium tracking-tight text-accent/80">{site.initials}</span>
+        </div>
+        <div class="flex items-center gap-2 border-t border-line px-4 py-3 text-sm text-muted">
+          <Icon name="pin" size={15} />{site.location} · prev. {site.previously}
+        </div>
+      </div>
+      <div class="reveal flex flex-col">
+        <div class="space-y-4 text-lg leading-relaxed text-muted">
+          <p>
+            I'm <span class="text-fg">{site.firstName}</span>, a first-year <span class="text-fg">Aerospace Engineering and Physics</span> dual-degree student at the University of Illinois. I finished high school in Dubai, and before college I'd already worked on satellite quantum communication, drone design, and quantum machine learning in research labs across the UAE.
+          </p>
+          <p>
+            I also care about opening research up to other students. I founded <a href={leadership[0].href} target="_blank" rel="noopener" class="text-fg underline decoration-accent underline-offset-4">Erudios</a>, which connected 1,000+ high schoolers worldwide with university mentors to do their own research projects.
+          </p>
+        </div>
+        <dl class="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
+          {
+            highlights.map((h) => (
+              <div class="bg-surface p-4">
+                <dd class="text-2xl font-semibold tracking-tight text-fg">{h.value}</dd>
+                <dt class="mt-1 text-xs leading-snug text-faint">{h.label}</dt>
+              </div>
+            ))
+          }
+        </dl>
+        <a href={url('/about')} class="group mt-6 inline-flex items-center gap-1.5 self-start text-sm text-muted transition-colors hover:text-fg">
+          More about me <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-0.5" />
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ── CONTACT ──────────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="contact" aria-labelledby="contact-h">
     <div class="reveal corners relative overflow-hidden rounded-2xl border border-line bg-surface px-6 py-14 sm:px-12 sm:py-20">
-      <p class="label flex items-center gap-3"><span class="text-accent">04</span><span class="h-px w-8 bg-line-strong"></span>Contact</p>
+      <p class="label flex items-center gap-3"><span class="text-accent">05</span><span class="h-px w-8 bg-line-strong"></span>Contact</p>
       <h2 id="contact-h" class="mt-5 max-w-2xl text-4xl font-semibold tracking-[-0.035em] text-balance sm:text-6xl">
         Let's build something<span class="text-accent">.</span>
       </h2>
       <p class="mt-5 max-w-lg text-muted">
-        I'm looking for internships for Summer 2027. If you're hiring, or just want to talk engineering, my inbox is open.
+        I'm looking for Summer 2027 internships in aerospace, propulsion, and research. If you're hiring, or just want to talk engineering, my inbox is open.
       </p>
       <div class="mt-9 flex flex-wrap gap-3">
         <button

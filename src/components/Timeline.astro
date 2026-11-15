@@ -1,0 +1,69 @@
+---
+import type { Experience } from '../config';
+import { getProjects } from '../lib/projects';
+import { url } from '../utils';
+import Icon from './Icon.astro';
+
+interface Props {
+  items: Experience[];
+  compact?: boolean;
+}
+const { items, compact = false } = Astro.props;
+const projects = await getProjects();
+const titleOf = (slug: string) => projects.find((p) => p.id === slug)?.data.title;
+---
+
+<ol class="relative border-l border-line">
+  {
+    items.map((e) => (
+      <li class:list={['reveal group relative grid gap-2 pl-8 last:pb-0 md:grid-cols-[170px_1fr] md:gap-10', compact ? 'pb-8' : 'pb-11']}>
+        <span class="absolute top-1.5 -left-[5px] size-[9px] rounded-full border border-line-strong bg-bg transition-colors group-hover:border-accent group-hover:bg-accent" />
+        <div class="font-mono text-xs leading-6 tracking-wide text-faint uppercase">
+          <p>{e.start} — {e.end}</p>
+          {e.location && <p class="normal-case tracking-normal">{e.location}</p>}
+        </div>
+        <div>
+          <h3 class="text-lg leading-snug font-medium tracking-tight">
+            {e.role}
+            <span class="block text-base font-normal text-muted">
+              {e.href ? (
+                <a href={e.href} class="underline decoration-line-strong underline-offset-4 hover:text-fg hover:decoration-accent" target="_blank" rel="noopener">
+                  {e.org}
+                </a>
+              ) : (
+                e.org
+              )}
+            </span>
+          </h3>
+          <ul class="mt-3 space-y-2 text-sm leading-relaxed text-muted">
+            {e.bullets.map((b) => (
+              <li class="relative pl-5">
+                <span class="absolute left-0 font-mono text-accent">→</span>
+                {b}
+              </li>
+            ))}
+          </ul>
+          {e.projects && e.projects.some(titleOf) && (
+            <div class="mt-4 flex flex-wrap items-center gap-2">
+              <span class="label !text-[0.62rem]">Projects</span>
+              {e.projects.filter(titleOf).map((slug) => (
+                <a
+                  href={url(`/projects/${slug}`)}
+                  class="inline-flex items-center gap-1.5 rounded-md border border-line bg-surface px-2.5 py-1 text-xs text-fg transition-colors hover:border-accent"
+                >
+                  {titleOf(slug)}
+                  <Icon name="arrow" size={12} class="text-accent" />
+                </a>
+              ))}
+            </div>
+          )}
+          {e.tags && !compact && (
+            <ul class="mt-4 flex flex-wrap gap-1.5">
+              {e.tags.map((t) => <li class="tag">{t}</li>)}
+            </ul>
+          )}
+        </div>
+      </li>
+    ))
+  }
+</ol>

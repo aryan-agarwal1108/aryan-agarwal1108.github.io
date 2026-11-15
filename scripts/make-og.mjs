@@ -4,7 +4,8 @@ import sharp from 'sharp';
 import { readFileSync } from 'node:fs';
 
 const cfg = readFileSync(new URL('../src/config.ts', import.meta.url), 'utf8');
-const get = (k) => cfg.match(new RegExp(`${k}:\\s*'([^']*)'`))?.[1] ?? '';
+const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const get = (k) => esc(cfg.match(new RegExp(`${k}:\\s*'([^']*)'`))?.[1] ?? '');
 const name = get('name');
 const major = get('major');
 const school = get('schoolShort');
