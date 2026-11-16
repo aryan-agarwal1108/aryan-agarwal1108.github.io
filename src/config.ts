@@ -317,7 +317,6 @@ export const recognition: { what: string; detail: string; year: string; href?: s
   { what: 'Presented to the UAE government', detail: 'eVTOL drone with emergency water-landing floats (NYU Abu Dhabi), slated for TECHSPO Dubai 2026', year: '2025', href: '/projects/evtol-water-landing' },
   { what: 'Co-authored a quantum ML paper', detail: 'ClearQRL: an explainability framework for quantum reinforcement learning (NYU Abu Dhabi)', year: '2025–26', href: '/papers' },
   { what: 'IB Diploma: 40/45', detail: 'Dubai International Academy Emirates Hills', year: '2026', href: '/about' },
-  { what: 'UAE interschool golf champions', detail: 'Varsity golf, Dubai International Academy · plus two junior tournament wins at DASSA', year: '2023–24', href: '/about' },
 ];
 
 // ── Papers ───────────────────────────────────────────────────
@@ -379,7 +378,7 @@ export const papers: Paper[] = [
   {
     title: 'Investigating the Effect of Atmospheric Temperature on Depolarization of Light due to Atmospheric Scattering',
     subject: 'Physics · Optics',
-    year: '2026',
+    year: '2025–26',
     pages: 25,
     words: '3,962',
     abstract:
@@ -397,7 +396,7 @@ export const papers: Paper[] = [
   {
     title: 'The Relationship Between Current Supplied to a Magnetohydrodynamic Thruster and Maximum Velocity of Saltwater Displaced',
     subject: 'Physics · Electromagnetism',
-    year: '2026',
+    year: '2025–26',
     pages: 24,
     words: '2,996',
     abstract:
@@ -413,7 +412,7 @@ export const papers: Paper[] = [
   {
     title: 'Developing a Mathematical Model to Predict the Optimal Share Price of Apple Stock Using Multivariable Statistics and Calculus',
     subject: 'Mathematics · Modeling',
-    year: '2026',
+    year: '2025–26',
     pages: 23,
     abstract:
       "Can a company's own financials tell you when to buy or sell its stock? I built a multiple-regression model of Apple's share price from EBITDA, dividend per share, and earnings per share, then used multivariable calculus to find the model's maxima and minima and read them as entry and exit points.",
@@ -428,7 +427,7 @@ export const papers: Paper[] = [
   {
     title: 'The Effect of Heating Temperature on Free Calcium Ion Concentration in Milk',
     subject: 'Chemistry · Analytical',
-    year: '2025',
+    year: '2025–26',
     pages: 15,
     abstract:
       'How does the temperature milk is heated to change how much free calcium (Ca²⁺) it contains? I heated milk to five temperatures from 25 °C to 65 °C and measured free Ca²⁺ by complexometric titration with EDTA and Eriochrome Black T indicator.',
