@@ -4,7 +4,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import NowPanel from '../components/NowPanel.astro';
 import Icon from '../components/Icon.astro';
-import { site, experience, awards, highlights } from '../config';
+import { site, experience, awards, highlights, papers } from '../config';
 import { getProjects } from '../lib/projects';
 import { url } from '../utils';
 
@@ -78,13 +78,14 @@ const explore = [
     cta: 'About me',
   },
   {
-    href: '/resume',
-    kicker: 'Resume',
-    stat: 'PDF',
-    statLabel: 'one page',
-    title: 'My resume',
-    text: 'Read it on the page or download the PDF.',
-    cta: 'View resume',
+    href: '/papers',
+    kicker: 'Papers',
+    count: papers.length,
+    stat: String(papers.length),
+    statLabel: 'research papers and proposals',
+    title: 'Research papers',
+    text: 'Quantum ML, particle physics, optics, and more, each with an abstract and the PDF.',
+    cta: 'Read papers',
   },
 ];
 ---

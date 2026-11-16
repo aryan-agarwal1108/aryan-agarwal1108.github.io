@@ -43,6 +43,7 @@ const projects = defineCollection({
         demo: z.string().optional(),
         report: z.string().optional(),
         paper: z.string().optional(),
+        paperLabel: z.string().optional(),
       })
       .default({}),
     metrics: z.array(z.object({ value: z.string(), label: z.string() })).default([]),

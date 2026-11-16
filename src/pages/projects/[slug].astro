@@ -37,7 +37,7 @@ const spec = (
 const links = [
   p.links.github && { label: 'Source code', href: p.links.github, icon: 'github' as const },
   p.links.demo && { label: 'Live demo', href: p.links.demo, icon: 'external' as const },
-  p.links.paper && { label: 'Paper', href: p.links.paper, icon: 'file' as const },
+  p.links.paper && { label: p.links.paper.endsWith('.pdf') ? (p.links.paperLabel ?? 'Paper (PDF)') : (p.links.paperLabel ?? 'Paper'), href: p.links.paper.startsWith('/') ? url(p.links.paper) : p.links.paper, icon: 'file' as const },
   p.links.report && { label: 'Full report (PDF)', href: url(p.links.report), icon: 'file' as const },
 ].filter(Boolean) as { label: string; href: string; icon: 'github' | 'external' | 'file' }[];
 ---
@@ -85,7 +85,7 @@ const links = [
               <h2 id="figures" class="label mb-6 flex items-center gap-3">
                 <span class="text-accent">§</span>Figures
               </h2>
-              <div class:list={['grid gap-5', p.gallery.length > 1 && 'sm:grid-cols-2']}>
+              <div class:list={['grid items-start gap-5', p.gallery.length > 1 && 'sm:grid-cols-2']}>
                 {p.gallery.map((g, i) => (
                   <figure class="figure reveal">
                     <button
@@ -95,7 +95,7 @@ const links = [
                       data-caption={`Fig. ${index + 1}.${i + 1} — ${g.caption}`}
                       aria-label={`Enlarge figure: ${g.caption}`}
                     >
-                      <img src={url(g.src)} alt={g.alt ?? g.caption} loading="lazy" decoding="async" class="aspect-[16/10] w-full bg-white object-contain" />
+                      <img src={url(g.src)} alt={g.alt ?? g.caption} loading="lazy" decoding="async" class="block h-auto w-full bg-white" />
                     </button>
                     <figcaption>
                       <span class="font-mono text-accent">Fig. {index + 1}.{i + 1}</span> {g.caption}

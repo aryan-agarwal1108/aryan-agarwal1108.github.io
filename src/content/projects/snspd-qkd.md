@@ -1,11 +1,11 @@
 ---
 title: SNSPD Optics & Polarization-Based QKD
-summary: Optics work for a superconducting nanowire single-photon detector (SNSPD), plus research into polarization-encoded quantum key distribution for the UAE's satellite QKD ground station.
-result: Optics for single-photon detection in a polarization-based QKD link
+summary: Built and aligned a superconducting nanowire single-photon detector (SNSPD) setup for the UAE's satellite QKD ground station, automated it in Python, and researched polarization-encoded quantum key distribution.
+result: Single-photon detection for a polarization-based QKD link, demoed at GITEX
 year: 2024
 category: Quantum
 art: Detector
-tags: [Quantum Optics, Polarization Optics, QKD, BB84, Single-Photon Detection, SNSPD, SolidWorks, Photonics]
+tags: [Quantum Optics, Polarization Optics, QKD, BB84, Single-Photon Detection, SNSPD, SolidWorks, Python, Raspberry Pi, Nanopositioners, Cryogenics, Photonics]
 featured: false
 order: 5
 started: '2024-07'
@@ -16,10 +16,11 @@ timeline: Jul 2024 – Aug 2024
 metrics:
   - { value: "Youngest", label: "Quantum researcher at TII" }
   - { value: "BB84", label: "Polarization-encoded QKD protocol" }
+  - { value: "150K+", label: "GITEX visitors at the demo" }
 ---
 
 <!--
-  TODO (Aryan): add a CAD render of the components you modeled under `gallery:`,
+  TODO (Aryan): add a CAD render of the opto-mechanical interfaces under `gallery:`,
   and any detail you're allowed to share about the photon-absorption mechanism.
 -->
 
@@ -31,14 +32,15 @@ At TII, as the institute's youngest quantum researcher, I worked on this for the
 
 ## My part
 
-- Did **optics-related work for a superconducting nanowire single-photon detector (SNSPD)**
-- Researched **polarization-based QKD**, focusing on **BB84 receivers**
-- Investigated a **novel photon-absorption mechanism** for the detector
-- Modeled the design components in **SolidWorks**
-- Presented the work at a **global tech expo**
+- Built a **superconducting nanowire single-photon detector (SNSPD)** setup for ADQOGS
+- **Aligned the optics with nanopositioners** to couple light onto the detector
+- Programmed a **Raspberry Pi in Python** to automate the setup
+- Designed and fabricated **custom opto-mechanical interfaces in SolidWorks** to integrate the detector with the **cryostat**
+- Researched **polarization-based QKD**, focusing on **BB84 receivers**, and investigated a **novel photon-absorption mechanism** for the detector
+- Presented at the Quantum Research Center's **demo at GITEX**, which drew **150K+ visitors**
 
 ## The physics behind it
 
-An SNSPD is a thin superconducting nanowire biased just below its critical current. When a single photon is absorbed, it breaks superconductivity in a small hotspot, the wire briefly turns resistive, and that produces a voltage pulse: a detection event. How well the optics couple light onto the nanowire, and how efficiently the wire absorbs it, set the detector's **system detection efficiency**. Its **dark-count rate** (clicks with no photon) and **timing jitter** set the noise floor.
+An SNSPD is a thin superconducting nanowire, cooled in a cryostat and biased just below its critical current. When a single photon is absorbed, it breaks superconductivity in a small hotspot, the wire briefly turns resistive, and that produces a voltage pulse: a detection event. How well the optics couple light onto the nanowire, and how efficiently the wire absorbs it, set the detector's **system detection efficiency**. That is why sub-micron alignment with nanopositioners and rigid opto-mechanical mounts matter so much. Its **dark-count rate** (clicks with no photon) and **timing jitter** set the noise floor.
 
 In polarization-based QKD, every lost photon lowers the key rate, and every false click or polarization error raises the **quantum bit error rate (QBER)**, which limits how much secure key can be distilled. Satellite links feel both effects most, because so few photons reach the ground. The same problem, polarization getting scrambled on its way through the air, is what my [Extended Essay](/projects/atmospheric-depolarization) looks at.

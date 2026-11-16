@@ -127,14 +127,15 @@ export const experience: Experience[] = [
   {
     role: 'Visiting Researcher',
     org: 'NYU Abu Dhabi, CAIR Lab',
+    supervisor: 'Dr. Nikolaos Evangeliou',
     start: 'Jan 2025',
     end: 'Nov 2025',
     location: 'Abu Dhabi, UAE',
     bullets: [
       'Designed an eVTOL drone in SolidWorks with an emergency flotation system for water landings.',
-      'Engineered a solenoid-triggered pneumatic flotation system with a burst diaphragm to control inflation. It deploys in under 8 seconds.',
-      'Ran transient CFD in ANSYS Fluent to see how airflow and pressure behave as the floats inflate.',
-      'Presented the project at a national symposium.',
+      'Developed a rapid-deployment pneumatic buoyancy system that inflates from ambient-air intake in under 8 seconds, using solenoid-controlled burst-diaphragm regulators.',
+      'Ran transient CFD in ANSYS Fluent to validate how airflow and pressure behave as the floats inflate.',
+      'Presented the project to the UAE government. It is slated for TECHSPO Dubai 2026.',
     ],
     tags: ['SolidWorks', 'ANSYS Fluent', 'CFD', 'Pneumatics'],
     projects: ['evtol-water-landing'],
@@ -146,11 +147,12 @@ export const experience: Experience[] = [
     end: 'Mar 2026',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      'Co-developed the first metrics for explaining quantum reinforcement-learning agents (XQRL), plus a framework that ties them together.',
-      'Built hybrid quantum-classical simulation pipelines in Python with PennyLane, TensorFlow, and Qiskit.',
-      'Used LIME, SHAP, and feature occlusion to explain Quantum Q-Learning and Q-DQN policies.',
+      'Co-developed the first metrics for explaining quantum reinforcement-learning agents (XQRL), benchmarked on CartPole and MNIST and applied to Quantum Q-Learning and Quantum Deep Q-Networks.',
+      'Improved the interpretability of earlier XQRL models with LIME, SHAP, and feature occlusion.',
+      'Built hybrid quantum-classical simulation pipelines in Python with PennyLane, TensorFlow, and Qiskit, and optimized parameterized quantum gates for near-term hardware.',
+      'Co-authored the paper "ClearQRL: A Unified Interpretability and Explainability Framework for Quantum RL".',
     ],
-    tags: ['Python', 'PennyLane', 'Qiskit', 'TensorFlow'],
+    tags: ['Python', 'PennyLane', 'Qiskit', 'TensorFlow', 'Explainable AI'],
     projects: ['xqrl'],
   },
   {
@@ -160,12 +162,13 @@ export const experience: Experience[] = [
     end: 'Aug 2024',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      "Youngest intern at the UAE's only government-funded quantum research facility, working on satellite quantum key distribution for the Abu Dhabi Quantum Optical Ground Station.",
-      'Did optics-related work for a superconducting nanowire single-photon detector (SNSPD), including research into a novel photon-absorption mechanism.',
+      "Youngest intern at TII's Quantum Research Center, working on satellite quantum key distribution for the Abu Dhabi Quantum Optical Ground Station (ADQOGS).",
+      'Built a superconducting nanowire single-photon detector (SNSPD) setup for ADQOGS: aligned the optics with nanopositioners and automated it in Python on a Raspberry Pi.',
+      'Designed and fabricated custom opto-mechanical interfaces in SolidWorks to integrate the detector with the cryostat.',
       'Researched polarization-based QKD, focusing on BB84 receivers.',
-      'Modeled the design components in SolidWorks and presented the work at a global tech expo.',
+      "Presented at the Quantum Research Center's GITEX demo, which drew 150K+ visitors.",
     ],
-    tags: ['Quantum Optics', 'SolidWorks', 'QKD'],
+    tags: ['Quantum Optics', 'SolidWorks', 'QKD', 'Python', 'Raspberry Pi'],
     projects: ['snspd-qkd'],
   },
 ];
@@ -182,6 +185,7 @@ export const leadership: Experience[] = [
     bullets: [
       'Started a free research-mentorship program that paired 1,000+ high schoolers around the world with 200+ mentors from universities like Princeton and Penn.',
       'Students in the program have published 150+ research papers.',
+      'Created annual global research competitions with 450+ participants and $500 in prizes, judged by professors and students from Cambridge, Carnegie Mellon, Cornell, and more.',
     ],
   },
   {
@@ -245,6 +249,9 @@ export type Award = {
   org: string;
   level: 'International' | 'National' | 'School';
   year: string;
+  detail?: string; // one line on what I did
+  href?: string; // e.g. a report PDF
+  hrefLabel?: string;
 };
 
 export const awards: Award[] = [
@@ -255,6 +262,9 @@ export const awards: Award[] = [
     org: 'CERN',
     level: 'International',
     year: '2024–25',
+    detail: 'Proposed an experiment on CP violation in neutral kaon decays, with Monte Carlo simulations and a custom detector for semileptonic decays.',
+    href: '/files/BL4S_Proposal_CP_Violation_in_Neutral_Kaons.pdf',
+    hrefLabel: 'Read the proposal (PDF)',
   },
   {
     rank: 'Top 250',
@@ -271,6 +281,15 @@ export const awards: Award[] = [
     org: 'University of Waterloo',
     level: 'International',
     year: '2024–25',
+  },
+  {
+    rank: '1st',
+    context: 'Freshwater Conservation category',
+    title: 'EEG 2024 Environmental Competition',
+    org: 'Emirates Environmental Group',
+    level: 'National',
+    year: '2024',
+    detail: 'Developed a neutralization-based method for making freshwater.',
   },
   {
     rank: '2nd',
@@ -294,10 +313,133 @@ export const awards: Award[] = [
 export const recognition: { what: string; detail: string; year: string; href?: string }[] = [
   { what: 'World Science Scholar', detail: 'One of 52 students picked worldwide (World Science Festival)', year: '2024–25', href: '/experience' },
   { what: 'Youngest quantum researcher at TII', detail: "Technology Innovation Institute, the UAE's government quantum research facility", year: '2024', href: '/projects/snspd-qkd' },
-  { what: 'Presented at a global tech expo', detail: 'SNSPD optics and polarization-based QKD work at TII', year: '2024', href: '/projects/snspd-qkd' },
-  { what: 'Presented at a national symposium', detail: 'eVTOL drone with emergency water-landing floats (NYU Abu Dhabi)', year: '2025', href: '/projects/evtol-water-landing' },
+  { what: 'Presented at GITEX', detail: 'TII Quantum Research Center demo (150K+ visitors): SNSPD and polarization-based QKD work', year: '2024', href: '/projects/snspd-qkd' },
+  { what: 'Presented to the UAE government', detail: 'eVTOL drone with emergency water-landing floats (NYU Abu Dhabi), slated for TECHSPO Dubai 2026', year: '2025', href: '/projects/evtol-water-landing' },
+  { what: 'Co-authored a quantum ML paper', detail: 'ClearQRL: an explainability framework for quantum reinforcement learning (NYU Abu Dhabi)', year: '2025–26', href: '/papers' },
   { what: 'IB Diploma: 40/45', detail: 'Dubai International Academy Emirates Hills', year: '2026', href: '/about' },
   { what: 'UAE interschool golf champions', detail: 'Varsity golf, Dubai International Academy · plus two junior tournament wins at DASSA', year: '2023–24', href: '/about' },
+];
+
+// ── Papers ───────────────────────────────────────────────────
+// Research papers shown on /papers. Put PDFs in public/files/ with clean filenames.
+export type Paper = {
+  title: string;
+  subject: string;
+  year: string;
+  authors?: string; // defaults to just me
+  pages?: number;
+  words?: string;
+  abstract: string;
+  findingsLabel?: string; // defaults to "Key findings"
+  findings: string[];
+  keywords: string[];
+  pdf: string;
+  pdfLabel?: string; // defaults to "Read the paper (PDF)"
+  project?: string; // related project page
+  figure?: string; // optional preview image
+};
+
+export const papers: Paper[] = [
+  {
+    title: 'ClearQRL: A Unified Interpretability and Explainability Framework for Quantum RL',
+    subject: 'Quantum Computing · Machine Learning',
+    year: '2025–26',
+    authors: 'Nouhaila Innan, Aryan Agarwal · eBRAIN Lab, NYU Abu Dhabi',
+    abstract:
+      'Quantum reinforcement learning is promising for sequential decision-making, but quantum policies are hard to interpret. ClearQRL combines classical feature-attribution methods, quantum information-theoretic diagnostics, and new quantum-aware interpretability metrics into one framework, evaluated on CartPole-v1 with a four-qubit quantum model and a classical Deep Q-Network baseline.',
+    findingsLabel: 'What it contributes',
+    findings: [
+      'New quantum explainability metrics, including Quantum Attribution Score, Quantum Feature Alignment, Quantum Decision Purity, and Quantum State Diversity.',
+      'A combined Quantum Interpretability Index (QII) that rolls them into one score for comparing policy transparency.',
+      'Side-by-side analysis of feature importance, decision confidence, quantum-state sensitivity, and representational diversity for quantum and classical agents.',
+    ],
+    keywords: ['Quantum RL', 'Explainable AI', 'PennyLane', 'Quantum information', 'CartPole'],
+    pdf: '/files/ClearQRL_Quantum_RL_Explainability_First_Page.pdf',
+    pdfLabel: 'Read the first page (PDF)',
+    project: '/projects/xqrl',
+  },
+  {
+    title: 'Investigating CP Violation in Neutral Kaon Decays as a Source of Matter-Antimatter Asymmetry',
+    subject: 'Particle Physics · Proposal',
+    year: '2024–25',
+    authors: 'The Broken Symmetry Society (8 students, 6 countries), incl. Aryan Agarwal',
+    pages: 8,
+    abstract:
+      "Our team's proposal for CERN's Beamline for Schools competition, which placed in the top 50 of 508 teams worldwide. It describes an experiment at the PS T9 beamline to measure the semileptonic charge asymmetry δₗ in long-lived neutral kaon decays, a direct signature of CP violation, using a charge-exchange kaon beam and a custom two-arm detector.",
+    findingsLabel: 'Highlights',
+    findings: [
+      'Targets 10⁶–10⁷ semileptonic K_L decays for a statistical precision on δₗ of 0.1–0.2%, with electron and muon channels compared to test lepton universality.',
+      'A dual Cherenkov-calorimeter detector module designed under a USD 2,000 budget, with GEANT4 simulations to optimize geometry and acceptance.',
+      'Extensions to compare kaon and antikaon beams (a CPT test) and to probe quantum decoherence in K⁰–K̄⁰ oscillations, with analysis in ROOT.',
+    ],
+    keywords: ['CP violation', 'Neutral kaons', 'Detector design', 'GEANT4', 'ROOT'],
+    pdf: '/files/BL4S_Proposal_CP_Violation_in_Neutral_Kaons.pdf',
+    pdfLabel: 'Read the proposal (PDF)',
+  },
+  {
+    title: 'Investigating the Effect of Atmospheric Temperature on Depolarization of Light due to Atmospheric Scattering',
+    subject: 'Physics · Optics',
+    year: '2026',
+    pages: 25,
+    words: '3,962',
+    abstract:
+      'How does atmospheric temperature change the degree of polarization (DoP) of rectilinearly polarized light as it undergoes Mie scattering? Using a milk–water suspension as a scattering analog for the atmosphere, a 636 nm source, crossed and parallel polarizers, and a light sensor, I measured DoP at five temperatures from 25 °C to 65 °C, with five trials each and full uncertainty propagation.',
+    findings: [
+      'DoP fell steadily from 0.984 ± 0.003 at 25 °C to 0.861 ± 0.005 at 65 °C, a 12.5% drop.',
+      'The drop accelerated at higher temperatures, alongside visible convection and beam flicker.',
+      'Results point to temperature as a factor worth modeling in free-space optical and polarization-based QKD links.',
+    ],
+    keywords: ['Mie scattering', 'Polarimetry', 'Degree of polarization', 'Free-space optics', 'QKD'],
+    pdf: '/files/Aryan_Agarwal_Extended_Essay_Physics.pdf',
+    project: '/projects/atmospheric-depolarization',
+    figure: '/images/ee-dop-vs-temperature.svg',
+  },
+  {
+    title: 'The Relationship Between Current Supplied to a Magnetohydrodynamic Thruster and Maximum Velocity of Saltwater Displaced',
+    subject: 'Physics · Electromagnetism',
+    year: '2026',
+    pages: 24,
+    words: '2,996',
+    abstract:
+      'A magnetohydrodynamic (MHD) thruster has no moving parts: current through saltwater in a magnetic field produces a Lorentz force that pushes the water. I varied the current supplied to a small MHD thruster and measured the maximum velocity of the displaced saltwater with video analysis, to test the relationship predicted from F = BIL.',
+    findings: [
+      'Average velocity rose from 0.0052 m/s at 0.20 A to 0.0154 m/s at 1.60 A.',
+      'The fit v² = 0.0001471·I (negligible intercept) shows v² is proportional to current, matching the Lorentz-force prediction.',
+      'Electrolysis bubbles, electrode corrosion, and changes in magnetic field strength were the main limits on accuracy.',
+    ],
+    keywords: ['MHD propulsion', 'Lorentz force', 'Video analysis', 'Logger Pro', 'Uncertainty analysis'],
+    pdf: '/files/Aryan_Agarwal_Paper_MHD_Thruster.pdf',
+  },
+  {
+    title: 'Developing a Mathematical Model to Predict the Optimal Share Price of Apple Stock Using Multivariable Statistics and Calculus',
+    subject: 'Mathematics · Modeling',
+    year: '2026',
+    pages: 23,
+    abstract:
+      "Can a company's own financials tell you when to buy or sell its stock? I built a multiple-regression model of Apple's share price from EBITDA, dividend per share, and earnings per share, then used multivariable calculus to find the model's maxima and minima and read them as entry and exit points.",
+    findings: [
+      'The regression model fit the historical share price with R² = 0.975.',
+      'Critical points of the multivariable model were interpreted as buy and sell signals.',
+      'Best suited to mid- and long-term investing. It uses quarterly data and does not account for shocks like pandemics.',
+    ],
+    keywords: ['Multiple regression', 'Multivariable calculus', 'Optimization', 'Mathematica', 'Financial data'],
+    pdf: '/files/Aryan_Agarwal_Paper_Apple_Share_Price_Model.pdf',
+  },
+  {
+    title: 'The Effect of Heating Temperature on Free Calcium Ion Concentration in Milk',
+    subject: 'Chemistry · Analytical',
+    year: '2025',
+    pages: 15,
+    abstract:
+      'How does the temperature milk is heated to change how much free calcium (Ca²⁺) it contains? I heated milk to five temperatures from 25 °C to 65 °C and measured free Ca²⁺ by complexometric titration with EDTA and Eriochrome Black T indicator.',
+    findings: [
+      'Free Ca²⁺ concentration rose with temperature, most sharply between 25 °C and 45 °C, then plateaued.',
+      'The trend fits heat breaking down casein micelles, which normally bind calcium, and matches visible curdling above 45 °C.',
+      'Percentage error (5.72%) was within the total propagated uncertainty (6.87%), with a tight linear fit (RMSE 0.0001388).',
+    ],
+    keywords: ['Complexometric titration', 'EDTA', 'Food chemistry', 'Casein micelles', 'Uncertainty analysis'],
+    pdf: '/files/Aryan_Agarwal_Paper_Calcium_in_Heated_Milk.pdf',
+  },
 ];
 
 // Tools offered in the Projects page "Tool" filter (keep it short; projects still list every skill)
@@ -338,6 +480,6 @@ export const interests: { title: string; text: string }[] = [
   },
   {
     title: 'Guitar',
-    text: 'I play guitar in my spare time.',
+    text: "I've reached Grade 8, the highest level, in Trinity's exams for electric, acoustic, and classical guitar, and I've performed at school events.",
   },
 ];

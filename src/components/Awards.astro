@@ -1,5 +1,7 @@
 ---
+import Icon from './Icon.astro';
 import { awards } from '../config';
+import { url } from '../utils';
 
 const levelStyle: Record<string, string> = {
   International: 'border-accent/50 text-accent',
@@ -23,6 +25,17 @@ const levelStyle: Record<string, string> = {
         <div class="mt-5 border-t border-line pt-4">
           <p class="text-sm leading-snug font-medium text-fg">{a.title}</p>
           <p class="mt-1 text-xs text-faint">{a.org}</p>
+          {a.detail && <p class="mt-3 text-xs leading-relaxed text-muted">{a.detail}</p>}
+          {a.href && (
+            <a
+              href={url(a.href)}
+              target="_blank"
+              rel="noopener"
+              class="mt-3 inline-flex min-h-8 items-center gap-1.5 text-xs font-semibold tracking-[0.06em] text-accent uppercase hover:underline"
+            >
+              <Icon name="file" size={13} /> {a.hrefLabel ?? 'Read more'}
+            </a>
+          )}
         </div>
       </li>
     ))
