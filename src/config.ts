@@ -315,13 +315,14 @@ export const recognition: { what: string; detail: string; year: string; href?: s
   { what: 'Youngest quantum researcher at TII', detail: "Technology Innovation Institute, the UAE's government quantum research facility", year: '2024', href: '/projects/snspd-qkd' },
   { what: 'Presented at GITEX', detail: 'TII Quantum Research Center demo (150K+ visitors): SNSPD and polarization-based QKD work', year: '2024', href: '/projects/snspd-qkd' },
   { what: 'Presented to the UAE government', detail: 'eVTOL drone with emergency water-landing floats (NYU Abu Dhabi), slated for TECHSPO Dubai 2026', year: '2025', href: '/projects/evtol-water-landing' },
-  { what: 'Co-authored a quantum ML paper', detail: 'ClearQRL: an explainability framework for quantum reinforcement learning (NYU Abu Dhabi)', year: '2025–26', href: '/papers' },
+  { what: 'Co-authored a quantum ML paper', detail: 'ClearQRL: an explainability framework for quantum reinforcement learning (NYU Abu Dhabi)', year: '2025–26', href: '/papers/clearqrl' },
   { what: 'IB Diploma: 40/45', detail: 'Dubai International Academy Emirates Hills', year: '2026', href: '/about' },
 ];
 
 // ── Papers ───────────────────────────────────────────────────
 // Research papers shown on /papers. Put PDFs in public/files/ with clean filenames.
 export type Paper = {
+  slug: string; // URL: /papers/<slug>
   title: string;
   subject: string;
   year: string;
@@ -340,6 +341,7 @@ export type Paper = {
 
 export const papers: Paper[] = [
   {
+    slug: 'clearqrl',
     title: 'ClearQRL: A Unified Interpretability and Explainability Framework for Quantum RL',
     subject: 'Quantum Computing · Machine Learning',
     year: '2025–26',
@@ -358,6 +360,7 @@ export const papers: Paper[] = [
     project: '/projects/xqrl',
   },
   {
+    slug: 'cern-bl4s-cp-violation',
     title: 'Investigating CP Violation in Neutral Kaon Decays as a Source of Matter-Antimatter Asymmetry',
     subject: 'Particle Physics · Proposal',
     year: '2024–25',
@@ -376,6 +379,7 @@ export const papers: Paper[] = [
     pdfLabel: 'Read the proposal (PDF)',
   },
   {
+    slug: 'atmospheric-depolarization',
     title: 'Investigating the Effect of Atmospheric Temperature on Depolarization of Light due to Atmospheric Scattering',
     subject: 'Physics · Optics',
     year: '2025–26',
@@ -394,6 +398,7 @@ export const papers: Paper[] = [
     figure: '/images/ee-dop-vs-temperature.svg',
   },
   {
+    slug: 'mhd-thruster',
     title: 'The Relationship Between Current Supplied to a Magnetohydrodynamic Thruster and Maximum Velocity of Saltwater Displaced',
     subject: 'Physics · Electromagnetism',
     year: '2025–26',
@@ -410,6 +415,7 @@ export const papers: Paper[] = [
     pdf: '/files/Aryan_Agarwal_Paper_MHD_Thruster.pdf',
   },
   {
+    slug: 'apple-share-price-model',
     title: 'Developing a Mathematical Model to Predict the Optimal Share Price of Apple Stock Using Multivariable Statistics and Calculus',
     subject: 'Mathematics · Modeling',
     year: '2025–26',
@@ -425,6 +431,7 @@ export const papers: Paper[] = [
     pdf: '/files/Aryan_Agarwal_Paper_Apple_Share_Price_Model.pdf',
   },
   {
+    slug: 'calcium-in-heated-milk',
     title: 'The Effect of Heating Temperature on Free Calcium Ion Concentration in Milk',
     subject: 'Chemistry · Analytical',
     year: '2025–26',

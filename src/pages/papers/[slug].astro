@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import { site, papers } from '../../config';
+import { url, pad } from '../../utils';
+
+export function getStaticPaths() {
+  return papers.map((paper, i) => ({
+    params: { slug: paper.slug },
+    props: {
+      paper,
+      index: i,
+      prev: papers[(i - 1 + papers.length) % papers.length],
+      next: papers[(i + 1) % papers.length],
+    },
+  }));
+}
+
+const { paper: p, index, prev, next } = Astro.props;
+
+const spec = (
+  [
+    ['Authors', p.authors ?? site.name],
+    ['Subject', p.subject],
+    ['Year', p.year],
+    ['Length', [p.pages && `${p.pages} pages`, p.words && `${p.words} words`].filter(Boolean).join(' · ') || undefined],
+  ] as [string, string | undefined][]
+).filter(([, v]) => v) as [string, string][];
+---
+
+<BaseLayout title={p.title} description={p.abstract}>
+  <article class="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-14">
+    <a href={url('/papers')} class="group inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-fg">
+      <Icon name="arrow-left" size={15} class="transition-transform group-hover:-translate-x-0.5" /> All papers
+    </a>
+
+    <header class="reveal mt-8 max-w-4xl">
+      <p class="label flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span class="text-accent">PPR-{pad(index + 1)}</span><span class="h-px w-8 bg-line-strong"></span>{p.subject} · {p.year}
+      </p>
+      <h1 class="mt-4 text-3xl font-semibold tracking-[-0.03em] text-balance hyphens-auto [overflow-wrap:anywhere] sm:text-5xl sm:hyphens-none">{p.title}</h1>
+      <p class="mt-4 text-muted">{p.authors ?? site.name}</p>
+    </header>
+
+    <div class="mt-12 grid gap-12 lg:grid-cols-[1fr_300px]">
+      <div class="min-w-0">
+        <section class="reveal">
+          <h2 class="label">Abstract</h2>
+          <p class="mt-3 text-lg leading-relaxed text-pretty text-muted">{p.abstract}</p>
+        </section>
+
+        <section class="reveal mt-10">
+          <h2 class="label">{p.findingsLabel ?? 'Key findings'}</h2>
+          <ul class="mt-3 space-y-2.5 leading-relaxed text-muted">
+            {p.findings.map((f) => (
+              <li class="relative pl-6">
+                <span class="absolute top-[0.7em] left-0 h-[2px] w-3 bg-accent" />
+                {f}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {
+          p.figure && (
+            <figure class="reveal mt-10 overflow-hidden rounded-xl border border-line bg-white p-4 sm:p-6">
+              <img src={url(p.figure)} alt={`Figure from ${p.title}`} loading="lazy" class="mx-auto block h-auto w-full max-w-2xl" />
+              <figcaption class="mt-3 font-mono text-[0.65rem] tracking-[0.12em] text-[#5b606a] uppercase">Figure from the paper</figcaption>
+            </figure>
+          )
+        }
+
+        <section class="reveal mt-12">
+          <div class="flex flex-wrap items-end justify-between gap-3">
+            <h2 class="label">{p.pdfLabel?.toLowerCase().includes('first page') ? 'First page' : 'The paper'}</h2>
+            <a href={url(p.pdf)} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.06em] text-accent uppercase hover:underline">
+              Open in a new tab <Icon name="external" size={13} />
+            </a>
+          </div>
+          <div class="mt-3 hidden overflow-hidden rounded-xl border border-line bg-surface-2 md:block">
+            <iframe src={`${url(p.pdf)}#view=FitH`} title={`${p.title} (PDF)`} loading="lazy" class="block h-[80vh] max-h-[1000px] w-full"></iframe>
+          </div>
+          <a
+            href={url(p.pdf)}
+            target="_blank"
+            rel="noopener"
+            class="mt-3 flex items-center justify-between rounded-xl border border-line bg-surface px-5 py-4 md:hidden"
+          >
+            <span class="flex items-center gap-3 text-sm font-medium"><Icon name="file" size={18} class="text-accent" />{p.pdfLabel ?? 'Read the paper (PDF)'}</span>
+            <Icon name="external" size={15} class="text-faint" />
+          </a>
+        </section>
+      </div>
+
+      <aside class="order-first lg:order-last">
+        <div class="corners sticky top-20 rounded-xl border border-line bg-surface">
+          <div class="flex items-center justify-between border-b border-line px-5 py-3">
+            <span class="label">Paper details</span>
+            <span class="font-mono text-[0.65rem] text-faint">PPR-{pad(index + 1)}</span>
+          </div>
+          <dl class="divide-y divide-line">
+            {
+              spec.map(([k, v]) => (
+                <div class="px-5 py-3">
+                  <dt class="font-mono text-[0.68rem] tracking-wider text-faint uppercase">{k}</dt>
+                  <dd class="mt-0.5 text-sm text-fg">{v}</dd>
+                </div>
+              ))
+            }
+            <div class="px-5 py-3">
+              <dt class="font-mono text-[0.68rem] tracking-wider text-faint uppercase">Keywords</dt>
+              <dd class="mt-2 flex flex-wrap gap-1.5">
+                {p.keywords.map((k) => <span class="tag">{k}</span>)}
+              </dd>
+            </div>
+          </dl>
+          <div class="flex flex-col gap-2 border-t border-line p-4">
+            <a
+              href={url(p.pdf)}
+              target="_blank"
+              rel="noopener"
+              class="flex min-h-11 items-center justify-between rounded-lg bg-fg px-3.5 py-2.5 text-sm text-bg transition-colors hover:bg-accent hover:text-white"
+            >
+              <span class="flex items-center gap-2.5"><Icon name="file" size={15} />{p.pdfLabel ?? 'Read the paper (PDF)'}</span>
+              <Icon name="external" size={14} />
+            </a>
+            {p.project && (
+              <a href={url(p.project)} class="flex min-h-11 items-center justify-between rounded-lg border border-line px-3.5 py-2.5 text-sm transition-colors hover:border-accent">
+                <span>Project write-up</span>
+                <Icon name="arrow" size={14} class="text-faint" />
+              </a>
+            )}
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <nav class="mt-20 grid gap-4 border-t border-line pt-8 sm:grid-cols-2" aria-label="More papers">
+      <a href={url(`/papers/${prev.slug}`)} class="card group p-5">
+        <span class="label flex items-center gap-2"><Icon name="arrow-left" size={13} />Previous</span>
+        <span class="mt-2 block font-medium text-fg">{prev.title}</span>
+      </a>
+      <a href={url(`/papers/${next.slug}`)} class="card group p-5 sm:text-right">
+        <span class="label flex items-center gap-2 sm:justify-end">Next<Icon name="arrow" size={13} /></span>
+        <span class="mt-2 block font-medium text-fg">{next.title}</span>
+      </a>
+    </nav>
+  </article>
+</BaseLayout>
