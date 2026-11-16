@@ -218,7 +218,7 @@ export const leadership: Experience[] = [
     ],
   },
   {
-    role: 'President of the General Assembly',
+    role: 'President of the General Assemblies',
     org: 'DIAMUN, Dubai International Academy Model UN',
     location: 'Dubai, UAE',
     bullets: [
@@ -230,14 +230,6 @@ export const leadership: Experience[] = [
     org: 'Dubai International Academy',
     location: 'Dubai, UAE',
     bullets: ['Oversaw 50+ prefects and student well-being across the school.'],
-  },
-  {
-    role: 'Volunteer Tutor',
-    org: 'Bachpan Bachao',
-    bullets: [
-      'Ran bi-weekly lessons in math, physics, digital literacy, and English for 30+ underserved students in India.',
-      'Organized a book drive that collected 500+ books.',
-    ],
   },
 ];
 
