@@ -48,6 +48,7 @@ export type Education = {
   degree: string;
   date: string;
   details?: string[];
+  subjects?: string[]; // shown as tags on the About page
 };
 
 export const education: Education[] = [
@@ -62,6 +63,7 @@ export const education: Education[] = [
     location: 'Dubai, UAE',
     degree: 'International Baccalaureate Diploma Programme: 40/45',
     date: 'May 2026',
+    subjects: ['Physics', 'Mathematics: Analysis & Approaches', 'Chemistry'],
     details: [
       'Extended Essay (Physics): Investigating the Effect of Atmospheric Temperature on Depolarization of Light Due to Atmospheric Scattering',
     ],
