@@ -196,21 +196,25 @@ export const leadership: Experience[] = [
     location: 'New York, USA',
     bullets: [
       'One of 52 students picked worldwide for advanced courses and projects in theoretical physics, math, and computation, taught by scientists including Brian Greene, Stephen Wolfram, and Cumrun Vafa.',
+      "The program is run by the World Science Festival, which Brian Greene co-founded, and funded by the John Templeton Foundation. Scholars are high schoolers with exceptional math ability, chosen through nominations and applications from around the world. Each cohort is only a few dozen students.",
     ],
   },
   {
     role: 'Problem Writer',
     org: 'Online Physics Olympiad (OPhO) 2025',
-    href: 'https://opho.physoly.tech',
+    href: 'https://opho.physoly.org',
     start: '2025',
     location: 'Online',
     bullets: [
       'Wrote olympiad-level problems on quantum physics, relativity, and electromagnetism for a competition with 900+ participants, and graded 70 entries.',
+      "OPhO is a student-run international physics olympiad. It has drawn 10,000+ competitors from 80+ countries since 2020, with sponsors like Jane Street, Citadel, and Wolfram. Most of the problem-writing team are IPhO and EuPhO medalists or physics students at places like MIT and Oxford, and I wrote problems alongside them.",
     ],
   },
   {
     role: 'Co-Founder & President',
     org: 'Cosmic Society, Dubai International Academy',
+    start: '2024',
+    end: '2025',
     location: 'Dubai, UAE',
     bullets: [
       'Taught special relativity, quantum theory, and astrophysics to 60+ students in Grades 7–9.',
@@ -220,14 +224,18 @@ export const leadership: Experience[] = [
   {
     role: 'President of the General Assemblies',
     org: 'DIAMUN, Dubai International Academy Model UN',
+    start: '2024',
+    end: '2025',
     location: 'Dubai, UAE',
     bullets: [
       'Helped organize the largest THIMUN-affiliated Model UN conference in the MENA region: 600+ delegates from 20+ schools across 10 countries, with $100k in revenue.',
+      "DIAMUN has been officially affiliated with The Hague International Model United Nations (THIMUN) since 2011 and is run entirely by students. As President of the General Assemblies, I held one of the conference's top student leadership roles, overseeing the General Assembly committees and presiding over their sessions.",
     ],
   },
   {
     role: 'Lead Prefect, Student Leadership Team',
     org: 'Dubai International Academy',
+    start: '2025',
     location: 'Dubai, UAE',
     bullets: ['Oversaw 50+ prefects and student well-being across the school.'],
   },
