@@ -31,8 +31,8 @@ export const site = {
     schoolEmail: 'aryana13@illinois.edu',
     phone: '+1 (217) 402-1220',
     phoneHref: '+12174021220',
-    current: { city: 'Urbana, IL', country: 'USA', iata: 'CMI', lat: 40.0392, lon: -88.2781, tz: 'America/Chicago' },
-    home: { city: 'Dubai', country: 'UAE', iata: 'DXB', lat: 25.2532, lon: 55.3657, tz: 'Asia/Dubai' },
+    current: { city: 'Urbana, IL', country: 'USA' },
+    home: { city: 'Dubai', country: 'UAE' },
   },
   resume: '/files/Aryan_Agarwal_Resume.pdf',
   links: {
@@ -213,6 +213,28 @@ export const leadership: Experience[] = [
       "Ran events including NASA's International Astronomical Search Collaboration (IASC), expert panels, and competitions.",
     ],
   },
+  {
+    role: 'President of the General Assembly',
+    org: 'DIAMUN, Dubai International Academy Model UN',
+    location: 'Dubai, UAE',
+    bullets: [
+      'Helped organize the largest THIMUN-affiliated Model UN conference in the MENA region: 600+ delegates from 20+ schools across 10 countries, with $100k in revenue.',
+    ],
+  },
+  {
+    role: 'Lead Prefect, Student Leadership Team',
+    org: 'Dubai International Academy',
+    location: 'Dubai, UAE',
+    bullets: ['Oversaw 50+ prefects and student well-being across the school.'],
+  },
+  {
+    role: 'Volunteer Tutor',
+    org: 'Bachpan Bachao',
+    bullets: [
+      'Ran bi-weekly lessons in math, physics, digital literacy, and English for 30+ underserved students in India.',
+      'Organized a book drive that collected 500+ books.',
+    ],
+  },
 ];
 
 // ── Awards & competitions ────────────────────────────────────
@@ -275,6 +297,7 @@ export const recognition: { what: string; detail: string; year: string; href?: s
   { what: 'Presented at a global tech expo', detail: 'SNSPD optics and polarization-based QKD work at TII', year: '2024', href: '/projects/snspd-qkd' },
   { what: 'Presented at a national symposium', detail: 'eVTOL drone with emergency water-landing floats (NYU Abu Dhabi)', year: '2025', href: '/projects/evtol-water-landing' },
   { what: 'IB Diploma: 40/45', detail: 'Dubai International Academy Emirates Hills', year: '2026', href: '/about' },
+  { what: 'UAE interschool golf champions', detail: 'Varsity golf, Dubai International Academy · plus two junior tournament wins at DASSA', year: '2023–24', href: '/about' },
 ];
 
 // Tools offered in the Projects page "Tool" filter (keep it short; projects still list every skill)
@@ -316,9 +339,5 @@ export const interests: { title: string; text: string }[] = [
   {
     title: 'Guitar',
     text: 'I play guitar in my spare time.',
-  },
-  {
-    title: 'Tutoring',
-    text: 'Through Bachpan Bachao, I ran bi-weekly lessons in math, physics, digital literacy, and English for 30+ kids in India, and organized a book drive that collected 500+ books.',
   },
 ];
