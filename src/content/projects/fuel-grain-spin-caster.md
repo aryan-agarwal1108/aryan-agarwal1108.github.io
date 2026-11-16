@@ -7,6 +7,8 @@ category: Propulsion
 tags: [Siemens NX, 3D Printing, FEA, Thermal Analysis, Heat Transfer, Mechanical Design, Hybrid Propulsion]
 featured: true
 order: 2
+started: '2026-08'
+ended: 'present'
 role: Manufacturing Engineer, Hybrid Team
 org: Illinois Space Society
 timeline: Aug 2026 – Present

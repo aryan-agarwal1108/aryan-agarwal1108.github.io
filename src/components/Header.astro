@@ -11,6 +11,7 @@ const nav = [
   { href: '/awards', label: 'Awards' },
   { href: '/about', label: 'About' },
   { href: '/resume', label: 'Resume' },
+  { href: '/contact', label: 'Contact' },
 ];
 const isActive = (href: string) => path.startsWith(href);
 ---
@@ -35,7 +36,7 @@ const isActive = (href: string) => path.startsWith(href);
               <a
                 href={url(item.href)}
                 class:list={[
-                  'group/nav relative block px-3 py-2 text-[0.82rem] font-medium tracking-[0.06em] uppercase transition-colors hover:text-fg',
+                  'group/nav relative block px-2 py-2 text-[0.76rem] font-medium tracking-[0.06em] uppercase transition-colors hover:text-fg lg:px-3 lg:text-[0.82rem]',
                   isActive(item.href) ? 'text-fg' : 'text-muted',
                 ]}
                 aria-current={isActive(item.href) ? 'page' : undefined}
@@ -43,7 +44,7 @@ const isActive = (href: string) => path.startsWith(href);
                 {item.label}
                 <span
                   class:list={[
-                    'absolute inset-x-3 -bottom-[13px] h-[3px] origin-left bg-accent transition-transform duration-300',
+                    'absolute inset-x-2 lg:inset-x-3 -bottom-[13px] h-[3px] origin-left bg-accent transition-transform duration-300',
                     isActive(item.href) ? 'scale-x-100' : 'scale-x-0 group-hover/nav:scale-x-100',
                   ]}
                   aria-hidden="true"

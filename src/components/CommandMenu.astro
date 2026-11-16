@@ -13,6 +13,7 @@ const items: Item[] = [
   { group: 'Pages', label: 'Awards & competitions', href: url('/awards') },
   { group: 'Pages', label: 'About', href: url('/about') },
   { group: 'Pages', label: 'Resume', href: url('/resume') },
+  { group: 'Pages', label: 'Contact', href: url('/contact') },
   ...projects.map((p) => ({ group: 'Projects', label: p.data.title, hint: p.data.category, href: url(`/projects/${p.id}`) })),
   { group: 'Actions', label: 'Copy email address', hint: site.email, action: 'copy-email' },
   { group: 'Actions', label: 'Download resume (PDF)', href: url(site.resume), external: true },

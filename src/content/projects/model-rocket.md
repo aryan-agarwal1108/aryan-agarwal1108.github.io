@@ -6,11 +6,12 @@ year: 2026
 category: Rocketry
 tags: [OpenRocket, Flight Simulation, Python, NumPy, Matplotlib, Flight Data Analysis, Model Rocketry]
 featured: false
-order: 6
+order: 7
+started: '2026-08'
+ended: '2026-11'
 role: AE 100 @ UIUC
 timeline: Fall 2026
 status: Flown
-interactive: rocket
 ---
 
 <!--

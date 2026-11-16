@@ -25,6 +25,15 @@ export const site = {
     text: 'Open to Summer 2027 internships',
   },
   email: 'aryana13@illinois.edu',
+  // Shown on the Contact page (obfuscated in the HTML so bots can't scrape them easily)
+  contact: {
+    personalEmail: 'aryan.exe@outlook.com',
+    schoolEmail: 'aryana13@illinois.edu',
+    phone: '+1 (217) 402-1220',
+    phoneHref: '+12174021220',
+    current: { city: 'Urbana, IL', country: 'USA', iata: 'CMI', lat: 40.0392, lon: -88.2781, tz: 'America/Chicago' },
+    home: { city: 'Dubai', country: 'UAE', iata: 'DXB', lat: 25.2532, lon: 55.3657, tz: 'Asia/Dubai' },
+  },
   resume: '/files/Aryan_Agarwal_Resume.pdf',
   links: {
     github: 'https://github.com/aryan-agarwal1108',
@@ -151,10 +160,10 @@ export const experience: Experience[] = [
     end: 'Aug 2024',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      "Youngest intern at the UAE's only government-funded quantum research facility, working on satellite quantum key distribution.",
-      "Researched BB84 QKD receivers and designed a superconducting nanowire single-photon detector with lower dark-count rates for the Abu Dhabi Quantum Optical Ground Station.",
-      'Looked into a new photon-absorption mechanism and modeled the detector components in SolidWorks.',
-      'Presented the detector at a global tech expo.',
+      "Youngest intern at the UAE's only government-funded quantum research facility, working on satellite quantum key distribution for the Abu Dhabi Quantum Optical Ground Station.",
+      'Did optics-related work for a superconducting nanowire single-photon detector (SNSPD), including research into a novel photon-absorption mechanism.',
+      'Researched polarization-based QKD, focusing on BB84 receivers.',
+      'Modeled the design components in SolidWorks and presented the work at a global tech expo.',
     ],
     tags: ['Quantum Optics', 'SolidWorks', 'QKD'],
     projects: ['snspd-qkd'],
@@ -263,10 +272,13 @@ export const awards: Award[] = [
 export const recognition: { what: string; detail: string; year: string; href?: string }[] = [
   { what: 'World Science Scholar', detail: 'One of 52 students picked worldwide (World Science Festival)', year: '2024–25', href: '/experience' },
   { what: 'Youngest quantum researcher at TII', detail: "Technology Innovation Institute, the UAE's government quantum research facility", year: '2024', href: '/projects/snspd-qkd' },
-  { what: 'Presented at a global tech expo', detail: 'Single-photon detector for the Abu Dhabi Quantum Optical Ground Station', year: '2024', href: '/projects/snspd-qkd' },
+  { what: 'Presented at a global tech expo', detail: 'SNSPD optics and polarization-based QKD work at TII', year: '2024', href: '/projects/snspd-qkd' },
   { what: 'Presented at a national symposium', detail: 'eVTOL drone with emergency water-landing floats (NYU Abu Dhabi)', year: '2025', href: '/projects/evtol-water-landing' },
   { what: 'IB Diploma: 40/45', detail: 'Dubai International Academy Emirates Hills', year: '2026', href: '/about' },
 ];
+
+// Tools offered in the Projects page "Tool" filter (keep it short; projects still list every skill)
+export const filterTools = ['Python', 'SolidWorks', 'Siemens NX', 'ANSYS Fluent', 'CFD', 'FEA', 'OpenRocket', 'Qiskit'];
 
 // ── Skills ───────────────────────────────────────────────────
 export const skills: { group: string; items: string[] }[] = [

@@ -6,7 +6,9 @@ year: 2026
 category: Optics
 tags: [Experimental Physics, Polarimetry, Mie Scattering, Vernier LabQuest, Uncertainty Analysis, Data Analysis, Optics]
 featured: false
-order: 8
+order: 6
+started: '2025-09'
+ended: '2026-02'
 role: Independent researcher
 org: IB Extended Essay, Physics
 timeline: IB Diploma Programme

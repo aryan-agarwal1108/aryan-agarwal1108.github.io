@@ -15,7 +15,9 @@ year: 2026
 category: Propulsion # Aerodynamics | Propulsion | Mechanical Design | Quantum | Optics | anything else
 tags: [Siemens NX, FEA]
 featured: false # true = show on the home page (up to 4)
-order: 10 # lower = earlier in lists
+order: 10 # Recommended sort: lower = earlier (put current work first)
+started: '2026-01' # YYYY-MM, used for "Most recent" sort
+ended: present # or YYYY-MM
 role: Your role
 org: Organization / team (optional)
 timeline: Month Year – Month Year

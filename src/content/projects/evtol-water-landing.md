@@ -7,6 +7,8 @@ category: Mechanical Design
 tags: [SolidWorks, ANSYS Fluent, CFD, Transient Simulation, Pneumatics, Mechanical Design, Reinforcement Learning]
 featured: true
 order: 3
+started: '2025-01'
+ended: '2025-11'
 role: Visiting Researcher
 org: NYU Abu Dhabi, CAIR Lab
 timeline: Jan 2025 – Nov 2025

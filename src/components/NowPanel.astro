@@ -1,0 +1,45 @@
+---
+// Hero panel: what I'm working on right now, built only from real projects/roles.
+import ProjectCover from './ProjectCover.astro';
+import Icon from './Icon.astro';
+import { url } from '../utils';
+
+const items = [
+  { tag: 'Research', title: 'PA-28 blown-wing model', sub: 'Midwest Nice Aerospace Group · Dr. Elle Wroblewski', href: '/projects/pa28-blown-wing', live: true },
+  { tag: 'Club', title: 'Hybrid rocket fuel-grain spin-caster', sub: 'Illinois Space Society, Hybrid team', href: '/projects/fuel-grain-spin-caster', live: true },
+  { tag: 'Jan 2027', title: 'Hypersonics research at CHESS', sub: 'Incoming undergraduate researcher', href: '/experience', live: false },
+];
+---
+
+<div class="bp corners overflow-hidden rounded-xl shadow-[0_30px_70px_-35px_rgb(0_0_0/0.55)]">
+  <div class="flex items-center justify-between border-b border-white/15 px-4 py-2.5 font-mono text-[0.62rem] tracking-[0.14em] uppercase">
+    <span class="opacity-80">Fig. 0 · Currently working on</span>
+    <span class="flex items-center gap-1.5 opacity-80"><span class="size-1.5 animate-pulse rounded-full bg-[#7ee2a8]"></span>Fall 2026</span>
+  </div>
+
+  <a href={url('/projects/pa28-blown-wing')} class="group block border-b border-white/15" aria-label="PA-28 blown-wing aerodynamic model">
+    <div class="overflow-hidden">
+      <ProjectCover title="PA-28 Blown-Wing Aerodynamic Model" category="Aerodynamics" fig="00" eager />
+    </div>
+  </a>
+
+  <ul class="divide-y divide-white/15">
+    {
+      items.map((it) => (
+        <li>
+          <a href={url(it.href)} class="group flex items-center gap-4 px-4 py-3.5 transition-colors hover:bg-white/10">
+            <span class="w-[4.6rem] shrink-0 font-mono text-[0.62rem] tracking-[0.12em] uppercase opacity-75">
+              {it.live && <span class="mr-1.5 inline-block size-1.5 rounded-full bg-[var(--accent-bright)] align-middle" />}
+              {it.tag}
+            </span>
+            <span class="min-w-0 flex-1">
+              <span class="display block text-[0.98rem] leading-snug">{it.title}</span>
+              <span class="mt-0.5 block truncate text-xs opacity-70">{it.sub}</span>
+            </span>
+            <Icon name="arrow" size={15} class="shrink-0 opacity-70 transition-transform group-hover:translate-x-1 group-hover:opacity-100" />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>

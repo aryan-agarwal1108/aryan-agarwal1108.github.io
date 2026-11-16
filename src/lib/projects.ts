@@ -14,3 +14,15 @@ export async function getToolCounts() {
   }
   return counts;
 }
+
+type ProjectEntry = Awaited<ReturnType<typeof getProjects>>[number];
+
+/** Most-recent-first: ongoing work first, then by end date, then start date, then recommended order. */
+export function byRecent(a: ProjectEntry, b: ProjectEntry) {
+  const end = (p: ProjectEntry) => (p.data.ended === 'present' ? '9999-99' : p.data.ended);
+  return (
+    end(b).localeCompare(end(a)) ||
+    b.data.started.localeCompare(a.data.started) ||
+    a.data.order - b.data.order
+  );
+}

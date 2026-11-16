@@ -2,8 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import FlightProfile from '../components/FlightProfile.astro';
-import AirfoilLab from '../components/AirfoilLab.astro';
+import NowPanel from '../components/NowPanel.astro';
 import Icon from '../components/Icon.astro';
 import { site, experience, awards, highlights } from '../config';
 import { getProjects } from '../lib/projects';
@@ -137,7 +136,7 @@ const explore = [
       </div>
 
       <div class="hero-in" style="--d:0.2s">
-        <FlightProfile />
+        <NowPanel />
       </div>
     </div>
 
@@ -148,7 +147,7 @@ const explore = [
           stats.map((s, i) => (
             <li class:list={['bg-surface', i === stats.length - 1 && 'col-span-2 sm:col-span-1']}>
               <a href={url(s.href)} class="group relative block h-full px-5 pt-5 pb-4 transition-colors hover:bg-surface-2">
-                <span class="livery block text-[2rem] normal-case text-fg" data-count={s.count} data-suffix={s.suffix}>{s.value}</span>
+                <span class="livery block text-[clamp(1.35rem,6.4vw,2rem)] normal-case text-fg" data-count={s.count} data-suffix={s.suffix}>{s.value}</span>
                 <span class="mt-2 block text-xs leading-snug text-muted">{s.label}</span>
                 <span class="absolute bottom-0 left-0 h-[3px] w-0 bg-accent transition-all duration-500 group-hover:w-full" />
               </a>
@@ -219,19 +218,9 @@ const explore = [
     </ol>
   </section>
 
-  <!-- ── FLIGHT LAB (interactive) ─────────────────────────── -->
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="03" label="Flight lab" title="Play with the physics">
-      <p class="max-w-sm text-sm text-muted">
-        A simplified version of the aerodynamics behind my <a href={url('/projects/pa28-blown-wing')} class="text-fg underline decoration-accent underline-offset-4">blown-wing research</a>. Try a steep angle, then switch on prop wash.
-      </p>
-    </SectionHeading>
-    <div class="reveal"><AirfoilLab /></div>
-  </section>
-
   <!-- ── EXPLORE (links to the other pages) ───────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="04" label="Explore" title="More about me" />
+    <SectionHeading index="03" label="Explore" title="More about me" />
     <div class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
       {
         explore.map((e, i) => (
@@ -257,7 +246,7 @@ const explore = [
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="contact" aria-labelledby="contact-h">
     <div class="reveal bp corners relative overflow-hidden rounded-xl px-6 py-14 sm:px-12 sm:py-20">
       <p class="flex items-center gap-3 font-mono text-[0.68rem] tracking-[0.12em] uppercase opacity-80">
-        <span class="bg-accent px-1.5 py-0.5 text-white">05</span>Contact
+        <span class="bg-accent px-1.5 py-0.5 text-white">04</span>Contact
       </p>
       <h2 id="contact-h" class="livery relative mt-6 max-w-3xl text-[clamp(2.6rem,7vw,5.5rem)]">
         Want to talk<span class="text-[var(--accent-bright)]">?</span>
@@ -279,6 +268,9 @@ const explore = [
         </a>
         <a href={site.links.linkedin} target="_blank" rel="noopener" class="inline-flex h-12 items-center gap-2 border border-white/40 px-6 text-sm font-medium transition-colors hover:border-white hover:bg-white/10">
           <Icon name="linkedin" size={15} />LinkedIn
+        </a>
+        <a href={url('/contact')} class="inline-flex h-12 items-center gap-2 border border-white/40 px-6 text-sm font-semibold tracking-[0.06em] uppercase transition-colors hover:border-white hover:bg-white/10">
+          All contact info <Icon name="arrow" size={15} />
         </a>
       </div>
       <!-- Orbit graphic -->

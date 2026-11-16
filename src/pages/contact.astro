@@ -1,0 +1,339 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../config';
+
+const c = site.contact;
+
+// Encode contact strings so they don't appear as plain text in the HTML.
+// The browser decodes them on load (see script below).
+const enc = (s: string) => Buffer.from([...s].reverse().join(''), 'utf8').toString('base64');
+const human = (email: string) => email.replace('@', ' [at] ').replace(/\.(?=[^.]+$)/, ' [dot] ');
+
+const channels = [
+  { ch: '01', label: 'Personal email', kind: 'mail', value: c.personalEmail, fallback: human(c.personalEmail), note: 'Best for anything' },
+  { ch: '02', label: 'School email', kind: 'mail', value: c.schoolEmail, fallback: human(c.schoolEmail), note: 'UIUC' },
+  { ch: '03', label: 'Phone', kind: 'tel', value: c.phone, href: c.phoneHref, fallback: 'Enable JavaScript to see it', note: 'Call or text' },
+  { ch: '04', label: 'LinkedIn', kind: 'link', value: site.links.linkedin.replace('https://www.', ''), href: site.links.linkedin, note: 'Connect' },
+];
+
+// ── Great-circle route DXB → CMI, projected onto a simple map grid ──
+const toRad = (d: number) => (d * Math.PI) / 180;
+const toDeg = (r: number) => (r * 180) / Math.PI;
+const vec = (lat: number, lon: number) => [Math.cos(toRad(lat)) * Math.cos(toRad(lon)), Math.cos(toRad(lat)) * Math.sin(toRad(lon)), Math.sin(toRad(lat))];
+const A = vec(c.home.lat, c.home.lon);
+const B = vec(c.current.lat, c.current.lon);
+const omega = Math.acos(A[0] * B[0] + A[1] * B[1] + A[2] * B[2]);
+const distanceKm = Math.round(6371 * omega);
+const BOUNDS = { lonMin: -125, lonMax: 90, latMin: 5, latMax: 82 };
+const MAP = { w: 720, h: 300 };
+const px = (lat: number, lon: number) => [
+  ((lon - BOUNDS.lonMin) / (BOUNDS.lonMax - BOUNDS.lonMin)) * MAP.w,
+  ((BOUNDS.latMax - lat) / (BOUNDS.latMax - BOUNDS.latMin)) * MAP.h,
+];
+const routePts: number[][] = [];
+for (let i = 0; i <= 80; i++) {
+  const t = i / 80;
+  const s1 = Math.sin((1 - t) * omega) / Math.sin(omega);
+  const s2 = Math.sin(t * omega) / Math.sin(omega);
+  const v = [s1 * A[0] + s2 * B[0], s1 * A[1] + s2 * B[1], s1 * A[2] + s2 * B[2]];
+  routePts.push(px(toDeg(Math.asin(v[2])), toDeg(Math.atan2(v[1], v[0]))));
+}
+const route = routePts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
+const [hx, hy] = px(c.home.lat, c.home.lon);
+const [cx, cy] = px(c.current.lat, c.current.lon);
+const peakLat = Math.max(...routePts.map(([, y]) => BOUNDS.latMax - (y / MAP.h) * (BOUNDS.latMax - BOUNDS.latMin)));
+
+// Decorative barcode (deterministic)
+const bars = Array.from({ length: 46 }, (_, i) => ((i * 7919) % 5) + 1);
+---
+
+<BaseLayout title="Contact" description={`Get in touch with ${site.name}: email, phone, and LinkedIn.`}>
+  <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
+    <PageHeader tag="COMMS" label="Get in touch" title="Contact">
+      The fastest way to reach me is email. I'm in Urbana-Champaign during the school year and home in Dubai over breaks, so check
+      the clocks below before you call.
+    </PageHeader>
+  </section>
+
+  <!-- ── Boarding pass ─────────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 pt-14 sm:px-6" aria-label="Summary">
+    <div class="reveal boarding relative grid overflow-hidden rounded-xl border border-line bg-surface shadow-[var(--shadow)] lg:grid-cols-[1fr_250px]">
+      <!-- main -->
+      <div class="relative p-6 sm:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-2 font-mono text-[0.65rem] tracking-[0.16em] text-faint uppercase">
+          <span class="flex items-center gap-2"><span class="bg-accent px-1.5 py-0.5 text-white">Boarding pass</span> Internship season</span>
+          <span class="hidden sm:inline">Flight AA 2030</span>
+        </div>
+
+        <div class="mt-7 grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-6">
+          <div>
+            <p class="label">From · home</p>
+            <p class="livery mt-2 text-[clamp(2.1rem,10.5vw,4.6rem)]">{c.home.iata}</p>
+            <p class="mt-1 text-sm text-muted">{c.home.city}, {c.home.country}</p>
+          </div>
+          <div class="flex flex-col items-center gap-1 text-accent">
+            <svg width="64" height="20" viewBox="0 0 64 20" fill="none" class="w-10 sm:w-16" aria-hidden="true">
+              <path d="M2 10h46" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 4" />
+              <path d="M62 10 L48 3 V8 L40 6 V14 L48 12 V17 Z" fill="currentColor" />
+            </svg>
+            <span class="font-mono text-[0.6rem] tracking-[0.12em] text-faint">{distanceKm.toLocaleString('en-US')} km</span>
+          </div>
+          <div class="text-right">
+            <p class="label">To · now</p>
+            <p class="livery mt-2 text-[clamp(2.1rem,10.5vw,4.6rem)]">{c.current.iata}</p>
+            <p class="mt-1 text-sm text-muted">{c.current.city}, {c.current.country}</p>
+          </div>
+        </div>
+
+        <dl class="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-dashed border-line-strong pt-6 sm:grid-cols-4">
+          <div><dt class="label">Passenger</dt><dd class="display mt-1 text-sm font-semibold uppercase">Agarwal / Aryan</dd></div>
+          <div><dt class="label">Program</dt><dd class="display mt-1 text-sm font-semibold">Aero Eng + Physics</dd></div>
+          <div><dt class="label">Boarding</dt><dd class="display mt-1 text-sm font-semibold">Summer 2027</dd></div>
+          <div><dt class="label">Status</dt><dd class="mt-1 flex items-center gap-2 text-sm font-semibold text-ok"><span class="pulse-dot"></span>Open to offers</dd></div>
+        </dl>
+      </div>
+
+      <!-- stub -->
+      <div class="relative border-t border-dashed border-line-strong bg-surface-2 p-6 sm:p-8 lg:border-t-0 lg:border-l">
+        <span class="notch notch-top hidden lg:block" aria-hidden="true"></span>
+        <span class="notch notch-bottom hidden lg:block" aria-hidden="true"></span>
+        <dl class="grid grid-cols-3 gap-3 sm:gap-4 lg:grid-cols-1">
+          <div><dt class="label">Gate</dt><dd class="livery mt-1 text-[0.9rem] min-[360px]:text-base min-[400px]:text-lg sm:text-2xl">UIUC</dd></div>
+          <div><dt class="label">Seat</dt><dd class="livery mt-1 text-[0.9rem] min-[360px]:text-base min-[400px]:text-lg sm:text-2xl">AE·PHY</dd></div>
+          <div><dt class="label">Class of</dt><dd class="livery mt-1 text-[0.9rem] min-[360px]:text-base min-[400px]:text-lg sm:text-2xl">{site.gradYear}</dd></div>
+        </dl>
+        <div class="mt-6 flex h-12 items-end gap-[2px] opacity-80" aria-hidden="true">
+          {bars.map((w, i) => <span class="h-full bg-fg" style={`width:${w}px;${i % 9 === 0 ? 'height:80%' : ''}`} />)}
+        </div>
+        <p class="mt-2 font-mono text-[0.6rem] tracking-[0.12em] text-faint">AAGARWAL·2030·AERO</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Comms channels ────────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 pt-20 pb-6 sm:px-6">
+    <SectionHeading index="01" label="Comms channels" title="Pick a frequency" />
+    <ul class="grid gap-5 sm:grid-cols-2">
+      {
+        channels.map((ch) => (
+          <li class="reveal card group relative flex flex-col p-6">
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
+                <span class="grid h-6 min-w-9 place-items-center bg-fg px-1.5 text-bg">CH {ch.ch}</span>
+                <span class="text-faint">{ch.note}</span>
+              </span>
+              <span class="text-accent">
+                <Icon name={ch.kind === 'mail' ? 'mail' : ch.kind === 'tel' ? 'phone' : 'linkedin'} size={18} />
+              </span>
+            </div>
+            <p class="label mt-6">{ch.label}</p>
+            {ch.kind === 'link' ? (
+              <p class="display mt-1 text-xl break-all sm:text-2xl">{ch.value}</p>
+            ) : (
+              <p class="display mt-1 text-xl break-all sm:text-2xl" data-reveal={enc(ch.value)}>{ch.fallback}</p>
+            )}
+            <div class="mt-6 flex flex-wrap gap-2">
+              {ch.kind === 'link' ? (
+                <a href={ch.href} target="_blank" rel="noopener" class="inline-flex h-10 items-center gap-2 bg-fg px-4 text-xs font-semibold tracking-[0.08em] text-bg uppercase transition-colors hover:bg-accent hover:text-white">
+                  Open profile <Icon name="external" size={14} />
+                </a>
+              ) : (
+                <>
+                  <a
+                    href="#"
+                    data-action-href={enc(ch.kind === 'mail' ? `mailto:${ch.value}` : `tel:${ch.href}`)}
+                    class="inline-flex h-10 items-center gap-2 bg-fg px-4 text-xs font-semibold tracking-[0.08em] text-bg uppercase transition-colors hover:bg-accent hover:text-white"
+                  >
+                    {ch.kind === 'mail' ? 'Send email' : 'Call'} <Icon name="arrow" size={14} />
+                  </a>
+                  <button
+                    type="button"
+                    data-copy-enc={enc(ch.value)}
+                    class="inline-flex h-10 items-center gap-2 border border-fg px-4 text-xs font-semibold tracking-[0.08em] uppercase transition-colors hover:bg-fg hover:text-bg"
+                  >
+                    <Icon name="copy" size={14} /><span data-copy-label>Copy</span>
+                  </button>
+                </>
+              )}
+            </div>
+            <span class="absolute right-6 bottom-6 hidden font-mono text-[0.6rem] tracking-[0.12em] text-faint sm:block" aria-hidden="true">
+              {ch.ch === '01' ? '127.40' : ch.ch === '02' ? '118.30' : ch.ch === '03' ? '124.85' : '132.05'} MHz
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- ── Route map + clocks ─────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <SectionHeading index="02" label="Location" title="Where I am" />
+    <figure class="reveal bp corners overflow-hidden rounded-xl">
+      <div class="flex items-center justify-between border-b border-white/15 px-4 py-2.5 font-mono text-[0.62rem] tracking-[0.14em] uppercase">
+        <span class="opacity-80">Fig. C · Great-circle route {c.home.iata} → {c.current.iata}</span>
+        <span class="opacity-80">{distanceKm.toLocaleString('en-US')} km · peaks near {Math.round(peakLat)}°N</span>
+      </div>
+      <svg viewBox={`0 0 ${MAP.w} ${MAP.h}`} class="block w-full" fill="none" stroke="currentColor" font-family="IBM Plex Mono, monospace" aria-hidden="true">
+        <!-- graticule -->
+        {
+          [-120, -90, -60, -30, 0, 30, 60, 90].map((lon) => {
+            const [x] = px(0, lon);
+            return (
+              <g opacity="0.35">
+                <path d={`M${x} 0 V${MAP.h}`} stroke-width="0.6" stroke-dasharray="2 4" />
+                <text x={x + 4} y={MAP.h - 6} font-size="9" fill="currentColor" stroke="none">{Math.abs(lon)}°{lon < 0 ? 'W' : lon > 0 ? 'E' : ''}</text>
+              </g>
+            );
+          })
+        }
+        {
+          [15, 30, 45, 60, 75].map((lat) => {
+            const [, y] = px(lat, 0);
+            return (
+              <g opacity="0.35">
+                <path d={`M0 ${y} H${MAP.w}`} stroke-width="0.6" stroke-dasharray="2 4" />
+                <text x="6" y={y - 4} font-size="9" fill="currentColor" stroke="none">{lat}°N</text>
+              </g>
+            );
+          })
+        }
+        <!-- route -->
+        <path d={route} stroke="var(--bp-ink)" stroke-opacity="0.35" stroke-width="1.2" stroke-dasharray="3 5" />
+        <path class="route" d={route} pathLength="1" stroke="var(--accent-bright)" stroke-width="2.4" stroke-linecap="round" />
+        <!-- endpoints -->
+        {
+          [
+            { x: hx, y: hy, code: c.home.iata, sub: 'HOME', anchor: 'end', dx: -12 },
+            { x: cx, y: cy, code: c.current.iata, sub: 'NOW', anchor: 'start', dx: 12 },
+          ].map((p) => (
+            <g>
+              <circle cx={p.x} cy={p.y} r="10" stroke="var(--accent-bright)" stroke-width="1" opacity="0.5" class="ping" />
+              <circle cx={p.x} cy={p.y} r="4.5" fill="var(--bp-ink)" stroke="none" />
+              <text x={p.x + p.dx} y={p.y - 4} text-anchor={p.anchor} font-size="15" font-weight="600" fill="currentColor" stroke="none" letter-spacing="1">{p.code}</text>
+              <text x={p.x + p.dx} y={p.y + 11} text-anchor={p.anchor} font-size="9" fill="currentColor" stroke="none" opacity="0.7" letter-spacing="1.5">{p.sub}</text>
+            </g>
+          ))
+        }
+        <!-- plane -->
+        <g>
+          <path d="M9 0 L-5 -6 V-2 L-9 -3 V3 L-5 2 V6 Z" fill="var(--bp-ink)" stroke="none" />
+          <animateMotion dur="9s" repeatCount="indefinite" rotate="auto" path={route} keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines="0.45 0 0.55 1" />
+        </g>
+      </svg>
+      <!-- live clocks -->
+      <div class="grid grid-cols-1 border-t border-white/15 font-mono text-[0.65rem] tracking-[0.1em] uppercase sm:grid-cols-3">
+        <div class="border-b border-white/15 px-4 py-3 sm:border-r sm:border-b-0">
+          <span class="block opacity-65">Now · {c.current.city}</span>
+          <b class="mt-1 block text-xl font-medium tracking-normal" data-clock={c.current.tz}>--:--</b>
+        </div>
+        <div class="border-b border-white/15 px-4 py-3 sm:border-r sm:border-b-0">
+          <span class="block opacity-65">Home · {c.home.city}, {c.home.country}</span>
+          <b class="mt-1 block text-xl font-medium tracking-normal" data-clock={c.home.tz}>--:--</b>
+        </div>
+        <div class="px-4 py-3">
+          <span class="block opacity-65">Time difference</span>
+          <b class="mt-1 block text-xl font-medium tracking-normal" data-diff={`${c.current.tz}|${c.home.tz}`}>—</b>
+        </div>
+      </div>
+    </figure>
+  </section>
+</BaseLayout>
+
+<style>
+  .boarding .notch {
+    position: absolute;
+    left: -11px;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+  .boarding .notch-top {
+    top: -12px;
+  }
+  .boarding .notch-bottom {
+    bottom: -12px;
+  }
+  .route {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .js .route {
+    animation: draw-route 2.4s cubic-bezier(0.45, 0, 0.2, 1) 0.4s both;
+  }
+  @keyframes draw-route {
+    from {
+      stroke-dashoffset: 1;
+    }
+  }
+  .ping {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: ping-ring 2.2s ease-out infinite;
+  }
+  @keyframes ping-ring {
+    from {
+      transform: scale(0.4);
+      opacity: 0.9;
+    }
+    to {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .js .route,
+    .ping {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import { scramble } from '../scripts/motion';
+
+  const dec = (s: string) => [...new TextDecoder().decode(Uint8Array.from(atob(s), (ch) => ch.charCodeAt(0)))].reverse().join('');
+
+  // Reveal obfuscated contact details
+  document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el, i) => {
+    const value = dec(el.dataset.reveal!);
+    el.textContent = value;
+    setTimeout(() => scramble(el, value, 700), 200 + i * 120);
+  });
+  document.querySelectorAll<HTMLAnchorElement>('[data-action-href]').forEach((a) => {
+    a.href = dec(a.dataset.actionHref!);
+  });
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-enc]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const label = btn.querySelector<HTMLElement>('[data-copy-label]')!;
+      try {
+        await navigator.clipboard.writeText(dec(btn.dataset.copyEnc!));
+        scramble(label, 'COPIED', 350);
+        setTimeout(() => scramble(label, 'COPY', 350), 1500);
+      } catch {}
+    });
+  });
+
+  // Live local clocks + time difference
+  const fmt = (tz: string) => new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: '2-digit', weekday: 'short' });
+  const offset = (tz: string, d: Date) => {
+    const parts = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'longOffset' }).formatToParts(d);
+    const m = parts.find((p) => p.type === 'timeZoneName')?.value.match(/GMT([+-]\d{2}):?(\d{2})?/);
+    return m ? Number(m[1]) + (Number(m[2] ?? 0) / 60) * Math.sign(Number(m[1]) || 1) : 0;
+  };
+  function tick() {
+    const now = new Date();
+    document.querySelectorAll<HTMLElement>('[data-clock]').forEach((el) => (el.textContent = fmt(el.dataset.clock!).format(now)));
+    document.querySelectorAll<HTMLElement>('[data-diff]').forEach((el) => {
+      const [a, b] = el.dataset.diff!.split('|');
+      const h = offset(b, now) - offset(a, now);
+      el.textContent = `Dubai is ${Math.abs(h)} h ${h >= 0 ? 'ahead' : 'behind'}`;
+    });
+  }
+  tick();
+  setInterval(tick, 15000);
+</script>

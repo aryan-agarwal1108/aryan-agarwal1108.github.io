@@ -140,6 +140,10 @@ h2,
   letter-spacing: -0.035em;
   line-height: 0.88;
 }
+/* Keep units like "s" or "km" lowercase in stat numbers */
+.livery.normal-case {
+  text-transform: none;
+}
 
 /* Small technical labels */
 .label {

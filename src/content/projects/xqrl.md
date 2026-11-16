@@ -7,6 +7,8 @@ category: Quantum
 tags: [Python, PennyLane, Qiskit, TensorFlow, SHAP, LIME, Feature Occlusion, Quantum Machine Learning, Explainable AI]
 featured: true
 order: 4
+started: '2025-08'
+ended: '2026-03'
 role: Student Researcher
 org: NYU Abu Dhabi, eBRAIN Lab
 timeline: Aug 2025 – Mar 2026

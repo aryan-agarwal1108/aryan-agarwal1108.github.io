@@ -7,12 +7,13 @@ category: Aerodynamics
 tags: [Python, BEMT, Aerodynamic Modeling, Propeller Slipstream Analysis, Lift Augmentation, Takeoff Performance, Power Loading]
 featured: true
 order: 1
+started: '2026-08'
+ended: 'present'
 role: Undergraduate Researcher
 org: Midwest Nice Aerospace Group
 timeline: Aug 2026 – Present
 status: In progress
 supervisor: Dr. Elle Wroblewski
-interactive: airfoil
 ---
 
 <!--

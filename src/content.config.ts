@@ -25,13 +25,15 @@ const projects = defineCollection({
       .default([]),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
+    // "Recommended" sort position: current work first, then most impressive/technical
     order: z.number().default(99),
+    // For "Most recent" sorting (YYYY-MM). `ended: present` = ongoing.
+    started: z.string().regex(/^\d{4}-\d{2}$/),
+    ended: z.union([z.literal('present'), z.string().regex(/^\d{4}-\d{2}$/)]),
     // Spec sheet
     role: z.string(),
     org: z.string().optional(),
     supervisor: z.string().optional(),
-    // Optional interactive demo shown on the project page
-    interactive: z.enum(['airfoil', 'rocket']).optional(),
     timeline: z.string(),
     team: z.string().optional(),
     status: z.string().optional(),

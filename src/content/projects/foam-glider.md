@@ -6,7 +6,9 @@ year: 2026
 category: Aircraft Design
 tags: [Aircraft Design, Weight & Balance, Center of Gravity Calculation, Balsa & Foam Fabrication, Epoxy Bonding, Prototyping, Teamwork]
 featured: false
-order: 7
+order: 8
+started: '2026-08'
+ended: '2026-11'
 role: AE 100 @ UIUC
 timeline: Fall 2026
 team: Group project
