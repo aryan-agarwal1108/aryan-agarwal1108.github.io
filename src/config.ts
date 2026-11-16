@@ -453,6 +453,7 @@ export const skills: { group: string; items: string[] }[] = [
   { group: 'Programming & Tools', items: ['Python', 'NumPy', 'Matplotlib', 'C++', 'Java', 'PennyLane', 'TensorFlow', 'Qiskit', 'Arduino'] },
   { group: 'Physics & Lab', items: ['Experimental Physics', 'Polarimetry', 'Mie Scattering', 'Quantum Optics', 'Photonics', 'Vernier LabQuest', 'Uncertainty Analysis'] },
   { group: 'Aerospace', items: ['Aircraft Design', 'Weight & Balance', 'Hybrid Propulsion', 'Model Rocketry', 'Propeller Slipstream Analysis', 'Takeoff Performance'] },
+  { group: 'Languages', items: ['English (Native)', 'Hindi (Native)', 'Spanish (B1)', 'German (A2)', 'French (A2)', 'Arabic (A2)'] },
 ];
 
 // ── Personal (About page) ────────────────────────────────────
@@ -470,6 +471,16 @@ export const now: string[] = [
   'Modeling a blown-wing PA-28 with the Midwest Nice Aerospace Group',
   'Designing spin-caster parts for the ISS Hybrid team',
   'Getting ready to start at CHESS in January',
+];
+
+// Languages (CEFR levels: A1–C2, or Native). Shown on the About page and in Skills.
+export const languages: { name: string; level: string }[] = [
+  { name: 'English', level: 'Native' },
+  { name: 'Hindi', level: 'Native' },
+  { name: 'Spanish', level: 'B1' },
+  { name: 'German', level: 'A2' },
+  { name: 'French', level: 'A2' },
+  { name: 'Arabic', level: 'A2' },
 ];
 
 // "Beyond engineering" section on the About page (hidden if empty).
