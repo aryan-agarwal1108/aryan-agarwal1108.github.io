@@ -486,10 +486,6 @@ export const languages: { name: string; level: string }[] = [
 // "Beyond engineering" section on the About page (hidden if empty).
 export const interests: { title: string; text: string }[] = [
   {
-    title: 'Golf',
-    text: "I've played since Grade 7 and was on my school's varsity team. Highlights: two junior tournament wins at DASSA, a UAE interschool title in 2023–24, and a 4.8 handicap. I also helped coach the newer players.",
-  },
-  {
     title: 'Guitar',
     text: "I've reached Grade 8, the highest level, in Trinity's exams for electric, acoustic, and classical guitar, and I've performed at school events.",
   },
