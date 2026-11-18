@@ -20,7 +20,8 @@ const { paper: p, index, prev, next } = Astro.props;
 
 const spec = (
   [
-    ['Authors', p.authors ?? site.name],
+    ['Authors', p.authors],
+    ['Status', p.status],
     ['Subject', p.subject],
     ['Year', p.year],
     ['Length', [p.pages && `${p.pages} pages`, p.words && `${p.words} words`].filter(Boolean).join(' · ') || undefined],
@@ -39,7 +40,6 @@ const spec = (
         <span class="text-accent">PPR-{pad(index + 1)}</span><span class="h-px w-8 bg-line-strong"></span>{p.subject} · {p.year}
       </p>
       <h1 class="mt-4 text-3xl font-semibold tracking-[-0.03em] text-balance hyphens-auto [overflow-wrap:anywhere] sm:text-5xl sm:hyphens-none">{p.title}</h1>
-      <p class="mt-4 text-muted">{p.authors ?? site.name}</p>
     </header>
 
     <div class="mt-12 grid gap-12 lg:grid-cols-[1fr_300px]">
@@ -70,26 +70,33 @@ const spec = (
           )
         }
 
-        <section class="reveal mt-12">
-          <div class="flex flex-wrap items-end justify-between gap-3">
-            <h2 class="label">{p.pdfLabel?.toLowerCase().includes('first page') ? 'First page' : 'The paper'}</h2>
-            <a href={url(p.pdf)} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.06em] text-accent uppercase hover:underline">
-              Open in a new tab <Icon name="external" size={13} />
+        {p.pdf ? (
+          <section class="reveal mt-12">
+            <div class="flex flex-wrap items-end justify-between gap-3">
+              <h2 class="label">{p.pdfLabel?.toLowerCase().includes('first page') ? 'First page' : 'The paper'}</h2>
+              <a href={url(p.pdf)} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.06em] text-accent uppercase hover:underline">
+                Open in a new tab <Icon name="external" size={13} />
+              </a>
+            </div>
+            <div class="mt-3 hidden overflow-hidden rounded-xl border border-line bg-surface-2 md:block">
+              <iframe src={`${url(p.pdf)}#view=FitH`} title={`${p.title} (PDF)`} loading="lazy" class="block h-[80vh] max-h-[1000px] w-full"></iframe>
+            </div>
+            <a
+              href={url(p.pdf)}
+              target="_blank"
+              rel="noopener"
+              class="mt-3 flex items-center justify-between rounded-xl border border-line bg-surface px-5 py-4 md:hidden"
+            >
+              <span class="flex items-center gap-3 text-sm font-medium"><Icon name="file" size={18} class="text-accent" />{p.pdfLabel ?? 'Read the paper (PDF)'}</span>
+              <Icon name="external" size={15} class="text-faint" />
             </a>
-          </div>
-          <div class="mt-3 hidden overflow-hidden rounded-xl border border-line bg-surface-2 md:block">
-            <iframe src={`${url(p.pdf)}#view=FitH`} title={`${p.title} (PDF)`} loading="lazy" class="block h-[80vh] max-h-[1000px] w-full"></iframe>
-          </div>
-          <a
-            href={url(p.pdf)}
-            target="_blank"
-            rel="noopener"
-            class="mt-3 flex items-center justify-between rounded-xl border border-line bg-surface px-5 py-4 md:hidden"
-          >
-            <span class="flex items-center gap-3 text-sm font-medium"><Icon name="file" size={18} class="text-accent" />{p.pdfLabel ?? 'Read the paper (PDF)'}</span>
-            <Icon name="external" size={15} class="text-faint" />
-          </a>
-        </section>
+          </section>
+        ) : (
+          <section class="reveal mt-12 rounded-xl border border-dashed border-line-strong bg-surface p-6">
+            <h2 class="label flex items-center gap-2"><span class="size-1.5 animate-pulse rounded-full bg-accent" />In progress</h2>
+            <p class="mt-3 text-sm leading-relaxed text-muted">I'm still writing this paper. The PDF will go up here when it's finished.</p>
+          </section>
+        )}
       </div>
 
       <aside class="order-first lg:order-last">
@@ -115,15 +122,17 @@ const spec = (
             </div>
           </dl>
           <div class="flex flex-col gap-2 border-t border-line p-4">
-            <a
-              href={url(p.pdf)}
-              target="_blank"
-              rel="noopener"
-              class="flex min-h-11 items-center justify-between rounded-lg bg-fg px-3.5 py-2.5 text-sm text-bg transition-colors hover:bg-accent hover:text-white"
-            >
-              <span class="flex items-center gap-2.5"><Icon name="file" size={15} />{p.pdfLabel ?? 'Read the paper (PDF)'}</span>
-              <Icon name="external" size={14} />
-            </a>
+            {p.pdf && (
+              <a
+                href={url(p.pdf)}
+                target="_blank"
+                rel="noopener"
+                class="flex min-h-11 items-center justify-between rounded-lg bg-fg px-3.5 py-2.5 text-sm text-bg transition-colors hover:bg-accent hover:text-white"
+              >
+                <span class="flex items-center gap-2.5"><Icon name="file" size={15} />{p.pdfLabel ?? 'Read the paper (PDF)'}</span>
+                <Icon name="external" size={14} />
+              </a>
+            )}
             {p.project && (
               <a href={url(p.project)} class="flex min-h-11 items-center justify-between rounded-lg border border-line px-3.5 py-2.5 text-sm transition-colors hover:border-accent">
                 <span>Project write-up</span>

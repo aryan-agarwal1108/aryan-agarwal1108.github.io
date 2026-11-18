@@ -3,18 +3,20 @@ import { getProjects, byRecent } from '../../lib/projects';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import { filterTools } from '../../config';
+import { filterSkills } from '../../config';
 
 const projects = await getProjects(); // Recommended order (default)
 const recentIds = [...projects].sort(byRecent).map((p) => p.id);
 const categories = ['All', ...new Set(projects.map((p) => p.data.category))];
 
-// Only the key tools appear in the dropdown (see filterTools in config), with project counts
-const toolCounts = new Map<string, number>();
-projects.forEach((p) => p.data.tags.forEach((t) => toolCounts.set(t.toLowerCase(), (toolCounts.get(t.toLowerCase()) ?? 0) + 1)));
-const tools = filterTools
-  .map((t) => [t, toolCounts.get(t.toLowerCase()) ?? 0] as [string, number])
-  .filter(([, n]) => n > 0);
+// The dropdown lists general skill areas (see filterSkills in config), with project counts
+const groupKeys = (tags: string[]) => {
+  const lower = new Set(tags.map((t) => t.toLowerCase()));
+  return filterSkills.filter((g) => g.tags.some((t) => lower.has(t.toLowerCase()))).map((g) => g.key);
+};
+const tools = filterSkills
+  .map((g) => [g.key, g.label, projects.filter((p) => groupKeys(p.data.tags).includes(g.key)).length] as [string, string, number])
+  .filter(([, , n]) => n > 0);
 // Every tag (any case) → its display name, so deep links to other tools still work
 const allTags = Object.fromEntries(projects.flatMap((p) => p.data.tags.map((t) => [t.toLowerCase(), t])));
 ---
@@ -55,13 +57,13 @@ const allTags = Object.fromEntries(projects.flatMap((p) => p.data.tags.map((t) =
           </select>
         </label>
         <label class="flex items-center gap-2 font-mono text-xs text-faint">
-          <span class="w-9 shrink-0 tracking-wider uppercase">Tool</span>
+          <span class="w-9 shrink-0 tracking-wider uppercase">Skill</span>
           <select
             id="tool"
             class="h-10 w-full rounded-md border border-line bg-surface px-2 text-xs text-fg outline-none hover:border-line-strong focus-visible:border-accent lg:h-8 lg:w-52"
           >
-            <option value="">Any tool</option>
-            {tools.map(([t, n]) => <option value={t.toLowerCase()}>{t} ({n})</option>)}
+            <option value="">Any skill</option>
+            {tools.map(([key, label, n]) => <option value={'skill:' + key}>{label} ({n})</option>)}
           </select>
         </label>
       </div>
@@ -70,7 +72,7 @@ const allTags = Object.fromEntries(projects.flatMap((p) => p.data.tags.map((t) =
     <p id="status" class="mt-5 font-mono text-xs text-faint" aria-live="polite"></p>
 
     <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" id="grid" data-all-tags={JSON.stringify(allTags)}>
-      {projects.map((p, i) => <ProjectCard project={p} index={i} recent={recentIds.indexOf(p.id)} />)}
+      {projects.map((p, i) => <ProjectCard project={p} index={i} recent={recentIds.indexOf(p.id)} skills={groupKeys(p.data.tags)} />)}
     </div>
     <p id="empty" class="hidden py-16 text-center text-muted">No projects match that combination.</p>
   </section>
@@ -109,7 +111,7 @@ const allTags = Object.fromEntries(projects.flatMap((p) => p.data.tags.map((t) =
     cards.forEach((c) => {
       const ok =
         (category === 'All' || c.dataset.category === category) &&
-        (!tool || (c.dataset.tags ?? '').split('|').includes(tool));
+        (!tool || (tool.startsWith('skill:') ? (c.dataset.skills ?? '').split('|').includes(tool.slice(6)) : (c.dataset.tags ?? '').split('|').includes(tool)));
       c.style.display = ok ? '' : 'none';
       if (ok) shown++;
     });

@@ -10,7 +10,7 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
   { when: '2024', where: 'New York, USA', what: 'Picked as one of 52 World Science Scholars' },
   { when: '2024', where: 'Abu Dhabi, UAE', what: 'Summer at TII as its youngest quantum researcher: SNSPD optics and polarization-based QKD' },
   { when: '2025', where: 'Abu Dhabi, UAE', what: 'Research at NYU Abu Dhabi: an eVTOL drone at CAIR and quantum RL at eBRAIN' },
-  { when: '2026', where: 'Dubai, UAE', what: 'Finished the IB Diploma (40/45), with an extended essay on how temperature affects light depolarization' },
+  { when: '2026', where: 'Dubai, UAE', what: 'Finished the IB Diploma (40/45), with a research paper on how temperature affects light depolarization' },
   { when: '2026', where: 'Urbana-Champaign, IL', what: 'Moved to UIUC. Joined ISS Hybrid and Midwest Nice, and built and flew a rocket in AE 100' },
   { when: '2027', where: 'Urbana-Champaign, IL', what: 'Starting hypersonics research at CHESS in January', next: true },
 ];
@@ -51,7 +51,7 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
           <p>
             Outside engineering, I started{' '}
             <a href={leadership[0].href} target="_blank" rel="noopener">Erudios</a>, a free research-mentorship program that
-            ended up connecting 1,000+ high schoolers with university mentors. I also play guitar.
+            ended up connecting 1,000+ high schoolers with university mentors.
           </p>
         </div>
       </div>
@@ -145,7 +145,7 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
     </div>
 
     {
-      interests.length > 0 && (
+      (interests.length > 0 || languages.length > 0) && (
         <div class="mt-20">
           <p class="reveal label flex items-center gap-3"><span class="text-accent">02</span><span class="h-px w-8 bg-line-strong" />Off the clock</p>
           <h2 class="reveal mt-3 mb-10 text-3xl font-semibold tracking-tight sm:text-4xl">Beyond engineering</h2>

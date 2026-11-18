@@ -65,7 +65,7 @@ export const education: Education[] = [
     date: 'May 2026',
     subjects: ['Physics', 'Mathematics: Analysis & Approaches', 'Chemistry'],
     details: [
-      'Extended Essay (Physics): Investigating the Effect of Atmospheric Temperature on Depolarization of Light Due to Atmospheric Scattering',
+      'Research paper (Physics): Investigating the Effect of Atmospheric Temperature on Depolarization of Light Due to Atmospheric Scattering',
     ],
   },
 ];
@@ -96,7 +96,7 @@ export const experience: Experience[] = [
     start: 'Jan 2027',
     location: 'Urbana-Champaign, IL',
     upcoming: true,
-    bullets: ["Joining UIUC's hypersonics research center in January 2027."],
+    bullets: ['Incoming undergraduate researcher in hypersonics and atmospheric entry systems, starting January 2027.'],
     tags: ['Hypersonics', 'Entry Systems'],
   },
   {
@@ -107,8 +107,8 @@ export const experience: Experience[] = [
     end: 'Present',
     location: 'Urbana-Champaign, IL',
     bullets: [
-      'Building Python models of a Piper PA-28 blown wing using blade-element momentum theory (BEMT).',
-      'Simulating the propeller slipstream and the extra lift it creates, then using the results to look at thrust, power loading, and takeoff performance.',
+      'Developing Python aerodynamic models of a Piper PA-28 blown wing using blade-element momentum theory (BEMT).',
+      'Simulating propeller slipstream effects and lift augmentation to evaluate thrust, power loading, and takeoff performance.',
     ],
     tags: ['Python', 'BEMT', 'Aerodynamic Modeling'],
     projects: ['pa28-blown-wing'],
@@ -120,8 +120,8 @@ export const experience: Experience[] = [
     end: 'Present',
     location: 'Urbana-Champaign, IL',
     bullets: [
-      'Designing parts in Siemens NX for the rig that spin-casts fuel grains for our hybrid rocket, and making them with 3D printing.',
-      'Running FEA on heat distribution, thermal gradients, and heat transfer during the casting process.',
+      'Designing components in Siemens NX for a hybrid rocket fuel-grain spin-caster and fabricating them with 3D printing.',
+      'Performing FEA of heat distribution, thermal gradients, and heat transfer during the fuel-grain casting process.',
     ],
     tags: ['Siemens NX', '3D Printing', 'FEA', 'Thermal Analysis'],
     projects: ['fuel-grain-spin-caster'],
@@ -129,15 +129,14 @@ export const experience: Experience[] = [
   {
     role: 'Visiting Researcher',
     org: 'NYU Abu Dhabi, CAIR Lab',
-    supervisor: 'Dr. Nikolaos Evangeliou',
     start: 'Jan 2025',
     end: 'Nov 2025',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      'Designed an eVTOL drone in SolidWorks with an emergency flotation system for water landings.',
-      'Developed a rapid-deployment pneumatic buoyancy system that inflates from ambient-air intake in under 8 seconds, using solenoid-controlled burst-diaphragm regulators.',
-      'Ran transient CFD in ANSYS Fluent to validate how airflow and pressure behave as the floats inflate.',
-      'Presented the project to the UAE government. It is slated for TECHSPO Dubai 2026.',
+      'Designed an eVTOL drone in SolidWorks with an integrated emergency flotation system for water landings.',
+      'Developed a rapid-deployment pneumatic buoyancy system with sub-8-second inflation using ambient-air intake and solenoid-controlled burst-diaphragm regulators.',
+      'Ran transient CFD simulations in ANSYS Fluent to validate airflow and pressure behavior during float inflation.',
+      'Presented the system to the UAE government ahead of its exhibition at TECHSPO Dubai 2026.',
     ],
     tags: ['SolidWorks', 'ANSYS Fluent', 'CFD', 'Pneumatics'],
     projects: ['evtol-water-landing'],
@@ -149,10 +148,10 @@ export const experience: Experience[] = [
     end: 'Mar 2026',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      'Co-developed the first metrics for explaining quantum reinforcement-learning agents (XQRL), benchmarked on CartPole and MNIST and applied to Quantum Q-Learning and Quantum Deep Q-Networks.',
-      'Improved the interpretability of earlier XQRL models with LIME, SHAP, and feature occlusion.',
-      'Built hybrid quantum-classical simulation pipelines in Python with PennyLane, TensorFlow, and Qiskit, and optimized parameterized quantum gates for near-term hardware.',
-      'Co-authored the paper "ClearQRL: A Unified Interpretability and Explainability Framework for Quantum RL".',
+      'Co-developed the first explainability metrics for quantum reinforcement learning (XQRL), benchmarked on CartPole and MNIST across Quantum Q-Learning and Quantum Deep Q-Network agents.',
+      'Enhanced the interpretability of prior XQRL models using LIME, SHAP, and feature occlusion.',
+      'Built hybrid quantum-classical simulation pipelines in Python (PennyLane, TensorFlow, Qiskit) and optimized parameterized quantum gates for near-term hardware.',
+      'Co-authored "ClearQRL: A Unified Interpretability and Explainability Framework for Quantum RL."',
     ],
     tags: ['Python', 'PennyLane', 'Qiskit', 'TensorFlow', 'Explainable AI'],
     projects: ['xqrl'],
@@ -164,11 +163,10 @@ export const experience: Experience[] = [
     end: 'Aug 2024',
     location: 'Abu Dhabi, UAE',
     bullets: [
-      "Youngest intern at TII's Quantum Research Center, working on satellite quantum key distribution for the Abu Dhabi Quantum Optical Ground Station (ADQOGS).",
-      'Built a superconducting nanowire single-photon detector (SNSPD) setup for ADQOGS: aligned the optics with nanopositioners and automated it in Python on a Raspberry Pi.',
-      'Designed and fabricated custom opto-mechanical interfaces in SolidWorks to integrate the detector with the cryostat.',
-      'Researched polarization-based QKD, focusing on BB84 receivers.',
-      "Presented at the Quantum Research Center's GITEX demo, which drew 150K+ visitors.",
+      "Contributed to satellite quantum key distribution research for the Abu Dhabi Quantum Optical Ground Station (ADQOGS) as the Quantum Research Center's youngest intern.",
+      'Built a superconducting nanowire single-photon detector (SNSPD) setup, aligning optics with nanopositioners and automating control in Python on a Raspberry Pi.',
+      'Designed and fabricated custom opto-mechanical interfaces in SolidWorks for detector–cryostat integration.',
+      'Researched polarization-based QKD with a focus on BB84 receivers.',
     ],
     tags: ['Quantum Optics', 'SolidWorks', 'QKD', 'Python', 'Raspberry Pi'],
     projects: ['snspd-qkd'],
@@ -185,9 +183,9 @@ export const leadership: Experience[] = [
     end: 'Sep 2026',
     location: 'Dubai, UAE',
     bullets: [
-      'Started a free research-mentorship program that paired 1,000+ high schoolers around the world with 200+ mentors from universities like Princeton and Penn.',
-      'Students in the program have published 150+ research papers.',
-      'Created annual global research competitions with 450+ participants and $500 in prizes, judged by professors and students from Cambridge, Carnegie Mellon, Cornell, and more.',
+      'Founded a free global research-mentorship program connecting 1,000+ high school students with 200+ mentors from universities including Princeton and Penn.',
+      'Supported program participants in publishing 150+ research papers.',
+      'Organized annual global research competitions with 450+ participants and $500 in prizes, judged by faculty and students from Cambridge, Carnegie Mellon, and Cornell.',
     ],
   },
   {
@@ -197,8 +195,9 @@ export const leadership: Experience[] = [
     end: 'Jun 2025',
     location: 'New York, USA',
     bullets: [
-      'One of 52 students picked worldwide for advanced courses and projects in theoretical physics, math, and computation, taught by scientists including Brian Greene, Stephen Wolfram, and Cumrun Vafa.',
-      "The program is run by the World Science Festival, which Brian Greene co-founded, and funded by the John Templeton Foundation. Scholars are high schoolers with exceptional math ability, chosen through nominations and applications from around the world. Each cohort is only a few dozen students.",
+      'Selected as one of 52 students worldwide for advanced coursework and projects in theoretical physics, mathematics, and computation.',
+      'Studied under scientists including Brian Greene, Stephen Wolfram, and Cumrun Vafa.',
+      'Admitted through an international nomination and application process to a program funded by the John Templeton Foundation.',
     ],
   },
   {
@@ -208,8 +207,10 @@ export const leadership: Experience[] = [
     start: '2025',
     location: 'Online',
     bullets: [
-      'Wrote olympiad-level problems on quantum physics, relativity, and electromagnetism for a competition with 900+ participants, and graded 70 entries.',
-      "OPhO is a student-run international physics olympiad. It has drawn 10,000+ competitors from 80+ countries since 2020, with sponsors like Jane Street, Citadel, and Wolfram. Most of the problem-writing team are IPhO and EuPhO medalists or physics students at places like MIT and Oxford, and I wrote problems alongside them.",
+      'Wrote olympiad-level problems in quantum physics, relativity, and electromagnetism for an international competition with 900+ participants.',
+      'Graded 70 competitor submissions.',
+      'Collaborated with a problem-writing team of IPhO and EuPhO medalists and physics students from MIT and Oxford.',
+      'Contributed to a student-run olympiad that has drawn 10,000+ competitors from 80+ countries since 2020, sponsored by Jane Street, Citadel, and Wolfram.',
     ],
   },
   {
@@ -220,7 +221,7 @@ export const leadership: Experience[] = [
     location: 'Dubai, UAE',
     bullets: [
       'Taught special relativity, quantum theory, and astrophysics to 60+ students in Grades 7–9.',
-      "Ran events including NASA's International Astronomical Search Collaboration (IASC), expert panels, and competitions.",
+      "Organized events including NASA's International Astronomical Search Collaboration (IASC), expert panels, and competitions.",
     ],
   },
   {
@@ -230,8 +231,8 @@ export const leadership: Experience[] = [
     end: '2025',
     location: 'Dubai, UAE',
     bullets: [
-      'Helped organize the largest THIMUN-affiliated Model UN conference in the MENA region: 600+ delegates from 20+ schools across 10 countries, with $100k in revenue.',
-      "DIAMUN has been officially affiliated with The Hague International Model United Nations (THIMUN) since 2011 and is run entirely by students. As President of the General Assemblies, I held one of the conference's top student leadership roles, overseeing the General Assembly committees and presiding over their sessions.",
+      'Co-organized the largest THIMUN-affiliated Model UN conference in the MENA region, with 600+ delegates from 20+ schools across 10 countries and $100K in revenue.',
+      'Presided over General Assembly sessions and oversaw all General Assembly committees in one of the conference’s top student leadership roles.',
     ],
   },
   {
@@ -239,7 +240,11 @@ export const leadership: Experience[] = [
     org: 'Dubai International Academy',
     start: '2025',
     location: 'Dubai, UAE',
-    bullets: ['Oversaw 50+ prefects and student well-being across the school.'],
+    bullets: [
+      "Led and coordinated a team of 50+ prefects as part of the school's Student Leadership Team.",
+      'Oversaw student well-being across the school, serving as a link between the student body and school leadership.',
+      'Assigned and supervised prefect duties for school events and day-to-day operations.',
+    ],
   },
 ];
 
@@ -315,7 +320,6 @@ export const awards: Award[] = [
 export const recognition: { what: string; detail: string; year: string; href?: string }[] = [
   { what: 'World Science Scholar', detail: 'One of 52 students picked worldwide (World Science Festival)', year: '2024–25', href: '/experience' },
   { what: 'Youngest quantum researcher at TII', detail: "Technology Innovation Institute, the UAE's government quantum research facility", year: '2024', href: '/projects/snspd-qkd' },
-  { what: 'Presented at GITEX', detail: 'TII Quantum Research Center demo (150K+ visitors): SNSPD and polarization-based QKD work', year: '2024', href: '/projects/snspd-qkd' },
   { what: 'Presented to the UAE government', detail: 'eVTOL drone with emergency water-landing floats (NYU Abu Dhabi), slated for TECHSPO Dubai 2026', year: '2025', href: '/projects/evtol-water-landing' },
   { what: 'Co-authored a quantum ML paper', detail: 'ClearQRL: an explainability framework for quantum reinforcement learning (NYU Abu Dhabi)', year: '2025–26', href: '/papers/clearqrl' },
   { what: 'IB Diploma: 40/45', detail: 'Dubai International Academy Emirates Hills', year: '2026', href: '/about' },
@@ -335,13 +339,31 @@ export type Paper = {
   findingsLabel?: string; // defaults to "Key findings"
   findings: string[];
   keywords: string[];
-  pdf: string;
+  pdf?: string; // leave out for a paper that's still being written
+  status?: string; // e.g. "In progress"; shown as a badge
   pdfLabel?: string; // defaults to "Read the paper (PDF)"
   project?: string; // related project page
   figure?: string; // optional preview image
 };
 
 export const papers: Paper[] = [
+  {
+    slug: 'pa28-blown-wing',
+    title: 'Modeling Propeller-Induced Lift Augmentation on a Piper PA-28 Blown Wing Using Blade-Element Momentum Theory',
+    subject: 'Aerodynamics · Modeling',
+    year: '2026–27',
+    status: 'In progress',
+    abstract:
+      'A blown wing places propellers ahead of the wing so their slipstream accelerates the air over it, raising lift at low speeds. This paper models that effect on a Piper PA-28 with Python implementations of blade-element momentum theory (BEMT), predicting the slipstream velocity behind each propeller and the resulting lift increase on the wing sections it covers.',
+    findingsLabel: 'Scope',
+    findings: [
+      'BEMT propeller model coupling blade-element lift and drag with momentum theory to solve for thrust and slipstream velocity.',
+      'Slipstream-to-wing coupling to estimate lift augmentation on the blown sections of the wing.',
+      'Evaluation of thrust, power loading, and takeoff performance with and without blowing.',
+    ],
+    keywords: ['Blown wing', 'BEMT', 'Propeller slipstream', 'Lift augmentation', 'Takeoff performance'],
+    project: '/projects/pa28-blown-wing',
+  },
   {
     slug: 'clearqrl',
     title: 'ClearQRL: A Unified Interpretability and Explainability Framework for Quantum RL',
@@ -395,7 +417,7 @@ export const papers: Paper[] = [
       'Results point to temperature as a factor worth modeling in free-space optical and polarization-based QKD links.',
     ],
     keywords: ['Mie scattering', 'Polarimetry', 'Degree of polarization', 'Free-space optics', 'QKD'],
-    pdf: '/files/Aryan_Agarwal_Extended_Essay_Physics.pdf',
+    pdf: '/files/Aryan_Agarwal_Atmospheric_Depolarization_Paper.pdf',
     project: '/projects/atmospheric-depolarization',
     figure: '/images/ee-dop-vs-temperature.svg',
   },
@@ -450,8 +472,18 @@ export const papers: Paper[] = [
   },
 ];
 
-// Tools offered in the Projects page "Tool" filter (keep it short; projects still list every skill)
-export const filterTools = ['Python', 'SolidWorks', 'Siemens NX', 'ANSYS Fluent', 'CFD', 'FEA', 'OpenRocket', 'Qiskit'];
+// General skill areas offered in the Projects page "Skill" filter. Each one matches any project
+// tagged with one of its `tags`. Projects still list the specific software on their own pages.
+export const filterSkills: { key: string; label: string; tags: string[] }[] = [
+  { key: 'cad', label: 'CAD', tags: ['SolidWorks', 'Siemens NX'] },
+  { key: 'cfd-fea', label: 'CFD & FEA', tags: ['ANSYS Fluent', 'CFD', 'FEA', 'Thermal Analysis', 'Heat Transfer'] },
+  { key: 'modeling', label: 'Simulation & Modeling', tags: ['BEMT', 'Aerodynamic Modeling', 'OpenRocket', 'Flight Simulation', 'Transient Simulation'] },
+  { key: 'programming', label: 'Programming', tags: ['Python', 'NumPy', 'Matplotlib', 'Raspberry Pi'] },
+  { key: 'data', label: 'Data Analysis', tags: ['Data Analysis', 'Flight Data Analysis', 'Uncertainty Analysis'] },
+  { key: 'fabrication', label: 'Fabrication & Prototyping', tags: ['3D Printing', 'Balsa & Foam Fabrication', 'Epoxy Bonding', 'Prototyping'] },
+  { key: 'lab', label: 'Experimental Physics', tags: ['Experimental Physics', 'Polarimetry', 'Quantum Optics', 'Nanopositioners', 'Cryogenics'] },
+  { key: 'quantum-ml', label: 'Quantum Computing & ML', tags: ['Qiskit', 'PennyLane', 'Quantum Circuits', 'Quantum Machine Learning', 'Reinforcement Learning'] },
+];
 
 // ── Skills ───────────────────────────────────────────────────
 export const skills: { group: string; items: string[] }[] = [
@@ -491,10 +523,5 @@ export const languages: { name: string; level: string }[] = [
   { name: 'Arabic', level: 'A2' },
 ];
 
-// "Beyond engineering" section on the About page (hidden if empty).
-export const interests: { title: string; text: string }[] = [
-  {
-    title: 'Guitar',
-    text: "I've reached Grade 8, the highest level, in Trinity's exams for electric, acoustic, and classical guitar, and I've performed at school events.",
-  },
-];
+// "Beyond engineering" section on the About page (hidden if empty, apart from Languages).
+export const interests: { title: string; text: string }[] = [];

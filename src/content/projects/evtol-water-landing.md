@@ -11,7 +11,6 @@ started: '2025-01'
 ended: '2025-11'
 role: Visiting Researcher
 org: NYU Abu Dhabi, CAIR Lab
-supervisor: Dr. Nikolaos Evangeliou
 timeline: Jan 2025 – Nov 2025
 metrics:
   - { value: "<8 s", label: "Float deployment" }
@@ -27,7 +26,7 @@ metrics:
 
 ## The goal
 
-Small eVTOL drones fly over water more and more, and if one has to land there you usually lose the aircraft and whatever it's carrying. At NYU Abu Dhabi's CAIR Lab, under Dr. Nikolaos Evangeliou, I designed a multicopter eVTOL with an emergency flotation system built into the airframe.
+Small eVTOL drones fly over water more and more, and if one has to land there you usually lose the aircraft and whatever it's carrying. At NYU Abu Dhabi's CAIR Lab, I designed a multicopter eVTOL with an emergency flotation system built into the airframe.
 
 ## My part
 

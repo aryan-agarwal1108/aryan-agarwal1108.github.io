@@ -9,8 +9,9 @@ interface Props {
   index: number;
   size?: 'lg' | 'md';
   recent?: number; // position in "Most recent" order (projects page sorting)
+  skills?: string[]; // general skill-area keys (projects page filter)
 }
-const { project, index, size = 'md', recent } = Astro.props;
+const { project, index, size = 'md', recent, skills } = Astro.props;
 const p = project.data;
 
 // Short status pill: In progress / Flown / Completed
@@ -23,6 +24,7 @@ const pill = live ? 'In progress' : /flown/i.test(p.status ?? '') ? 'Flown' : 'C
   class="card reveal group flex h-full flex-col overflow-hidden"
   data-category={p.category}
   data-tags={p.tags.map((t) => t.toLowerCase()).join('|')}
+  data-skills={skills?.join('|')}
   data-rec={index}
   data-recent={recent}
 >

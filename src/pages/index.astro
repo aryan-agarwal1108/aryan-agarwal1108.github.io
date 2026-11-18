@@ -21,29 +21,7 @@ const stats: { value: string; label: string; href: string; count?: number; prefi
   { value: 'Jan ’27', label: 'Starting hypersonics research at CHESS', href: '/experience' },
 ];
 
-// "How I work": three steps, each grounded in real projects
-const process = [
-  {
-    n: '01',
-    title: 'Model it',
-    text: 'I start with the physics. BEMT for the blown wing, CFD for the drone floats, OpenRocket before a launch.',
-    links: [['PA-28 model', '/projects/pa28-blown-wing'], ['eVTOL floats', '/projects/evtol-water-landing']],
-  },
-  {
-    n: '02',
-    title: 'Build it',
-    text: 'Then I make the parts. Siemens NX and 3D printing for the spin-caster, SolidWorks for the drone, foam and balsa for the glider.',
-    links: [['Spin-caster', '/projects/fuel-grain-spin-caster'], ['Glider', '/projects/foam-glider']],
-  },
-  {
-    n: '03',
-    title: 'Test it',
-    text: 'Last, I check it against reality. FEA on the spin-caster’s heat, and flight data from my AE 100 rocket in Python.',
-    links: [['Model rocket', '/projects/model-rocket'], ['Spin-caster FEA', '/projects/fuel-grain-spin-caster']],
-  },
-];
-
-const ticker = ['Aerodynamics', 'Propulsion', 'Hypersonics', 'Quantum optics', 'CFD', 'FEA', 'Rocketry', 'Aircraft design'];
+const ticker = ['Hypersonics', 'Atmospheric entry', 'Aerodynamics', 'Rocket propulsion', 'Hybrid rockets', 'Computational fluid dynamics', 'Aircraft design', 'Space systems', 'Quantum optics', 'Satellite quantum communication'];
 
 // Cards that point to each of the other pages. `count` animates up when visible.
 const explore = [
@@ -191,37 +169,9 @@ const explore = [
     </div>
   </section>
 
-  <!-- ── HOW I WORK ───────────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="02" label="Approach" title="How I work" />
-    <ol class="grid gap-6 md:grid-cols-3">
-      {
-        process.map((s, i) => (
-          <li class="reveal relative border-t-[3px] border-fg pt-6">
-            <span class="livery block text-6xl text-transparent [-webkit-text-stroke:1.5px_var(--accent)]">{s.n}</span>
-            <h3 class="display mt-4 text-2xl">{s.title}</h3>
-            <p class="mt-3 leading-relaxed text-muted">{s.text}</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              {s.links.map(([label, href]) => (
-                <a href={url(href)} class="tag inline-flex items-center gap-1.5 transition-colors">
-                  {label} <span aria-hidden="true">→</span>
-                </a>
-              ))}
-            </div>
-            {i < process.length - 1 && (
-              <svg class="absolute -top-[8.5px] -right-[21px] hidden bg-bg text-accent md:block" width="18" height="14" viewBox="0 0 22 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                <path d="M0 7h19M13 1l6 6-6 6" />
-              </svg>
-            )}
-          </li>
-        ))
-      }
-    </ol>
-  </section>
-
   <!-- ── EXPLORE (links to the other pages) ───────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <SectionHeading index="03" label="Explore" title="More about me" />
+    <SectionHeading index="02" label="Explore" title="More about me" />
     <div class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
       {
         explore.map((e, i) => (
@@ -247,7 +197,7 @@ const explore = [
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="contact" aria-labelledby="contact-h">
     <div class="reveal bp corners relative overflow-hidden rounded-xl px-6 py-14 sm:px-12 sm:py-20">
       <p class="flex items-center gap-3 font-mono text-[0.68rem] tracking-[0.12em] uppercase opacity-80">
-        <span class="bg-accent px-1.5 py-0.5 text-white">04</span>Contact
+        <span class="bg-accent px-1.5 py-0.5 text-white">03</span>Contact
       </p>
       <h2 id="contact-h" class="livery relative mt-6 max-w-3xl text-[clamp(2.6rem,7vw,5.5rem)]">
         Want to talk<span class="text-[var(--accent-bright)]">?</span>

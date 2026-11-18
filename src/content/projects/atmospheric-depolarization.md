@@ -1,6 +1,6 @@
 ---
 title: Temperature & Atmospheric Depolarization
-summary: My IB Extended Essay in Physics. I built a polarimetry experiment with a milk–water "atmosphere" to measure how temperature changes how much polarized light gets scrambled by Mie scattering.
+summary: An independent physics investigation. I built a polarimetry experiment with a milk–water "atmosphere" to measure how temperature changes how much polarized light gets scrambled by Mie scattering.
 result: Degree of polarization fell from 0.984 to 0.861 between 25 °C and 65 °C
 year: 2026
 category: Optics
@@ -10,11 +10,11 @@ order: 6
 started: '2025-09'
 ended: '2026-02'
 role: Independent researcher
-org: IB Extended Essay, Physics
-timeline: IB Diploma Programme
+org: Dubai International Academy
+timeline: 2025 – 2026
 status: Complete
 links:
-  report: /files/Aryan_Agarwal_Extended_Essay_Physics.pdf
+  report: /files/Aryan_Agarwal_Atmospheric_Depolarization_Paper.pdf
 gallery:
   - { src: /images/ee-setup-bench.jpg, alt: "Polarimeter bench with laser, two polarizing filters, a clamped beaker, light sensor and Vernier LabQuest", caption: "The setup on the bench: laser, two polarizing filters and the light sensor on a polarimeter rail, with the milk–water sample clamped in the beam and readings on the Vernier LabQuest." }
   - { src: /images/ee-setup-top.jpg, alt: "Top-down view of the polarimeter rail with the beaker clamped between the filters", caption: "Top-down view of the optical path. The beaker is clamped so the beam passes through its center, between the two polarizers." }
@@ -28,7 +28,7 @@ metrics:
 ---
 
 
-**[Read the full Extended Essay (PDF, 25 pages)](/files/Aryan_Agarwal_Extended_Essay_Physics.pdf)**: the theory, derivation, raw data tables, uncertainty propagation, and evaluation.
+**[Read the full paper (PDF, 25 pages)](/files/Aryan_Agarwal_Atmospheric_Depolarization_Paper.pdf)**: the theory, derivation, raw data tables, uncertainty propagation, and evaluation.
 
 ## The question
 

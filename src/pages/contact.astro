@@ -19,6 +19,15 @@ const channels = [
   { ch: '04', label: 'LinkedIn', kind: 'link', value: site.links.linkedin.replace('https://www.', ''), href: site.links.linkedin, note: 'Connect' },
 ];
 
+// Research areas I'm looking for internships and research positions in
+const interests = [
+  { area: 'Hypersonics & atmospheric entry', text: 'High-speed aerothermodynamics and entry systems, the focus of my upcoming research at CHESS.' },
+  { area: 'Aerodynamics & CFD', text: 'Low-speed and powered-lift aerodynamics, blown wings, and computational fluid dynamics.' },
+  { area: 'Rocket propulsion', text: 'Hybrid and solid rocket propulsion, from fuel-grain manufacturing to flight performance.' },
+  { area: 'Aircraft & UAV design', text: 'Conceptual design, structures, and emergency systems for aircraft and eVTOL drones.' },
+  { area: 'Space systems', text: 'Spacecraft and satellite systems, including optical ground stations and satellite links.' },
+  { area: 'Quantum optics & communication', text: 'Single-photon detection, free-space optics, and satellite quantum key distribution.' },
+];
 ---
 
 <BaseLayout title="Contact" description={`Get in touch with ${site.name}: email, phone, and LinkedIn.`}>
@@ -34,7 +43,7 @@ const channels = [
 
   <!-- ── Comms channels ────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6">
-    <SectionHeading index="01" label="Comms channels" title="Pick a frequency" />
+    <SectionHeading index="01" label="Comms channels" title="Reach me directly" />
     <ul class="grid gap-5 sm:grid-cols-2">
       {
         channels.map((ch) => (
@@ -78,9 +87,22 @@ const channels = [
                 </>
               )}
             </div>
-            <span class="absolute right-6 bottom-6 hidden font-mono text-[0.6rem] tracking-[0.12em] text-faint sm:block" aria-hidden="true">
-              {ch.ch === '01' ? '127.40' : ch.ch === '02' ? '118.30' : ch.ch === '03' ? '124.85' : '132.05'} MHz
-            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- ── Research interests ────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6">
+    <SectionHeading index="02" label="Research interests" title="What I want to work on" />
+    <ul class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+      {
+        interests.map((r, i) => (
+          <li class="reveal bg-surface p-6">
+            <span class="font-mono text-[0.68rem] tracking-[0.12em] text-accent">RI-{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="display mt-3 text-lg">{r.area}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-muted">{r.text}</p>
           </li>
         ))
       }

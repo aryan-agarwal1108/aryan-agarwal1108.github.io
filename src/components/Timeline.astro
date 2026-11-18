@@ -49,6 +49,17 @@ const dates = (e: Experience) =>
                 e.org
               )}
             </span>
+            {e.href && (
+              <a
+                href={e.href}
+                target="_blank"
+                rel="noopener"
+                class="mt-2 inline-flex items-center gap-1.5 rounded-md border border-line bg-surface px-2.5 py-1 font-mono text-xs font-normal text-accent transition-colors hover:border-accent"
+              >
+                <Icon name="external" size={12} />
+                {e.href.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+              </a>
+            )}
             {e.supervisor && (
               <span class="mt-1 block font-mono text-[0.7rem] font-normal tracking-wide text-faint">
                 Supervised by <span class="text-muted">{e.supervisor}</span>
