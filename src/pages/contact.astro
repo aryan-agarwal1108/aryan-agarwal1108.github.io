@@ -19,21 +19,23 @@ const channels = [
   { ch: '04', label: 'LinkedIn', kind: 'link', value: site.links.linkedin.replace('https://www.', ''), href: site.links.linkedin, note: 'Connect' },
 ];
 
-// Research areas I'm looking for internships and research positions in
+// Areas I want to work in (internships and, later, my career)
 const interests = [
-  { area: 'Hypersonics & atmospheric entry', text: 'High-speed aerothermodynamics and entry systems, the focus of my upcoming research at CHESS.' },
   { area: 'Aerodynamics & CFD', text: 'Low-speed and powered-lift aerodynamics, blown wings, and computational fluid dynamics.' },
   { area: 'Rocket propulsion', text: 'Hybrid and solid rocket propulsion, from fuel-grain manufacturing to flight performance.' },
+  { area: 'Manufacturing', text: 'Design for manufacturing, additive manufacturing, and turning CAD models into real flight hardware.' },
+  { area: 'Structures & thermal analysis', text: 'Structural and thermal analysis with FEA, from loads and stresses to heat transfer.' },
   { area: 'Aircraft & UAV design', text: 'Conceptual design, structures, and emergency systems for aircraft and eVTOL drones.' },
-  { area: 'Space systems', text: 'Spacecraft and satellite systems, including optical ground stations and satellite links.' },
-  { area: 'Quantum optics & communication', text: 'Single-photon detection, free-space optics, and satellite quantum key distribution.' },
+  { area: 'Space systems', text: 'Spacecraft and satellite design, from subsystems to integration and testing.' },
+  { area: 'Orbital mechanics', text: 'Trajectory design, orbit determination, and maneuver planning.' },
+  { area: 'Mission operations', text: 'Planning and running missions, from launch and early operations to on-orbit support.' },
 ];
 ---
 
 <BaseLayout
   sections={[
     { id: 'channels', label: 'Reach me' },
-    { id: 'research-interests', label: 'Research interests' },
+    { id: 'interests', label: 'Career interests' },
   ]}
   title="Contact" description={`Get in touch with ${site.name}: email, phone, and LinkedIn.`}>
   <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
@@ -98,14 +100,14 @@ const interests = [
     </ul>
   </section>
 
-  <!-- ── Research interests ────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6" id="research-interests">
-    <SectionHeading index="02" label="Research interests" title="What I want to work on" />
-    <ul class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+  <!-- ── Career interests ────────────────────────────────── -->
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6" id="interests">
+    <SectionHeading index="02" label="Career interests" title="Areas I want to work in" />
+    <ul class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
       {
         interests.map((r, i) => (
           <li class="reveal bg-surface p-6">
-            <span class="font-mono text-[0.68rem] tracking-[0.12em] text-accent">RI-{String(i + 1).padStart(2, '0')}</span>
+            <span class="font-mono text-[0.68rem] tracking-[0.12em] text-accent">AREA-{String(i + 1).padStart(2, '0')}</span>
             <h3 class="display mt-3 text-lg">{r.area}</h3>
             <p class="mt-2 text-sm leading-relaxed text-muted">{r.text}</p>
           </li>

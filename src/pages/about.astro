@@ -18,11 +18,9 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
 
 <BaseLayout
   sections={[
-    { id: 'background', label: 'Background' },
-    { id: 'highlights', label: 'Highlights' },
     { id: 'journey', label: 'How I got here' },
     { id: 'education', label: 'Education & now' },
-    ...(interests.length > 0 || languages.length > 0 ? [{ id: 'beyond', label: languages.length && !interests.length ? 'Languages' : 'Beyond engineering' }] : []),
+    ...(interests.length > 0 || languages.length > 0 ? [{ id: 'beyond', label: 'Beyond engineering' }] : []),
   ]}
   title="About" description={`About ${site.name}: background, education, and what I'm working on now.`}>
   <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20" id="background">
@@ -118,9 +116,12 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
     </div>
 
     <!-- Education + Now -->
-    <div class="mt-20 grid gap-5 lg:grid-cols-[1.4fr_1fr]" id="education">
+    <div class="mt-20" id="education">
+      <p class="reveal label flex items-center gap-3"><span class="text-accent">02</span><span class="h-px w-8 bg-line-strong"></span>Education & now</p>
+      <h2 class="reveal mt-3 mb-10 text-3xl font-semibold tracking-tight sm:text-4xl">Where I am now</h2>
+    <div class="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
       <div class="reveal card p-6 sm:p-8">
-        <h2 class="label mb-6">Education</h2>
+        <h3 class="label mb-6">Education</h3>
         <div class="space-y-6">
           {
             education.map((e) => (
@@ -145,17 +146,19 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
         </div>
       </div>
       <div class="reveal card p-6 sm:p-8">
-        <h2 class="label mb-6 flex items-center gap-2"><span class="pulse-dot"></span>Currently</h2>
+        <h3 class="label mb-6 flex items-center gap-2"><span class="pulse-dot"></span>Currently</h3>
         <ul class="space-y-3 text-sm text-muted">
           {now.map((n) => <li class="relative pl-5"><span class="absolute left-0 font-mono text-accent">→</span>{n}</li>)}
         </ul>
       </div>
     </div>
 
+    </div>
+
     {
       (interests.length > 0 || languages.length > 0) && (
         <div class="mt-20" id="beyond">
-          <p class="reveal label flex items-center gap-3"><span class="text-accent">02</span><span class="h-px w-8 bg-line-strong" />Off the clock</p>
+          <p class="reveal label flex items-center gap-3"><span class="text-accent">03</span><span class="h-px w-8 bg-line-strong" />Off the clock</p>
           <h2 class="reveal mt-3 mb-10 text-3xl font-semibold tracking-tight sm:text-4xl">Beyond engineering</h2>
           <div class="grid gap-5 sm:grid-cols-2">
             {interests.map((it) => (
