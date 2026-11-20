@@ -1,7 +1,7 @@
 ---
 title: Temperature & Atmospheric Depolarization
-short: Depolarization
-summary: An independent physics investigation. I built a polarimetry experiment with a milk–water "atmosphere" to measure how temperature changes how much polarized light gets scrambled by Mie scattering.
+short: "Mie-scattering polarimetry"
+summary: "Polarimetry experiment quantifying temperature-driven depolarization of 636 nm light under Mie scattering, using a milk–water suspension as an atmospheric analog."
 result: Degree of polarization fell from 0.984 to 0.861 between 25 °C and 65 °C
 year: 2026
 category: Optics

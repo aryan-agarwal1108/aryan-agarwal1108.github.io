@@ -1,7 +1,7 @@
 ---
 title: Model Rocket Flight & Data Analysis
-short: Model rocket
-summary: My AE 100 rocket. I simulated the flight in OpenRocket, built and flew it, then went through the flight data in Python.
+short: "Rocket trajectory analysis"
+summary: "AE 100 model rocket: pre-flight trajectory simulation in OpenRocket, build and launch, then post-flight data reduction in Python with NumPy and Matplotlib."
 result: Simulated in OpenRocket, analyzed in Python
 year: 2026
 category: Rocketry

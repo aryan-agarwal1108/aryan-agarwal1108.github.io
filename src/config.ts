@@ -350,13 +350,13 @@ export type Paper = {
 export const papers: Paper[] = [
   {
     slug: 'pa28-blown-wing',
-    short: 'Blown-wing lift on a PA-28',
+    short: "BEMT blown-wing lift model",
     title: 'Modeling Propeller-Induced Lift Augmentation on a Piper PA-28 Blown Wing Using Blade-Element Momentum Theory',
     subject: 'Aerodynamics · Modeling',
     year: '2026–27',
     status: 'In progress',
     abstract:
-      'A blown wing places propellers ahead of the wing so their slipstream accelerates the air over it, raising lift at low speeds. This paper models that effect on a Piper PA-28 with Python implementations of blade-element momentum theory (BEMT), predicting the slipstream velocity behind each propeller and the resulting lift increase on the wing sections it covers.',
+      "Develops a Python blade-element momentum theory (BEMT) model of a Piper PA-28 propeller to predict slipstream velocity and the resulting lift augmentation on the blown wing sections. Coupling blade-element aerodynamics with momentum theory yields thrust and induced velocity, which feed estimates of power loading and takeoff performance.",
     findingsLabel: 'Scope',
     findings: [
       'BEMT propeller model coupling blade-element lift and drag with momentum theory to solve for thrust and slipstream velocity.',
@@ -368,13 +368,13 @@ export const papers: Paper[] = [
   },
   {
     slug: 'clearqrl',
-    short: 'Explainable quantum RL',
+    short: "Quantum RL interpretability",
     title: 'ClearQRL: A Unified Interpretability and Explainability Framework for Quantum RL',
     subject: 'Quantum Computing · Machine Learning',
     year: '2025–26',
     authors: 'Nouhaila Innan, Aryan Agarwal · eBRAIN Lab, NYU Abu Dhabi',
     abstract:
-      'Quantum reinforcement learning is promising for sequential decision-making, but quantum policies are hard to interpret. ClearQRL combines classical feature-attribution methods, quantum information-theoretic diagnostics, and new quantum-aware interpretability metrics into one framework, evaluated on CartPole-v1 with a four-qubit quantum model and a classical Deep Q-Network baseline.',
+      "Quantum reinforcement-learning policies are difficult to interpret. ClearQRL unifies classical feature attribution (LIME, SHAP, feature occlusion), quantum information-theoretic diagnostics, and new quantum-aware interpretability metrics in one framework, benchmarked on CartPole-v1 with a four-qubit parameterized quantum circuit against a classical Deep Q-Network baseline.",
     findingsLabel: 'What it contributes',
     findings: [
       'New quantum explainability metrics, including Quantum Attribution Score, Quantum Feature Alignment, Quantum Decision Purity, and Quantum State Diversity.',
@@ -388,14 +388,14 @@ export const papers: Paper[] = [
   },
   {
     slug: 'cern-bl4s-cp-violation',
-    short: 'CP violation in kaons',
+    short: "Neutral-kaon CP violation",
     title: 'Investigating CP Violation in Neutral Kaon Decays as a Source of Matter-Antimatter Asymmetry',
     subject: 'Particle Physics · Proposal',
     year: '2024–25',
     authors: 'The Broken Symmetry Society (8 students, 6 countries), incl. Aryan Agarwal',
     pages: 8,
     abstract:
-      "Our team's proposal for CERN's Beamline for Schools competition, which placed in the top 50 of 508 teams worldwide. It describes an experiment at the PS T9 beamline to measure the semileptonic charge asymmetry δₗ in long-lived neutral kaon decays, a direct signature of CP violation, using a charge-exchange kaon beam and a custom two-arm detector.",
+      "Proposes a measurement of the semileptonic charge asymmetry δₗ in long-lived neutral kaon (K_L) decays at the CERN PS T9 beamline, a direct probe of CP violation. The design uses a charge-exchange kaon beam and a custom two-arm detector with scintillators, drift chambers, a magnetic spectrometer, and a Cherenkov–calorimeter module. Placed in the top 50 of 508 teams in CERN's Beamline for Schools.",
     findingsLabel: 'Highlights',
     findings: [
       'Targets 10⁶–10⁷ semileptonic K_L decays for a statistical precision on δₗ of 0.1–0.2%, with electron and muon channels compared to test lepton universality.',
@@ -408,14 +408,14 @@ export const papers: Paper[] = [
   },
   {
     slug: 'atmospheric-depolarization',
-    short: 'Temperature & light depolarization',
+    short: "Thermal Mie depolarization",
     title: 'Investigating the Effect of Atmospheric Temperature on Depolarization of Light due to Atmospheric Scattering',
     subject: 'Physics · Optics',
     year: '2025–26',
     pages: 25,
     words: '3,962',
     abstract:
-      'How does atmospheric temperature change the degree of polarization (DoP) of rectilinearly polarized light as it undergoes Mie scattering? Using a milk–water suspension as a scattering analog for the atmosphere, a 636 nm source, crossed and parallel polarizers, and a light sensor, I measured DoP at five temperatures from 25 °C to 65 °C, with five trials each and full uncertainty propagation.',
+      "Quantifies how temperature affects the degree of polarization (DoP) of linearly polarized 636 nm light under Mie scattering, using a milk–water suspension as an atmospheric analog. DoP was derived from parallel- and crossed-polarizer intensities at five temperatures from 25 °C to 65 °C, with five trials each and full uncertainty propagation.",
     findings: [
       'DoP fell steadily from 0.984 ± 0.003 at 25 °C to 0.861 ± 0.005 at 65 °C, a 12.5% drop.',
       'The drop accelerated at higher temperatures, alongside visible convection and beam flicker.',
@@ -428,14 +428,14 @@ export const papers: Paper[] = [
   },
   {
     slug: 'mhd-thruster',
-    short: 'MHD saltwater thruster',
+    short: "MHD Lorentz-force propulsion",
     title: 'The Relationship Between Current Supplied to a Magnetohydrodynamic Thruster and Maximum Velocity of Saltwater Displaced',
     subject: 'Physics · Electromagnetism',
     year: '2025–26',
     pages: 24,
     words: '2,996',
     abstract:
-      'A magnetohydrodynamic (MHD) thruster has no moving parts: current through saltwater in a magnetic field produces a Lorentz force that pushes the water. I varied the current supplied to a small MHD thruster and measured the maximum velocity of the displaced saltwater with video analysis, to test the relationship predicted from F = BIL.',
+      "Characterizes a magnetohydrodynamic (MHD) thruster, which accelerates saltwater through the Lorentz force (F = BIL) with no moving parts. Supplied current was varied and the maximum saltwater velocity measured by video analysis to test the predicted v² ∝ I relationship.",
     findings: [
       'Average velocity rose from 0.0052 m/s at 0.20 A to 0.0154 m/s at 1.60 A.',
       'The fit v² = 0.0001471·I (negligible intercept) shows v² is proportional to current, matching the Lorentz-force prediction.',
@@ -446,13 +446,13 @@ export const papers: Paper[] = [
   },
   {
     slug: 'apple-share-price-model',
-    short: "Modeling Apple's share price",
+    short: "Multivariable share-price model",
     title: 'Developing a Mathematical Model to Predict the Optimal Share Price of Apple Stock Using Multivariable Statistics and Calculus',
     subject: 'Mathematics · Modeling',
     year: '2025–26',
     pages: 23,
     abstract:
-      "Can a company's own financials tell you when to buy or sell its stock? I built a multiple-regression model of Apple's share price from EBITDA, dividend per share, and earnings per share, then used multivariable calculus to find the model's maxima and minima and read them as entry and exit points.",
+      "Builds a multiple-regression model of Apple's share price from EBITDA, dividend per share, and earnings per share, then applies multivariable calculus to locate the model's critical points and interpret them as entry and exit signals.",
     findings: [
       'The regression model fit the historical share price with R² = 0.975.',
       'Critical points of the multivariable model were interpreted as buy and sell signals.',
@@ -463,13 +463,13 @@ export const papers: Paper[] = [
   },
   {
     slug: 'calcium-in-heated-milk',
-    short: 'Calcium in heated milk',
+    short: "Thermal Ca²⁺ release in milk",
     title: 'The Effect of Heating Temperature on Free Calcium Ion Concentration in Milk',
     subject: 'Chemistry · Analytical',
     year: '2025–26',
     pages: 15,
     abstract:
-      'How does the temperature milk is heated to change how much free calcium (Ca²⁺) it contains? I heated milk to five temperatures from 25 °C to 65 °C and measured free Ca²⁺ by complexometric titration with EDTA and Eriochrome Black T indicator.',
+      "Measures how heating temperature (25–65 °C) changes free Ca²⁺ concentration in milk by complexometric EDTA titration with Eriochrome Black T indicator, and links the trend to heat-induced breakdown of calcium-binding casein micelles.",
     findings: [
       'Free Ca²⁺ concentration rose with temperature, most sharply between 25 °C and 45 °C, then plateaued.',
       'The trend fits heat breaking down casein micelles, which normally bind calcium, and matches visible curdling above 45 °C.',

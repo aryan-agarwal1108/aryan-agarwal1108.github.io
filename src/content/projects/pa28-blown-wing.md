@@ -1,7 +1,7 @@
 ---
 title: PA-28 Blown-Wing Aerodynamic Model
-short: PA-28 blown wing
-summary: Python models that predict how much extra lift a Piper PA-28's wing gets when propellers blow faster air over it, and what that does for takeoff.
+short: "BEMT blown-wing model"
+summary: "Python blade-element momentum theory (BEMT) model of a Piper PA-28's propeller slipstream, predicting blown-wing lift augmentation, power loading, and takeoff performance."
 result: Models lift gain, thrust, and takeoff performance
 year: 2026
 category: Aerodynamics

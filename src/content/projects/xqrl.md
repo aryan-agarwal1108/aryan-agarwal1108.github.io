@@ -1,7 +1,7 @@
 ---
 title: Explainable Quantum Reinforcement Learning (XQRL)
-short: XQRL
-summary: We came up with the first metrics for explaining why quantum reinforcement-learning agents make the decisions they do, benchmarked them on CartPole and MNIST, and wrote them up as the ClearQRL framework.
+short: "Quantum RL explainability"
+summary: "Co-developed the first explainability metrics for quantum reinforcement-learning agents, benchmarked on CartPole and MNIST and unified in the ClearQRL interpretability framework."
 result: First metrics for explaining quantum RL policies, written up as ClearQRL
 year: 2025
 category: Quantum

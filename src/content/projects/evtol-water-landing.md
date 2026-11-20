@@ -1,7 +1,7 @@
 ---
 title: eVTOL Drone with Emergency Water-Landing Floats
-short: eVTOL floats
-summary: A multicopter drone I designed at NYU Abu Dhabi that inflates its own floats from ambient air in under 8 seconds if it has to come down on water.
+short: "eVTOL pneumatic flotation"
+summary: "Multicopter eVTOL with a rapid-deployment pneumatic flotation system: ambient-air intake and solenoid-controlled burst-diaphragm regulators inflate the floats in under 8 s, validated with transient CFD in ANSYS Fluent."
 result: Floats deploy in under 8 seconds
 year: 2025
 category: Mechanical Design
