@@ -15,7 +15,7 @@ const currentRoles = experience.filter((e) => !e.upcoming).length;
 // Measured results strip (all from projects / awards on the site)
 const stats: { value: string; label: string; href: string; count?: number; prefix?: string; suffix?: string }[] = [
   { value: '<8 s', label: 'Float deployment on my eVTOL drone', href: '/projects/evtol-water-landing' },
-  { value: 'Top 50', label: 'of 508 teams, CERN Beamline for Schools', href: '/awards' },
+  { value: 'Top 50', label: 'of 508 teams, CERN Beamline for Schools', href: '/resume#awards' },
   { value: '1 of 52', label: 'World Science Scholars worldwide', href: '/resume#leadership' },
   { value: '1,000+', label: 'Students mentored through Erudios', href: '/about', count: 1000, suffix: '+' },
   { value: 'Jan ’27', label: 'Starting hypersonics research at CHESS', href: '/resume#experience' },
@@ -36,7 +36,7 @@ const explore = [
     cta: 'See resume',
   },
   {
-    href: '/awards',
+    href: '/resume#awards',
     kicker: 'Awards',
     stat: awards[0].rank,
     statLabel: `${awards[0].org} ${awards[0].title}`,
@@ -241,7 +241,7 @@ const explore = [
 
 <script>
   // Old links like /#experience or /#awards now live on their own pages
-  const moved: Record<string, string> = { '#experience': 'resume#experience', '#awards': 'awards', '#skills': 'resume#skills', '#about-me': 'about' };
+  const moved: Record<string, string> = { '#experience': 'resume#experience', '#awards': 'resume#awards', '#skills': 'resume#skills', '#about-me': 'about' };
   const to = moved[location.hash];
   if (to) location.replace(new URL(to, document.baseURI).href);
 </script>

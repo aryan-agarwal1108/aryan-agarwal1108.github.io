@@ -4,15 +4,16 @@ import PageHeader from '../components/PageHeader.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import Timeline from '../components/Timeline.astro';
 import Skills from '../components/Skills.astro';
+import Awards from '../components/Awards.astro';
 import Icon from '../components/Icon.astro';
-import { site, education, experience, leadership, awards } from '../config';
+import { site, education, experience, leadership, recognition } from '../config';
 import { url } from '../utils';
 ---
 
 <BaseLayout title="Resume" description={`Resume of ${site.name}, ${site.major} student at ${site.schoolShort}: research, engineering roles, leadership, awards, and skills.`}>
   <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
-    <PageHeader tag="DOC-002" label="Experience & skills" title="Resume">
-      Research labs, club teams, leadership, and the tools I use. Roles with a project link have a full write-up. Grab the PDF for the one-page version.
+    <PageHeader tag="DOC-002" label="Experience, awards & skills" title="Resume">
+      Research labs, club teams, leadership, awards, and the tools I use. Roles with a project link have a full write-up. Grab the PDF for the one-page version.
     </PageHeader>
     <div class="no-print hero-in mt-8 flex flex-wrap gap-3" style="--d:0.4s">
       <a href={url(site.resume)} download class="inline-flex h-12 items-center gap-2 bg-fg px-6 text-sm font-semibold tracking-[0.06em] text-bg uppercase transition-colors hover:bg-accent hover:text-white">
@@ -59,29 +60,40 @@ import { url } from '../utils';
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="awards">
-    <SectionHeading index="04" label="Honors & awards" title="Competition results">
-      <a href={url('/awards')} class="group inline-flex items-center gap-2 border-b border-fg pb-1 text-sm font-semibold tracking-[0.06em] uppercase transition-colors hover:border-accent hover:text-accent">
-        All awards <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-1" />
-      </a>
-    </SectionHeading>
+    <SectionHeading index="04" label="Honors & awards" title="Competition results" />
+    <Awards />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="recognition">
+    <SectionHeading index="05" label="Recognition" title="Other recognition" />
     <ul class="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
       {
-        awards.map((a) => (
-          <li class="reveal grid gap-1 px-5 py-4 sm:grid-cols-[7rem_1fr_auto] sm:items-baseline sm:gap-6">
-            <span class="livery text-xl normal-case text-accent">{a.rank}</span>
-            <span class="text-sm">
-              <span class="text-fg">{a.title}, {a.org}</span>
-              <span class="block text-muted">{a.context}</span>
-            </span>
-            <span class="font-mono text-xs text-faint">{a.year}</span>
-          </li>
-        ))
+        recognition.map((r) => {
+          const Tag = r.href ? 'a' : 'div';
+          return (
+            <li class="reveal">
+              <Tag
+                href={r.href ? url(r.href) : undefined}
+                class="group grid gap-1 px-5 py-4 transition-colors hover:bg-surface-2 sm:grid-cols-[1fr_auto] sm:items-center sm:gap-6 sm:px-6"
+              >
+                <div>
+                  <p class="font-medium text-fg">{r.what}</p>
+                  <p class="mt-0.5 text-sm text-muted">{r.detail}</p>
+                </div>
+                <div class="flex items-center gap-3 font-mono text-xs text-faint">
+                  {r.year}
+                  {r.href && <Icon name="arrow" size={14} class="text-faint transition-all group-hover:translate-x-0.5 group-hover:text-accent" />}
+                </div>
+              </Tag>
+            </li>
+          );
+        })
       }
     </ul>
   </section>
 
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="skills">
-    <SectionHeading index="05" label="Skills" title="What I work with">
+    <SectionHeading index="06" label="Skills" title="What I work with">
       <p class="max-w-xs text-sm text-muted">
         Tools with a <span class="font-mono text-accent-2">number</span> link to the projects I used them on.
       </p>
