@@ -16,9 +16,9 @@ const currentRoles = experience.filter((e) => !e.upcoming).length;
 const stats: { value: string; label: string; href: string; count?: number; prefix?: string; suffix?: string }[] = [
   { value: '<8 s', label: 'Float deployment on my eVTOL drone', href: '/projects/evtol-water-landing' },
   { value: 'Top 50', label: 'of 508 teams, CERN Beamline for Schools', href: '/awards' },
-  { value: '1 of 52', label: 'World Science Scholars worldwide', href: '/experience' },
+  { value: '1 of 52', label: 'World Science Scholars worldwide', href: '/resume#leadership' },
   { value: '1,000+', label: 'Students mentored through Erudios', href: '/about', count: 1000, suffix: '+' },
-  { value: 'Jan ’27', label: 'Starting hypersonics research at CHESS', href: '/experience' },
+  { value: 'Jan ’27', label: 'Starting hypersonics research at CHESS', href: '/resume#experience' },
 ];
 
 const ticker = ['Hypersonics', 'Atmospheric entry', 'Aerodynamics', 'Rocket propulsion', 'Hybrid rockets', 'Computational fluid dynamics', 'Aircraft design', 'Space systems', 'Quantum optics', 'Satellite quantum communication'];
@@ -26,14 +26,14 @@ const ticker = ['Hypersonics', 'Atmospheric entry', 'Aerodynamics', 'Rocket prop
 // Cards that point to each of the other pages. `count` animates up when visible.
 const explore = [
   {
-    href: '/experience',
-    kicker: 'Experience',
+    href: '/resume',
+    kicker: 'Resume',
     count: currentRoles,
     stat: String(currentRoles),
     statLabel: 'research & engineering roles',
     title: "Where I've worked",
     text: 'Labs at UIUC, NYU Abu Dhabi, and TII, plus leadership, activities, and the tools I use.',
-    cta: 'See experience',
+    cta: 'See resume',
   },
   {
     href: '/awards',
@@ -241,7 +241,7 @@ const explore = [
 
 <script>
   // Old links like /#experience or /#awards now live on their own pages
-  const moved: Record<string, string> = { '#experience': 'experience', '#awards': 'awards', '#skills': 'experience', '#about-me': 'about' };
+  const moved: Record<string, string> = { '#experience': 'resume#experience', '#awards': 'awards', '#skills': 'resume#skills', '#about-me': 'about' };
   const to = moved[location.hash];
   if (to) location.replace(new URL(to, document.baseURI).href);
 </script>

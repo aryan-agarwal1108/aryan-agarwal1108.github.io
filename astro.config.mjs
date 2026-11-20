@@ -9,6 +9,8 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://aryan-agarwal1108.github.io',
   integrations: [mdx(), sitemap()],
+  // Experience was merged into the Resume page
+  redirects: { '/experience': '/resume' },
   vite: { plugins: [tailwindcss()] },
   markdown: {
     shikiConfig: { theme: 'github-dark-dimmed' },

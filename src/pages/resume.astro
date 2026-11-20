@@ -1,116 +1,91 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Icon from '../components/Icon.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { site, education, experience, leadership, skills, awards, type Experience } from '../config';
+import SectionHeading from '../components/SectionHeading.astro';
+import Timeline from '../components/Timeline.astro';
+import Skills from '../components/Skills.astro';
+import Icon from '../components/Icon.astro';
+import { site, education, experience, leadership, awards } from '../config';
 import { url } from '../utils';
-
-const sections: { title: string; items: Experience[] }[] = [
-  { title: 'Experience', items: experience },
-  { title: 'Leadership & Activities', items: leadership },
-];
-const dates = (e: Experience) =>
-  e.upcoming ? `Starting ${e.start ?? 'soon'}` : [e.start, e.end].filter(Boolean).join(' – ');
 ---
 
-<BaseLayout title="Resume" description={`Resume of ${site.name}, ${site.major} student at ${site.schoolShort}.`}>
-  <section class="mx-auto max-w-4xl px-4 pt-16 sm:px-6 sm:pt-20">
-    <PageHeader tag="DOC-002" label="One page" title="Resume">
-      Everything on one page. Read it here or grab the PDF.
+<BaseLayout title="Resume" description={`Resume of ${site.name}, ${site.major} student at ${site.schoolShort}: research, engineering roles, leadership, awards, and skills.`}>
+  <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
+    <PageHeader tag="DOC-002" label="Experience & skills" title="Resume">
+      Research labs, club teams, leadership, and the tools I use. Roles with a project link have a full write-up. Grab the PDF for the one-page version.
     </PageHeader>
     <div class="no-print hero-in mt-8 flex flex-wrap gap-3" style="--d:0.4s">
       <a href={url(site.resume)} download class="inline-flex h-12 items-center gap-2 bg-fg px-6 text-sm font-semibold tracking-[0.06em] text-bg uppercase transition-colors hover:bg-accent hover:text-white">
         <Icon name="download" size={16} /> Download PDF
       </a>
       <a href={url(site.resume)} target="_blank" rel="noopener" class="inline-flex h-12 items-center gap-2 border border-fg px-6 text-sm font-semibold tracking-[0.06em] uppercase transition-colors hover:bg-fg hover:text-bg">
-        Open <Icon name="external" size={15} />
+        Open PDF <Icon name="external" size={15} />
       </a>
     </div>
+  </section>
 
-    <!-- HTML version: readable on phones and searchable by applicant-tracking systems -->
-    <div class="reveal corners mt-10 rounded-xl border border-line bg-surface p-6 sm:p-10">
-      <header class="border-b border-line pb-6">
-        <h2 class="text-2xl font-semibold tracking-tight">{site.name}</h2>
-        <p class="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-muted">
-          <a href={`mailto:${site.email}`} class="hover:text-fg">{site.email}</a>
-          <a href={site.links.linkedin} class="hover:text-fg">{site.links.linkedin.replace('https://www.', '')}</a>
-          <span>{site.location}</span>
-        </p>
-      </header>
-
-      <div class="mt-8">
-        <h3 class="label mb-4">Education</h3>
-        <div class="space-y-5">
-          {
-            education.map((e) => (
-              <div>
-                <div class="flex flex-wrap justify-between gap-x-4 gap-y-1">
-                  <p class="font-medium">{e.school}</p>
-                  <p class="font-mono text-xs text-faint uppercase">{e.location} · {e.date}</p>
-                </div>
-                <p class="mt-1 text-sm text-muted italic">{e.degree}</p>
-                {e.details && (
-                  <ul class="mt-1.5 space-y-1 text-sm text-muted">
-                    {e.details.map((d) => <li class="relative pl-4"><span class="absolute left-0 text-accent">·</span>{d}</li>)}
-                  </ul>
-                )}
-              </div>
-            ))
-          }
-        </div>
-      </div>
-
+  <section class="mx-auto max-w-6xl px-4 pt-20 pb-10 sm:px-6" id="education">
+    <SectionHeading index="01" label="Education" title="Where I study" />
+    <div class="grid gap-5 md:grid-cols-2">
       {
-        sections.map((s) => (
-          <div class="mt-9">
-            <h3 class="label mb-4">{s.title}</h3>
-            <div class="space-y-6">
-              {s.items.map((e) => (
-                <div>
-                  <div class="flex flex-wrap justify-between gap-x-4 gap-y-1">
-                    <p class="font-medium">{e.role}</p>
-                    <p class="font-mono text-xs text-faint uppercase">{e.location}</p>
-                  </div>
-                  <div class="flex flex-wrap justify-between gap-x-4 gap-y-1">
-                    <p class="text-sm text-muted italic">{e.org}{e.supervisor && <span class="not-italic text-faint"> · Supervisor: {e.supervisor}</span>}</p>
-                    <p class="font-mono text-xs text-faint uppercase">{dates(e)}</p>
-                  </div>
-                  <ul class="mt-2 space-y-1 text-sm text-muted">
-                    {e.bullets.map((b) => <li class="relative pl-4"><span class="absolute left-0 text-accent">·</span>{b}</li>)}
-                  </ul>
-                </div>
-              ))}
-            </div>
+        education.map((e) => (
+          <div class="reveal card p-6 sm:p-7">
+            <p class="font-mono text-xs tracking-wide text-faint uppercase">{e.date} · {e.location}</p>
+            <h3 class="mt-3 text-lg leading-snug font-medium tracking-tight">{e.school}</h3>
+            <p class="mt-1 text-sm text-muted">{e.degree}</p>
+            {e.subjects && (
+              <div class="mt-4">
+                <p class="font-mono text-[0.65rem] tracking-[0.12em] text-faint uppercase">Higher Level subjects</p>
+                <ul class="mt-2 flex flex-wrap gap-1.5">
+                  {e.subjects.map((sub) => <li class="tag">{sub}</li>)}
+                </ul>
+              </div>
+            )}
+            {e.details?.map((d) => <p class="mt-3 text-sm text-muted italic">{d}</p>)}
           </div>
         ))
       }
-
-      <div class="mt-9">
-        <h3 class="label mb-4">Honors & Awards</h3>
-        <ul class="space-y-1.5 text-sm">
-          {
-            awards.map((a) => (
-              <li class="flex flex-wrap justify-between gap-x-4 gap-y-0.5">
-                <span>
-                  <span class="text-fg">{a.rank}</span> <span class="text-muted">({a.context}): {a.title}, {a.org}</span>
-                </span>
-                <span class="font-mono text-xs text-faint">{a.year}</span>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <div class="mt-9">
-        <h3 class="label mb-4">Technical Skills</h3>
-        <dl class="space-y-1.5 text-sm">
-          {skills.map((s) => <div class="flex flex-wrap gap-x-2"><dt class="text-fg">{s.group}:</dt><dd class="text-muted">{s.items.join(', ')}</dd></div>)}
-        </dl>
-      </div>
     </div>
+  </section>
 
-    <p class="mt-4 text-center font-mono text-xs text-faint">
-      A phone-friendly version of my resume, plus a few extras. <a href={url(site.resume)} class="underline decoration-accent underline-offset-4 hover:text-fg">Open the PDF</a>.
-    </p>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="experience">
+    <SectionHeading index="02" label="Research & engineering" title="Where I've worked" />
+    <Timeline items={experience} />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="leadership">
+    <SectionHeading index="03" label="Leadership & activities" title="Outside the lab" />
+    <Timeline items={leadership} compact />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="awards">
+    <SectionHeading index="04" label="Honors & awards" title="Competition results">
+      <a href={url('/awards')} class="group inline-flex items-center gap-2 border-b border-fg pb-1 text-sm font-semibold tracking-[0.06em] uppercase transition-colors hover:border-accent hover:text-accent">
+        All awards <Icon name="arrow" size={15} class="transition-transform group-hover:translate-x-1" />
+      </a>
+    </SectionHeading>
+    <ul class="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
+      {
+        awards.map((a) => (
+          <li class="reveal grid gap-1 px-5 py-4 sm:grid-cols-[7rem_1fr_auto] sm:items-baseline sm:gap-6">
+            <span class="livery text-xl normal-case text-accent">{a.rank}</span>
+            <span class="text-sm">
+              <span class="text-fg">{a.title}, {a.org}</span>
+              <span class="block text-muted">{a.context}</span>
+            </span>
+            <span class="font-mono text-xs text-faint">{a.year}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="skills">
+    <SectionHeading index="05" label="Skills" title="What I work with">
+      <p class="max-w-xs text-sm text-muted">
+        Tools with a <span class="font-mono text-accent-2">number</span> link to the projects I used them on.
+      </p>
+    </SectionHeading>
+    <Skills />
   </section>
 </BaseLayout>
