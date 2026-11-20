@@ -7,6 +7,7 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
+    short: z.string().optional(), // short name for the "On this page" bar
     summary: z.string(),
     // One-line highlight shown on cards, e.g. "Sub-8-second deployment"
     result: z.string().optional(),

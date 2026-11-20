@@ -1,5 +1,6 @@
 ---
 title: PA-28 Blown-Wing Aerodynamic Model
+short: PA-28 blown wing
 summary: Python models that predict how much extra lift a Piper PA-28's wing gets when propellers blow faster air over it, and what that does for takeoff.
 result: Models lift gain, thrust, and takeoff performance
 year: 2026
@@ -36,3 +37,7 @@ On a blown wing, the propellers sit in front of the wing and push faster-moving 
 ## How the model works
 
 BEMT treats each propeller blade as a stack of thin airfoil slices and works out the lift and drag on each one. It pairs that with momentum theory, which treats the whole propeller as a disk that speeds up the air passing through it. Solving the two together gives the thrust and the speed of the slipstream, and that slipstream speed is what drives the extra lift on the part of the wing behind each propeller.
+
+## The paper
+
+I'm writing this work up as a paper, **[Modeling Propeller-Induced Lift Augmentation on a Piper PA-28 Blown Wing Using Blade-Element Momentum Theory](/papers/pa28-blown-wing)**. It's still in progress, and the abstract and scope are on my [Papers](/papers) page.

@@ -16,8 +16,16 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
 ];
 ---
 
-<BaseLayout title="About" description={`About ${site.name}: background, education, and what I'm working on now.`}>
-  <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
+<BaseLayout
+  sections={[
+    { id: 'background', label: 'Background' },
+    { id: 'highlights', label: 'Highlights' },
+    { id: 'journey', label: 'How I got here' },
+    { id: 'education', label: 'Education & now' },
+    ...(interests.length > 0 || languages.length > 0 ? [{ id: 'beyond', label: languages.length && !interests.length ? 'Languages' : 'Beyond engineering' }] : []),
+  ]}
+  title="About" description={`About ${site.name}: background, education, and what I'm working on now.`}>
+  <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20" id="background">
     <div class="grid gap-12 lg:grid-cols-[1fr_320px]">
       <div>
         <p class="hero-in flex items-center gap-3">
@@ -79,7 +87,7 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
     </div>
 
     <!-- Highlights -->
-    <dl class="reveal mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4">
+    <dl id="highlights" class="reveal mt-16 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4">
       {
         highlights.map((h) => (
           <div class="bg-surface p-5 sm:p-6">
@@ -91,7 +99,7 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
     </dl>
 
     <!-- Journey -->
-    <div class="mt-20">
+    <div class="mt-20" id="journey">
       <p class="reveal label flex items-center gap-3"><span class="text-accent">01</span><span class="h-px w-8 bg-line-strong"></span>Flight path</p>
       <h2 class="reveal mt-3 mb-10 text-3xl font-semibold tracking-tight sm:text-4xl">How I got here</h2>
       <ol class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
@@ -110,7 +118,7 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
     </div>
 
     <!-- Education + Now -->
-    <div class="mt-20 grid gap-5 lg:grid-cols-[1.4fr_1fr]">
+    <div class="mt-20 grid gap-5 lg:grid-cols-[1.4fr_1fr]" id="education">
       <div class="reveal card p-6 sm:p-8">
         <h2 class="label mb-6">Education</h2>
         <div class="space-y-6">
@@ -146,7 +154,7 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
 
     {
       (interests.length > 0 || languages.length > 0) && (
-        <div class="mt-20">
+        <div class="mt-20" id="beyond">
           <p class="reveal label flex items-center gap-3"><span class="text-accent">02</span><span class="h-px w-8 bg-line-strong" />Off the clock</p>
           <h2 class="reveal mt-3 mb-10 text-3xl font-semibold tracking-tight sm:text-4xl">Beyond engineering</h2>
           <div class="grid gap-5 sm:grid-cols-2">

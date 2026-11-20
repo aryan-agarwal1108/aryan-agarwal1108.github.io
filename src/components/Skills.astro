@@ -9,8 +9,8 @@ const toolCounts = await getToolCounts();
 
 <div class="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
   {
-    skills.map((s) => (
-      <div class="reveal bg-surface p-6">
+    skills.map((s, idx) => (
+      <div class:list={['reveal bg-surface p-6', skills.length % 2 === 1 && idx === skills.length - 1 && 'sm:col-span-2']}>
         <h3 class="label mb-4">{s.group}</h3>
         <ul class="flex flex-wrap gap-2">
           {s.items.map((i) => {

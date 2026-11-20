@@ -21,7 +21,7 @@ const tools = filterSkills
 const allTags = Object.fromEntries(projects.flatMap((p) => p.data.tags.map((t) => [t.toLowerCase(), t])));
 ---
 
-<BaseLayout title="Projects" description="Aerospace, propulsion, design, and quantum physics projects by Aryan Agarwal.">
+<BaseLayout sections={projects.map((p) => ({ id: p.id, label: p.data.short ?? p.data.title }))} title="Projects" description="Aerospace, propulsion, design, and quantum physics projects by Aryan Agarwal.">
   <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
     <PageHeader tag="INDEX" label={`${projects.length} projects`} title="Projects">
       Research, club, and class work. Each page covers what the project was for, what my part was, and the tools I used.
@@ -72,7 +72,7 @@ const allTags = Object.fromEntries(projects.flatMap((p) => p.data.tags.map((t) =
     <p id="status" class="mt-5 font-mono text-xs text-faint" aria-live="polite"></p>
 
     <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" id="grid" data-all-tags={JSON.stringify(allTags)}>
-      {projects.map((p, i) => <ProjectCard project={p} index={i} recent={recentIds.indexOf(p.id)} skills={groupKeys(p.data.tags)} />)}
+      {projects.map((p, i) => <ProjectCard project={p} index={i} recent={recentIds.indexOf(p.id)} skills={groupKeys(p.data.tags)} anchor />)}
     </div>
     <p id="empty" class="hidden py-16 text-center text-muted">No projects match that combination.</p>
   </section>
@@ -95,6 +95,7 @@ const allTags = Object.fromEntries(projects.flatMap((p) => p.data.tags.map((t) =
       sortSel.value === 'recent' ? u.searchParams.set('sort', 'recent') : u.searchParams.delete('sort');
       history.replaceState(null, '', u);
     }
+    document.dispatchEvent(new Event('snav:refresh'));
   }
   sortSel.addEventListener('change', () => sortCards());
   if (new URLSearchParams(location.search).get('sort') === 'recent') {
@@ -127,6 +128,7 @@ const allTags = Object.fromEntries(projects.flatMap((p) => p.data.tags.map((t) =
       category !== 'All' ? u.searchParams.set('discipline', category) : u.searchParams.delete('discipline');
       history.replaceState(null, '', u);
     }
+    document.dispatchEvent(new Event('snav:refresh'));
   }
 
   buttons.forEach((btn) =>

@@ -1,5 +1,6 @@
 ---
 title: Hybrid Rocket Fuel-Grain Spin-Caster
+short: Spin-caster
 summary: Parts and thermal analysis for the rig that casts solid fuel grains for the Illinois Space Society's hybrid rocket engine.
 result: Parts designed in Siemens NX, made with 3D printing
 year: 2026

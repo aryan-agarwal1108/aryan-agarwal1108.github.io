@@ -10,8 +10,9 @@ interface Props {
   size?: 'lg' | 'md';
   recent?: number; // position in "Most recent" order (projects page sorting)
   skills?: string[]; // general skill-area keys (projects page filter)
+  anchor?: boolean; // give the card an id so the "On this page" bar can jump to it
 }
-const { project, index, size = 'md', recent, skills } = Astro.props;
+const { project, index, size = 'md', recent, skills, anchor = false } = Astro.props;
 const p = project.data;
 
 // Short status pill: In progress / Flown / Completed
@@ -21,6 +22,7 @@ const pill = live ? 'In progress' : /flown/i.test(p.status ?? '') ? 'Flown' : 'C
 
 <a
   href={url(`/projects/${project.id}`)}
+  id={anchor ? project.id : undefined}
   class="card reveal group flex h-full flex-col overflow-hidden"
   data-category={p.category}
   data-tags={p.tags.map((t) => t.toLowerCase()).join('|')}

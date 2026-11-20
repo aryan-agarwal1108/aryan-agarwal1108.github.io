@@ -1,5 +1,6 @@
 ---
 title: eVTOL Drone with Emergency Water-Landing Floats
+short: eVTOL floats
 summary: A multicopter drone I designed at NYU Abu Dhabi that inflates its own floats from ambient air in under 8 seconds if it has to come down on water.
 result: Floats deploy in under 8 seconds
 year: 2025

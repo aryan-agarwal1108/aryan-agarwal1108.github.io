@@ -10,7 +10,16 @@ import { site, education, experience, leadership, recognition } from '../config'
 import { url } from '../utils';
 ---
 
-<BaseLayout title="Resume" description={`Resume of ${site.name}, ${site.major} student at ${site.schoolShort}: research, engineering roles, leadership, awards, and skills.`}>
+<BaseLayout
+  sections={[
+    { id: 'education', label: 'Education' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'leadership', label: 'Leadership' },
+    { id: 'awards', label: 'Awards' },
+    { id: 'recognition', label: 'Recognition' },
+    { id: 'skills', label: 'Skills' },
+  ]}
+  title="Resume" description={`Resume of ${site.name}, ${site.major} student at ${site.schoolShort}: research, engineering roles, leadership, awards, and skills.`}>
   <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
     <PageHeader tag="DOC-002" label="Experience, awards & skills" title="Resume">
       Research labs, club teams, leadership, awards, and the tools I use. Roles with a project link have a full write-up. Grab the PDF for the one-page version.

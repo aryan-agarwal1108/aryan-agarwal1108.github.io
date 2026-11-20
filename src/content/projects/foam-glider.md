@@ -1,5 +1,6 @@
 ---
 title: High-Aspect-Ratio Foam Glider
+short: Foam glider
 summary: A long-winged glider my team built from foam, balsa, and epoxy, sized and balanced from our own measurements and calculations.
 result: Long, slender wing for less drag and a longer glide
 year: 2026

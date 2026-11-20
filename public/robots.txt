@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aryan-agarwal1108.github.io/sitemap-index.xml

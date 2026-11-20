@@ -1,5 +1,6 @@
 ---
 title: SNSPD Optics & Polarization-Based QKD
+short: SNSPD & QKD
 summary: Built and aligned a superconducting nanowire single-photon detector (SNSPD) setup for the UAE's satellite QKD ground station, automated it in Python, and researched polarization-encoded quantum key distribution.
 result: Single-photon detection for a polarization-based QKD link
 year: 2024

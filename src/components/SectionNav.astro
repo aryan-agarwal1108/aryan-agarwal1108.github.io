@@ -1,0 +1,141 @@
+---
+// "On this page" bar: sticky under the header, one chip per section.
+// Clicking a chip jumps to that section; the chip for the section you're reading is highlighted.
+interface Props {
+  sections: { id: string; label: string }[];
+}
+const { sections } = Astro.props;
+---
+
+<nav class="section-nav no-print sticky top-16 z-30 border-b border-line bg-bg/90 backdrop-blur-md" aria-label="On this page">
+  <div class="mx-auto flex max-w-6xl items-center gap-3 px-4 sm:px-6">
+    <span class="hidden shrink-0 font-mono text-[0.65rem] tracking-[0.14em] text-faint uppercase md:block">On this page</span>
+    <span class="hidden h-4 w-px shrink-0 bg-line-strong md:block" aria-hidden="true"></span>
+    <ol class="snav-list -mx-1 flex min-w-0 flex-1 gap-1 overflow-x-auto px-1 py-2" data-snav>
+      {
+        sections.map((s, i) => (
+          <li class="shrink-0">
+            <a
+              href={`#${s.id}`}
+              data-snav-link={s.id}
+              class="inline-flex h-9 items-center gap-1.5 rounded-full border border-transparent px-3 font-mono text-xs whitespace-nowrap text-muted transition-colors hover:border-line hover:text-fg data-[active]:border-accent data-[active]:bg-accent data-[active]:text-white"
+            >
+              <span class="opacity-60">{String(i + 1).padStart(2, '0')}</span>
+              {s.label}
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</nav>
+
+<script>
+  function initSectionNav() {
+    const list = document.querySelector<HTMLElement>('[data-snav]');
+    if (!list) return;
+    const all = [...list.querySelectorAll<HTMLAnchorElement>('[data-snav-link]')]
+      .map((a) => [a, document.getElementById(a.dataset.snavLink!)] as const)
+      .filter(([, el]) => el) as [HTMLAnchorElement, HTMLElement][];
+    let targets = all;
+    let current: HTMLAnchorElement | null = null;
+    let pinnedUntil = 0;
+
+    // Match the chips to the page: same order as the sections, and hide chips whose
+    // section is hidden (e.g. a project filtered out on the Projects page)
+    const refresh = () => {
+      const sorted = [...all].sort(([, x], [, y]) =>
+        x.compareDocumentPosition(y) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1,
+      );
+      let n = 0;
+      for (const [a, el] of sorted) {
+        const li = a.parentElement!;
+        list.appendChild(li);
+        const shown = el.offsetParent !== null || getComputedStyle(el).display !== 'none';
+        li.hidden = !shown;
+        if (shown) a.querySelector('span')!.textContent = String(++n).padStart(2, '0');
+      }
+      targets = sorted.filter(([a]) => !a.parentElement!.hidden);
+      current?.removeAttribute('data-active');
+      current?.removeAttribute('aria-current');
+      current = null;
+      pinnedUntil = 0;
+      update();
+    };
+
+    const update = () => {
+      if (Date.now() < pinnedUntil) return;
+      // The section whose top has passed just under the header + bar is the one being read.
+      // Sections side by side (same top) count as one row: the first one wins.
+      const line = 140;
+      let active = targets[0]?.[0] ?? null;
+      let best = -Infinity;
+      for (const [a, el] of targets) {
+        const top = Math.round(el.getBoundingClientRect().top);
+        if (top <= line && top > best + 2) {
+          active = a;
+          best = top;
+        }
+      }
+      // At the very bottom of the page, highlight the last section
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) active = targets.at(-1)?.[0] ?? active;
+      setActive(active);
+    };
+
+    const setActive = (active: HTMLAnchorElement | null) => {
+      if (active === current) return;
+      current?.removeAttribute('data-active');
+      current?.removeAttribute('aria-current');
+      current = active;
+      if (!current) return;
+      current.setAttribute('data-active', '');
+      current.setAttribute('aria-current', 'true');
+      // Keep the active chip visible when the bar scrolls sideways (phones)
+      const l = current.offsetLeft - list.offsetLeft;
+      if (l < list.scrollLeft || l + current.offsetWidth > list.scrollLeft + list.clientWidth) {
+        list.scrollTo({ left: l - 16, behavior: 'smooth' });
+      }
+    };
+
+    // A clicked chip stays highlighted while the page scrolls to its section
+    list.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('[data-snav-link]');
+      if (!a) return;
+      setActive(a);
+      pinnedUntil = Date.now() + 900;
+    });
+    // User input cancels the pin so the highlight follows their own scrolling again
+    for (const ev of ['wheel', 'touchstart', 'keydown'] as const)
+      window.addEventListener(ev, () => (pinnedUntil = 0), { passive: true });
+    document.addEventListener('snav:refresh', refresh);
+
+    let ticking = false;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+      },
+      { passive: true },
+    );
+    window.addEventListener('resize', update);
+    refresh();
+  }
+  initSectionNav();
+</script>
+
+<style>
+  .snav-list {
+    scrollbar-width: none;
+    padding-right: 2rem;
+    /* Soft fade on the right edge hints that the chips scroll sideways */
+    mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent);
+  }
+  .snav-list::-webkit-scrollbar {
+    display: none;
+  }
+</style>

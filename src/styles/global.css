@@ -691,3 +691,8 @@ a.skill:hover {
     margin: 14mm;
   }
 }
+
+/* Jump targets clear the sticky header and the "On this page" bar */
+main [id] {
+  scroll-margin-top: 8rem;
+}

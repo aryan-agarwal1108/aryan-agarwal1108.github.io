@@ -30,7 +30,12 @@ const interests = [
 ];
 ---
 
-<BaseLayout title="Contact" description={`Get in touch with ${site.name}: email, phone, and LinkedIn.`}>
+<BaseLayout
+  sections={[
+    { id: 'channels', label: 'Reach me' },
+    { id: 'research-interests', label: 'Research interests' },
+  ]}
+  title="Contact" description={`Get in touch with ${site.name}: email, phone, and LinkedIn.`}>
   <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-20">
     <PageHeader tag="COMMS" label="Get in touch" title="Contact">
       The fastest way to reach me is email. I'm open to Summer 2027 internships in aerospace, propulsion, and research.
@@ -42,7 +47,7 @@ const interests = [
   </section>
 
   <!-- ── Comms channels ────────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6">
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6" id="channels">
     <SectionHeading index="01" label="Comms channels" title="Reach me directly" />
     <ul class="grid gap-5 sm:grid-cols-2">
       {
@@ -94,7 +99,7 @@ const interests = [
   </section>
 
   <!-- ── Research interests ────────────────────────────────── -->
-  <section class="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6">
+  <section class="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6" id="research-interests">
     <SectionHeading index="02" label="Research interests" title="What I want to work on" />
     <ul class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
       {

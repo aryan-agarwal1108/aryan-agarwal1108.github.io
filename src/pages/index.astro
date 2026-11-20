@@ -68,9 +68,16 @@ const explore = [
 ];
 ---
 
-<BaseLayout>
+<BaseLayout
+  sections={[
+    { id: 'overview', label: 'Overview' },
+    { id: 'work', label: 'Selected work' },
+    { id: 'explore', label: 'Explore' },
+    { id: 'contact', label: 'Contact' },
+  ]}
+>
   <!-- ── HERO ─────────────────────────────────────────────── -->
-  <section class="relative mx-auto max-w-6xl px-4 pt-12 pb-14 sm:px-6 sm:pt-20">
+  <section class="relative mx-auto max-w-6xl px-4 pt-12 pb-14 sm:px-6 sm:pt-20" id="overview">
     <div class="grid grid-cols-[minmax(0,1fr)] items-center gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
       <div>
         <!-- Departure-board status -->
@@ -170,7 +177,7 @@ const explore = [
   </section>
 
   <!-- ── EXPLORE (links to the other pages) ───────────────── -->
-  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="explore">
     <SectionHeading index="02" label="Explore" title="More about me" />
     <div class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
       {

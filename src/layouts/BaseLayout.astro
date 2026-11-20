@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CommandMenu from '../components/CommandMenu.astro';
 import Lightbox from '../components/Lightbox.astro';
+import SectionNav from '../components/SectionNav.astro';
 import { site } from '../config';
 import { url } from '../utils';
 
@@ -11,9 +12,11 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  // Sections for the "On this page" jump bar (shown when there are 2 or more)
+  sections?: { id: string; label: string }[];
 }
 
-const { title, description = site.description, image = '/og.png' } = Astro.props;
+const { title, description = site.description, image = '/og.png', sections = [] } = Astro.props;
 const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.title}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(url(image), Astro.site);
@@ -69,6 +72,7 @@ const ogImage = new URL(url(image), Astro.site);
       >Skip to content</a
     >
     <Header />
+    {sections.length >= 2 && <SectionNav sections={sections} />}
     <main id="main" class="relative z-10">
       <slot />
     </main>

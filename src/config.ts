@@ -329,6 +329,7 @@ export const recognition: { what: string; detail: string; year: string; href?: s
 // Research papers shown on /papers. Put PDFs in public/files/ with clean filenames.
 export type Paper = {
   slug: string; // URL: /papers/<slug>
+  short: string; // short name for the "On this page" bar
   title: string;
   subject: string;
   year: string;
@@ -349,6 +350,7 @@ export type Paper = {
 export const papers: Paper[] = [
   {
     slug: 'pa28-blown-wing',
+    short: 'PA-28 blown wing',
     title: 'Modeling Propeller-Induced Lift Augmentation on a Piper PA-28 Blown Wing Using Blade-Element Momentum Theory',
     subject: 'Aerodynamics · Modeling',
     year: '2026–27',
@@ -366,6 +368,7 @@ export const papers: Paper[] = [
   },
   {
     slug: 'clearqrl',
+    short: 'ClearQRL',
     title: 'ClearQRL: A Unified Interpretability and Explainability Framework for Quantum RL',
     subject: 'Quantum Computing · Machine Learning',
     year: '2025–26',
@@ -385,6 +388,7 @@ export const papers: Paper[] = [
   },
   {
     slug: 'cern-bl4s-cp-violation',
+    short: 'CERN kaon proposal',
     title: 'Investigating CP Violation in Neutral Kaon Decays as a Source of Matter-Antimatter Asymmetry',
     subject: 'Particle Physics · Proposal',
     year: '2024–25',
@@ -404,6 +408,7 @@ export const papers: Paper[] = [
   },
   {
     slug: 'atmospheric-depolarization',
+    short: 'Atmospheric depolarization',
     title: 'Investigating the Effect of Atmospheric Temperature on Depolarization of Light due to Atmospheric Scattering',
     subject: 'Physics · Optics',
     year: '2025–26',
@@ -423,6 +428,7 @@ export const papers: Paper[] = [
   },
   {
     slug: 'mhd-thruster',
+    short: 'MHD thruster',
     title: 'The Relationship Between Current Supplied to a Magnetohydrodynamic Thruster and Maximum Velocity of Saltwater Displaced',
     subject: 'Physics · Electromagnetism',
     year: '2025–26',
@@ -440,6 +446,7 @@ export const papers: Paper[] = [
   },
   {
     slug: 'apple-share-price-model',
+    short: 'Share-price model',
     title: 'Developing a Mathematical Model to Predict the Optimal Share Price of Apple Stock Using Multivariable Statistics and Calculus',
     subject: 'Mathematics · Modeling',
     year: '2025–26',
@@ -456,6 +463,7 @@ export const papers: Paper[] = [
   },
   {
     slug: 'calcium-in-heated-milk',
+    short: 'Calcium in milk',
     title: 'The Effect of Heating Temperature on Free Calcium Ion Concentration in Milk',
     subject: 'Chemistry · Analytical',
     year: '2025–26',

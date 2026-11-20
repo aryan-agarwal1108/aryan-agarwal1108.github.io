@@ -18,6 +18,14 @@ export function getStaticPaths() {
 
 const { paper: p, index, prev, next } = Astro.props;
 
+const sections = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'abstract', label: 'Abstract' },
+  { id: 'findings', label: p.findingsLabel ?? 'Key findings' },
+  ...(p.figure ? [{ id: 'figure', label: 'Figure' }] : []),
+  { id: 'paper', label: p.pdf ? 'Full paper' : 'Status' },
+];
+
 const spec = (
   [
     ['Authors', p.authors],
@@ -29,13 +37,13 @@ const spec = (
 ).filter(([, v]) => v) as [string, string][];
 ---
 
-<BaseLayout title={p.title} description={p.abstract}>
+<BaseLayout title={p.title} description={p.abstract} sections={sections}>
   <article class="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-14">
-    <a href={url('/papers')} class="group inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-fg">
+    <a href={url('/papers')} class="group -my-2 inline-flex items-center gap-2 py-2 text-sm text-muted transition-colors hover:text-fg">
       <Icon name="arrow-left" size={15} class="transition-transform group-hover:-translate-x-0.5" /> All papers
     </a>
 
-    <header class="reveal mt-8 max-w-4xl">
+    <header class="reveal mt-8 max-w-4xl" id="overview">
       <p class="label flex flex-wrap items-center gap-x-3 gap-y-1">
         <span class="text-accent">PPR-{pad(index + 1)}</span><span class="h-px w-8 bg-line-strong"></span>{p.subject} · {p.year}
       </p>
@@ -44,12 +52,12 @@ const spec = (
 
     <div class="mt-12 grid gap-12 lg:grid-cols-[1fr_300px]">
       <div class="min-w-0">
-        <section class="reveal">
+        <section class="reveal" id="abstract">
           <h2 class="label">Abstract</h2>
           <p class="mt-3 text-lg leading-relaxed text-pretty text-muted">{p.abstract}</p>
         </section>
 
-        <section class="reveal mt-10">
+        <section class="reveal mt-10" id="findings">
           <h2 class="label">{p.findingsLabel ?? 'Key findings'}</h2>
           <ul class="mt-3 space-y-2.5 leading-relaxed text-muted">
             {p.findings.map((f) => (
@@ -63,7 +71,7 @@ const spec = (
 
         {
           p.figure && (
-            <figure class="reveal mt-10 overflow-hidden rounded-xl border border-line bg-white p-4 sm:p-6">
+            <figure id="figure" class="reveal mt-10 overflow-hidden rounded-xl border border-line bg-white p-4 sm:p-6">
               <img src={url(p.figure)} alt={`Figure from ${p.title}`} loading="lazy" class="mx-auto block h-auto w-full max-w-2xl" />
               <figcaption class="mt-3 font-mono text-[0.65rem] tracking-[0.12em] text-[#5b606a] uppercase">Figure from the paper</figcaption>
             </figure>
@@ -71,10 +79,10 @@ const spec = (
         }
 
         {p.pdf ? (
-          <section class="reveal mt-12">
+          <section class="reveal mt-12" id="paper">
             <div class="flex flex-wrap items-end justify-between gap-3">
               <h2 class="label">{p.pdfLabel?.toLowerCase().includes('first page') ? 'First page' : 'The paper'}</h2>
-              <a href={url(p.pdf)} target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-xs font-semibold tracking-[0.06em] text-accent uppercase hover:underline">
+              <a href={url(p.pdf)} target="_blank" rel="noopener" class="-my-1.5 inline-flex items-center gap-1.5 py-1.5 text-xs font-semibold tracking-[0.06em] text-accent uppercase hover:underline">
                 Open in a new tab <Icon name="external" size={13} />
               </a>
             </div>
@@ -92,7 +100,7 @@ const spec = (
             </a>
           </section>
         ) : (
-          <section class="reveal mt-12 rounded-xl border border-dashed border-line-strong bg-surface p-6">
+          <section id="paper" class="reveal mt-12 rounded-xl border border-dashed border-line-strong bg-surface p-6">
             <h2 class="label flex items-center gap-2"><span class="size-1.5 animate-pulse rounded-full bg-accent" />In progress</h2>
             <p class="mt-3 text-sm leading-relaxed text-muted">I'm still writing this paper. The PDF will go up here when it's finished.</p>
           </section>
