@@ -4,7 +4,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import NowPanel from '../components/NowPanel.astro';
 import Icon from '../components/Icon.astro';
-import { site, experience, awards, highlights, papers } from '../config';
+import { site, experience, awards, highlights, papers, updates } from '../config';
 import { getProjects } from '../lib/projects';
 import { url } from '../utils';
 
@@ -71,6 +71,7 @@ const explore = [
 <BaseLayout
   sections={[
     { id: 'work', label: 'Selected work' },
+    { id: 'updates', label: 'Latest updates' },
     { id: 'explore', label: 'Explore' },
     { id: 'contact', label: 'Contact' },
   ]}
@@ -81,7 +82,7 @@ const explore = [
       <div>
         <!-- Departure-board status -->
         <p class="hero-in mb-8 inline-flex items-stretch overflow-hidden rounded-sm border border-[#2a2d34] font-mono text-[0.68rem] tracking-[0.12em] uppercase">
-          <span class="bg-accent px-2.5 py-1.5 font-medium text-white">Status</span>
+          <span class="bg-accent px-2.5 py-1.5 font-medium text-on-accent">Status</span>
           <span class="caret bg-[#14161b] px-3 py-1.5 text-[#ffb547]" data-scramble={site.status.text.toUpperCase()}>{site.status.text.toUpperCase()}</span>
         </p>
 
@@ -102,7 +103,7 @@ const explore = [
         <div class="hero-in mt-9 flex flex-wrap items-center gap-3" style="--d:0.46s">
           <a
             href={url('/projects')}
-            class="group inline-flex h-12 items-center gap-2.5 bg-fg px-6 text-sm font-semibold tracking-[0.06em] text-bg uppercase transition-colors hover:bg-accent hover:text-white"
+            class="group inline-flex h-12 items-center gap-2.5 bg-fg px-6 text-sm font-semibold tracking-[0.06em] text-bg uppercase transition-colors hover:bg-accent hover:text-on-accent"
           >
             See my projects <Icon name="arrow" size={16} class="transition-transform group-hover:translate-x-1" />
           </a>
@@ -175,9 +176,37 @@ const explore = [
     </div>
   </section>
 
+  <!-- ── LATEST UPDATES (edit `updates` in config.ts) ────── -->
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="updates">
+    <SectionHeading index="02" label="Latest updates" title="What's new" />
+    <ol class="divide-y divide-line overflow-hidden rounded-xl border border-line bg-surface">
+      {
+        updates.slice(0, 6).map((u) => {
+          const Tag = u.href ? 'a' : 'div';
+          return (
+            <li class="reveal">
+              <Tag
+                href={u.href ? url(u.href) : undefined}
+                class="group grid gap-1 px-5 py-4 transition-colors hover:bg-surface-2 sm:grid-cols-[8.5rem_1fr_auto] sm:items-center sm:gap-6 sm:px-6"
+              >
+                <span class="flex items-center gap-2 font-mono text-xs tracking-wide text-faint uppercase">
+                  {u.upcoming ? <span class="size-1.5 rounded-full border border-dashed border-accent" /> : <span class="size-1.5 rounded-full bg-accent" />}
+                  {u.date}
+                  {u.upcoming && <span class="text-accent">· Next</span>}
+                </span>
+                <span class="text-sm leading-relaxed text-fg">{u.text}</span>
+                {u.href && <Icon name="arrow" size={14} class="hidden text-faint transition-all group-hover:translate-x-0.5 group-hover:text-accent sm:block" />}
+              </Tag>
+            </li>
+          );
+        })
+      }
+    </ol>
+  </section>
+
   <!-- ── EXPLORE (links to the other pages) ───────────────── -->
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="explore">
-    <SectionHeading index="02" label="Explore" title="More about me" />
+    <SectionHeading index="03" label="Explore" title="More about me" />
     <div class="grid gap-px overflow-hidden border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
       {
         explore.map((e, i) => (
@@ -203,7 +232,7 @@ const explore = [
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6" id="contact" aria-labelledby="contact-h">
     <div class="reveal bp corners relative overflow-hidden rounded-xl px-6 py-14 sm:px-12 sm:py-20">
       <p class="flex items-center gap-3 font-mono text-[0.68rem] tracking-[0.12em] uppercase opacity-80">
-        <span class="bg-accent px-1.5 py-0.5 text-white">03</span>Contact
+        <span class="bg-accent px-1.5 py-0.5 text-on-accent">04</span>Contact
       </p>
       <h2 id="contact-h" class="livery relative mt-6 max-w-3xl text-[clamp(2.6rem,7vw,5.5rem)]">
         Want to talk<span class="text-[var(--accent-bright)]">?</span>
@@ -216,7 +245,7 @@ const explore = [
         <button
           type="button"
           data-copy={site.email}
-          class="inline-flex h-12 items-center gap-2 bg-[var(--accent-bright)] px-6 text-sm font-semibold tracking-[0.06em] text-white uppercase transition-transform hover:-translate-y-0.5"
+          class="inline-flex h-12 items-center gap-2 bg-accent px-6 text-sm font-semibold tracking-[0.06em] text-on-accent uppercase transition-transform hover:-translate-y-0.5"
         >
           <Icon name="copy" size={16} /><span data-copy-label>Copy email</span>
         </button>

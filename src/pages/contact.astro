@@ -72,7 +72,7 @@ const interests = [
             )}
             <div class="mt-6 flex flex-wrap gap-2">
               {ch.kind === 'link' ? (
-                <a href={ch.href} target="_blank" rel="noopener" class="inline-flex h-10 items-center gap-2 bg-fg px-4 text-xs font-semibold tracking-[0.08em] text-bg uppercase transition-colors hover:bg-accent hover:text-white">
+                <a href={ch.href} target="_blank" rel="noopener" class="inline-flex h-10 items-center gap-2 bg-fg px-4 text-xs font-semibold tracking-[0.08em] text-bg uppercase transition-colors hover:bg-accent hover:text-on-accent">
                   Open profile <Icon name="external" size={14} />
                 </a>
               ) : (
@@ -80,7 +80,7 @@ const interests = [
                   <a
                     href="#"
                     data-action-href={enc(ch.kind === 'mail' ? `mailto:${ch.value}` : `tel:${ch.href}`)}
-                    class="inline-flex h-10 items-center gap-2 bg-fg px-4 text-xs font-semibold tracking-[0.08em] text-bg uppercase transition-colors hover:bg-accent hover:text-white"
+                    class="inline-flex h-10 items-center gap-2 bg-fg px-4 text-xs font-semibold tracking-[0.08em] text-bg uppercase transition-colors hover:bg-accent hover:text-on-accent"
                   >
                     {ch.kind === 'mail' ? 'Send email' : 'Call'} <Icon name="arrow" size={14} />
                   </a>

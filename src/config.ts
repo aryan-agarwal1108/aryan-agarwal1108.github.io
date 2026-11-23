@@ -35,6 +35,10 @@ export const site = {
     home: { city: 'Dubai', country: 'UAE' },
   },
   resume: '/files/Aryan_Agarwal_Resume.pdf',
+  // Visitor stats with GoatCounter (free, no cookies, no consent banner needed).
+  // Sign up at goatcounter.com, then put your site code here, e.g. 'aryan-agarwal'.
+  // Leave empty to turn tracking off.
+  goatcounter: '',
   links: {
     github: 'https://github.com/aryan-agarwal1108',
     linkedin: 'https://www.linkedin.com/in/aryan-agarwal1108',
@@ -519,6 +523,17 @@ export const now: string[] = [
   'Modeling a blown-wing PA-28 with the Midwest Nice Aerospace Group',
   'Designing spin-caster parts for the ISS Hybrid team',
   'Getting ready to start at CHESS in January',
+];
+
+// "Latest updates" log on the home page, newest first. Add a line whenever something happens.
+// `upcoming: true` marks something that hasn't happened yet.
+export const updates: { date: string; text: string; href?: string; upcoming?: boolean }[] = [
+  { date: 'Jan 2027', text: 'Starting undergraduate research at CHESS, UIUC’s hypersonics and entry systems center.', href: '/resume#experience', upcoming: true },
+  { date: 'Nov 2026', text: 'Writing up the PA-28 blown-wing BEMT model as a research paper.', href: '/papers/pa28-blown-wing' },
+  { date: 'Fall 2026', text: 'Simulated, built, and flew a model rocket and built a high-aspect-ratio glider in AE 100.', href: '/projects/model-rocket' },
+  { date: 'Aug 2026', text: 'Started at UIUC and joined the ISS Hybrid team and the Midwest Nice Aerospace Group.', href: '/projects/fuel-grain-spin-caster' },
+  { date: 'May 2026', text: 'Finished the IB Diploma with 40/45.', href: '/about#education' },
+  { date: 'Mar 2026', text: 'Wrapped up quantum RL explainability research at NYU Abu Dhabi’s eBRAIN Lab (ClearQRL).', href: '/projects/xqrl' },
 ];
 
 // Languages (CEFR levels: A1–C2, or Native). Shown on the About page and in Skills.

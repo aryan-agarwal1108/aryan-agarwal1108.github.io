@@ -69,6 +69,7 @@ const allTags = Object.fromEntries(projects.flatMap((p) => p.data.tags.map((t) =
       </div>
     </div>
 
+    <h2 class="sr-only">All projects</h2>
     <p id="status" class="mt-5 font-mono text-xs text-faint" aria-live="polite"></p>
 
     <div class="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" id="grid" data-all-tags={JSON.stringify(allTags)}>

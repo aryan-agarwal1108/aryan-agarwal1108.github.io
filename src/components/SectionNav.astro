@@ -18,9 +18,9 @@ const { sections } = Astro.props;
             <a
               href={`#${s.id}`}
               data-snav-link={s.id}
-              class="inline-flex h-9 items-center gap-1.5 rounded-full border border-transparent px-3 font-mono text-xs whitespace-nowrap text-muted transition-colors hover:border-line hover:text-fg data-[active]:border-accent data-[active]:bg-accent data-[active]:text-white"
+              class="inline-flex h-9 items-center gap-1.5 rounded-full border border-transparent px-3 font-mono text-xs whitespace-nowrap text-muted transition-colors hover:border-line hover:text-fg data-[active]:border-accent data-[active]:bg-accent data-[active]:text-on-accent"
             >
-              <span class="opacity-60">{String(i + 1).padStart(2, '0')}</span>
+              <span class="opacity-60 [[data-active]_&]:opacity-100">{String(i + 1).padStart(2, '0')}</span>
               {s.label}
             </a>
           </li>
