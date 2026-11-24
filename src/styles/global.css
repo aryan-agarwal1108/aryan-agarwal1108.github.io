@@ -261,93 +261,29 @@ a.skill:hover {
     12px 12px;
 }
 
-/* Plotter reveal: drawings "draw" left→right with a scan line when they scroll in */
 .plot {
   position: relative;
 }
-.js .plot .plot-art {
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.6s cubic-bezier(0.6, 0.05, 0.25, 1);
-}
-.js .plot.in .plot-art {
-  clip-path: inset(0 0 0 0);
-}
-.js .plot::after {
-  content: '';
-  position: absolute;
-  top: 8%;
-  bottom: 8%;
-  left: 0;
-  width: 2px;
-  background: var(--accent-bright);
-  box-shadow: 0 0 12px var(--accent-bright);
-  opacity: 0;
-  pointer-events: none;
-}
-.js .plot.in::after {
-  animation: scan 1.6s cubic-bezier(0.6, 0.05, 0.25, 1) forwards;
-}
-@keyframes scan {
-  0% {
-    left: 11%;
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    left: 89%;
-    opacity: 0;
-  }
-}
 
 /* ── Motion ───────────────────────────────────────────────── */
-/* Reveal on scroll (only hidden once JS is running) */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
-    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
-  transition-delay: var(--d, 0s);
+/* Reveal on scroll: only content that starts below the fold is hidden (motion.ts adds
+   .pending), then it fades in once. What's on screen at load shows immediately. */
+.reveal {
+  transition: opacity 0.3s ease;
 }
-.js .reveal.in {
-  opacity: 1;
-  transform: none;
+.reveal.pending {
+  opacity: 0;
 }
 
-/* Masked line reveal for headings: text slides up from behind a mask */
+/* Heading wrappers kept as plain blocks (the masked slide-up is retired) */
 .rise {
   display: block;
-  overflow: hidden;
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
 }
 .rise > span {
   display: inline-block;
-  animation: rise 1s cubic-bezier(0.2, 0.75, 0.15, 1) both;
-  animation-delay: var(--d, 0s);
-}
-@keyframes rise {
-  from {
-    transform: translateY(105%);
-  }
 }
 
-/* Above-the-fold entrance */
-.hero-in {
-  animation: hero-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  animation-delay: var(--d, 0s);
-}
-.hero-in-2 {
-  --d: 0.15s;
-}
-@keyframes hero-in {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-}
+/* Above-the-fold entrance retired: content is visible on first paint */
 
 /* Ticker / marquee */
 .marquee {
@@ -445,27 +381,7 @@ a.skill:hover {
   }
 }
 
-/* Page transitions between pages (supported browsers; others just navigate) */
-@view-transition {
-  navigation: auto;
-}
-::view-transition-old(root) {
-  animation: vt-out 0.25s ease both;
-}
-::view-transition-new(root) {
-  animation: vt-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-@keyframes vt-out {
-  to {
-    opacity: 0;
-  }
-}
-@keyframes vt-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-}
+/* Page-to-page transitions retired for faster navigation */
 .site-header {
   view-transition-name: site-header;
 }

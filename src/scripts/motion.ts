@@ -3,25 +3,29 @@
 
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ── Reveal on scroll (.reveal, .plot) ─────────────────────── */
-const revealables = document.querySelectorAll<HTMLElement>('.reveal, .plot');
-if (reduce || !('IntersectionObserver' in window)) {
-  revealables.forEach((el) => el.classList.add('in'));
-} else {
-  // Stagger siblings that enter together
+/* ── Reveal on scroll (.reveal) ───────────────────────────
+   Anything already on screen at load stays visible. Content further down is hidden
+   with .pending and fades in once when it scrolls into view. */
+const revealables = [...document.querySelectorAll<HTMLElement>('.reveal')];
+if (!reduce && 'IntersectionObserver' in window) {
   const io = new IntersectionObserver(
     (entries) => {
-      const entering = entries.filter((e) => e.isIntersecting);
-      entering.forEach((entry, i) => {
-        const el = entry.target as HTMLElement;
-        if (!el.style.getPropertyValue('--d')) el.style.setProperty('--d', `${Math.min(i, 6) * 70}ms`);
-        el.classList.add('in');
-        io.unobserve(el);
-      });
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        e.target.classList.remove('pending');
+        io.unobserve(e.target);
+      }
     },
-    { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+    // The huge top margin counts anything already scrolled past as seen, so sections you
+    // jump over (jump bar, fast flicks) are never left invisible.
+    { rootMargin: '100000px 0px -5% 0px', threshold: 0 },
   );
-  revealables.forEach((el) => io.observe(el));
+  for (const el of revealables) {
+    if (el.getBoundingClientRect().top > innerHeight) {
+      el.classList.add('pending');
+      io.observe(el);
+    }
+  }
 }
 
 /* Swap text in place (used by copy buttons and the contact page). Kept as `scramble`
