@@ -68,7 +68,7 @@ const { sections } = Astro.props;
       // The section whose top has passed just under the header + bar is the one being read.
       // Sections side by side (same top) count as one row: the first one wins.
       const line = 140;
-      let active = targets[0]?.[0] ?? null;
+      let active: HTMLAnchorElement | null = null;
       let best = -Infinity;
       for (const [a, el] of targets) {
         const top = Math.round(el.getBoundingClientRect().top);

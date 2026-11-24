@@ -699,3 +699,25 @@ a.skill:hover {
 main [id] {
   scroll-margin-top: 8rem;
 }
+
+/* ── Toned-down decoration ─────────────────────────────────
+   Bracket corners, rivets, ruler ticks, the blinking caret and the scroll
+   progress bar are retired; any leftover classes render as nothing or a hairline. */
+.corners::before,
+.corners::after {
+  content: none !important;
+}
+.rivets > .rivet {
+  display: none !important;
+}
+.ruler {
+  height: 1px !important;
+  background: var(--border) !important;
+  opacity: 1 !important;
+}
+.caret::after {
+  content: none !important;
+}
+#progress {
+  display: none !important;
+}

@@ -50,14 +50,13 @@ const interests = [
 
   <!-- ── Comms channels ────────────────────────────────────── -->
   <section class="mx-auto max-w-6xl px-4 pt-16 pb-6 sm:px-6" id="channels">
-    <SectionHeading index="01" label="Comms channels" title="Reach me directly" />
+    <SectionHeading index="01" label="Contact details" title="Reach me directly" />
     <ul class="grid gap-5 sm:grid-cols-2">
       {
         channels.map((ch) => (
           <li class="reveal card group relative flex flex-col p-6">
             <div class="flex items-center justify-between">
               <span class="flex items-center gap-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase">
-                <span class="grid h-6 min-w-9 place-items-center bg-fg px-1.5 text-bg">CH {ch.ch}</span>
                 <span class="text-faint">{ch.note}</span>
               </span>
               <span class="text-accent">
@@ -107,8 +106,7 @@ const interests = [
       {
         interests.map((r, i) => (
           <li class="reveal bg-surface p-6">
-            <span class="font-mono text-[0.68rem] tracking-[0.12em] text-accent">AREA-{String(i + 1).padStart(2, '0')}</span>
-            <h3 class="display mt-3 text-lg">{r.area}</h3>
+            <h3 class="display text-lg">{r.area}</h3>
             <p class="mt-2 text-sm leading-relaxed text-muted">{r.text}</p>
           </li>
         ))

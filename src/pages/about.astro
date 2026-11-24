@@ -27,12 +27,11 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
     <div class="grid gap-12 lg:grid-cols-[1fr_320px]">
       <div>
         <p class="hero-in flex items-center gap-3">
-          <span class="grid h-6 place-items-center bg-accent px-2 font-mono text-[0.68rem] font-medium text-on-accent">ABOUT</span>
           <span class="label">Background</span>
         </p>
         <h1 class="livery mt-6 text-[clamp(2.6rem,8vw,6rem)]">
           <span class="rise"><span>Hi, I'm</span></span>
-          <span class="rise"><span style="--d:0.1s">{site.firstName}<span class="text-accent">.</span></span></span>
+          <span class="rise"><span style="--d:0.1s">{site.firstName}</span></span>
         </h1>
         <div class="ruler hero-in mt-8" style="--d:0.25s"></div>
         <div class="prose hero-in mt-8 max-w-2xl" style="--d:0.3s">
@@ -105,7 +104,7 @@ const journey: { when: string; where: string; what: string; next?: boolean }[] =
           journey.map((j, i) => (
             <li class:list={['reveal relative p-6', j.next ? 'blueprint-fill' : 'bg-surface']}>
               <div class="flex items-center justify-between font-mono text-[0.68rem] tracking-wider text-faint uppercase">
-                <span><span class="text-accent">{j.next ? 'NEXT' : `WP-${String(i + 1).padStart(2, '0')}`}</span> · {j.when}</span>
+                <span>{j.next ? <span class="text-accent">Next · {j.when}</span> : j.when}</span>
                 <span>{j.where}</span>
               </div>
               <p class="mt-3 text-sm leading-relaxed text-fg">{j.what}</p>

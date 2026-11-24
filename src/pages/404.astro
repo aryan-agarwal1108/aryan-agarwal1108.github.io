@@ -4,9 +4,9 @@ import Icon from '../components/Icon.astro';
 import { url } from '../utils';
 ---
 
-<BaseLayout title="Part not found">
+<BaseLayout title="Page not found">
   <section class="mx-auto flex max-w-3xl flex-col items-center px-4 pt-20 pb-10 text-center sm:px-6">
-    <div class="corners blueprint-fill relative w-full max-w-md rounded-xl border border-line p-8">
+    <div class="blueprint-fill relative w-full max-w-md rounded-xl border border-line p-8">
       <svg viewBox="0 0 300 160" class="w-full text-accent/70" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true">
         <rect x="40" y="40" width="220" height="80" rx="4" stroke-dasharray="5 5" />
         <path d="M40 30v-10M260 30v-10M40 25h220M40 130v10M150 120v20" />
@@ -14,9 +14,8 @@ import { url } from '../utils';
         <text x="150" y="18" text-anchor="middle" fill="currentColor" stroke="none" font-family="Geist Mono, monospace" font-size="9">TOLERANCE: ±∞</text>
         <path d="m250 50 20-20M265 30h5v5" />
       </svg>
-      <span class="absolute top-3 left-3 font-mono text-[0.62rem] tracking-widest text-faint">ERR-404</span>
-    </div>
-    <h1 class="livery mt-10 text-[clamp(2.4rem,7vw,4.5rem)]">Part not found<span class="text-accent">.</span></h1>
+          </div>
+    <h1 class="livery mt-10 text-[clamp(2.4rem,7vw,4.5rem)]">Page not found</h1>
     <p class="mt-3 max-w-md text-muted">There's nothing at this address. The page may have moved, or the link has a typo.</p>
     <a href={url('/')} class="mt-8 inline-flex h-11 items-center gap-2 rounded-lg bg-fg px-5 text-sm font-medium text-bg transition-opacity hover:opacity-85">
       <Icon name="arrow-left" size={16} /> Back to home

@@ -45,7 +45,7 @@ const spec = (
 
     <header class="reveal mt-8 max-w-4xl" id="overview">
       <p class="label flex flex-wrap items-center gap-x-3 gap-y-1">
-        <span class="text-accent">PPR-{pad(index + 1)}</span><span class="h-px w-8 bg-line-strong"></span>{p.subject} · {p.year}
+        {p.subject} · {p.year}
       </p>
       <h1 class="mt-4 text-3xl font-semibold tracking-[-0.03em] text-balance hyphens-auto [overflow-wrap:anywhere] sm:text-5xl sm:hyphens-none">{p.title}</h1>
     </header>
@@ -108,10 +108,9 @@ const spec = (
       </div>
 
       <aside class="order-first lg:order-last">
-        <div class="corners sticky top-20 rounded-xl border border-line bg-surface">
+        <div class="sticky top-32 rounded-xl border border-line bg-surface">
           <div class="flex items-center justify-between border-b border-line px-5 py-3">
             <span class="label">Paper details</span>
-            <span class="font-mono text-[0.65rem] text-faint">PPR-{pad(index + 1)}</span>
           </div>
           <dl class="divide-y divide-line">
             {

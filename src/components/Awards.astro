@@ -16,7 +16,7 @@ const levelStyle: Record<string, string> = {
       <li class="reveal group relative flex flex-col bg-surface p-6">
         <div class="flex items-center justify-between font-mono text-[0.65rem] tracking-wider text-faint uppercase">
           <span>
-            <span class="text-accent">AWD-{String(i + 1).padStart(2, '0')}</span> · {a.year}
+            {a.year}
           </span>
           <span class:list={['rounded-full border px-2 py-0.5 text-[0.6rem] tracking-widest', levelStyle[a.level]]}>{a.level}</span>
         </div>

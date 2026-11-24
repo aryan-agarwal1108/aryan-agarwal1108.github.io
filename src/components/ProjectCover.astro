@@ -140,12 +140,6 @@ const drawing = drawings[art ?? category] ?? drawings[category] ?? fallback;
             set:html={drawing}
           />
         </div>
-        <!-- Title block, like the corner box on an engineering drawing -->
-        <span class="absolute top-0 left-0 border-r border-b border-white/20 px-3 py-1.5 font-mono text-[0.6rem] tracking-[0.16em] text-bp-ink/80 uppercase">Fig. {fig}</span>
-        <span class="absolute right-0 bottom-0 flex border-t border-l border-white/20 font-mono text-[0.6rem] tracking-[0.16em] text-bp-ink/80 uppercase">
-          <span class="border-r border-white/20 px-3 py-1.5">{category}</span>
-          <span class="px-3 py-1.5">Scale NTS</span>
-        </span>
         <span class="sr-only">{`Illustration for ${title}`}</span>
       </>
     )
