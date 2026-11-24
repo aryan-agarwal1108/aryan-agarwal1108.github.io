@@ -38,7 +38,7 @@ export const site = {
   // Visitor stats with GoatCounter (free, no cookies, no consent banner needed).
   // Sign up at goatcounter.com, then put your site code here, e.g. 'aryan-agarwal'.
   // Leave empty to turn tracking off.
-  goatcounter: '',
+  goatcounter: 'aryan-agarwal',
   links: {
     github: 'https://github.com/aryan-agarwal1108',
     linkedin: 'https://www.linkedin.com/in/aryan-agarwal1108',
